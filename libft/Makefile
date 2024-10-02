@@ -36,3 +36,6 @@ so:
 	$(CC) -fPIC $(CFLAGS) $(SRCS) $(BONUS_SRCS)
 	cc -shared -o libft.so $(OBJS) $(BONUS_OBJS)
 
+SILENT:
+
+.PHONY: all clean fclean re

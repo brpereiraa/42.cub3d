@@ -6,11 +6,29 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 09:13:16 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/24 17:36:54 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/02 19:55:51 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int color_validation(char *map)
+{
+	char	**str;
+	int		i;
+	int		j;
+
+	i = -1;
+	str = ft_split(map, ',');
+	while(str[++i])
+	{
+		j = -1;
+		while(str[i][++j])
+			if(str[i][j] < '0' || str[i][j] > '9')
+				return(printf("Invalid colors"), 1);
+	}
+	return (0);
+}
 
 int char_validation(char *map)
 {
@@ -51,13 +69,16 @@ int sprite_validation(char **map)
 	while(++i < 7)
 	{
 		str = ft_split(map[i], 32);
-		if(str[2])
-			print_error("Invalid map", 0);
-		if(char_validation(*str))
-			return (1);
-		if(!ft_strcmp(*str, "EA") || !ft_strcmp(*str, "SO") 
+		if (str[2])
+			print_error("Invalid map", 1);
+		if (char_validation(*str))
+			return (printf("Invalid characters in textures\n"), 1);
+		if (!ft_strcmp(*str, "EA") || !ft_strcmp(*str, "SO") 
 			|| !ft_strcmp(*str, "WE") || !ft_strcmp(*str, "NO"))
 			sfile_validation(str[1]);
+		if (!ft_strcmp(*str, "C") || !ft_strcmp(*str, "F"))
+			if (color_validation(str[1]))
+				return (1);
 	}
 
 	return (0);

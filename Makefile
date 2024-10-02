@@ -6,7 +6,7 @@
 #    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2024/09/24 17:29:14 by bruno            ###   ########.fr        #
+#    Updated: 2024/10/02 19:52:27 by bruno            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ fclean: clean
 
 re: fclean all
 
+.SILENT:	
+
 .PHONY: all clean fclean re
 
-.SILENT:

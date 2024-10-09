@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validations.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 09:13:16 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 19:55:51 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/09 20:08:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int color_validation(char *map)
 		while(str[i][++j])
 			if(str[i][j] < '0' || str[i][j] > '9')
 				return(printf("Invalid colors"), 1);
+		if(ft_atoi(str[i]) < 0 || ft_atoi(str[i]) > 255)
+			return(printf("Invalid colors"), 1);
 	}
 	return (0);
 }
@@ -37,13 +39,13 @@ int char_validation(char *map)
 	i = -1;
 	if (map == NULL) 
 	    return -1;
-	while(map[++i])
-		if(!ft_strchr(" 012NSEWAOFC\n", map[i]))
+	while (map[++i])
+		if (!ft_strchr(" 012NSEWAOFC\n", map[i]))
 			return (1);
 	return(0);
 }
 
-void sfile_validation(char *file)
+int sfile_validation(char *file)
 {
 	int			fd;
 	char	*file1;
@@ -55,9 +57,10 @@ void sfile_validation(char *file)
 	{
 		printf("'%s'\n", file1);
 		close(fd);
-		print_error("Invalid sprite file", 0);
+		return (printf("Invalid sprite file"), 0);
 	}
 	close(fd);
+	return (1);
 }
 
 int sprite_validation(char **map)
@@ -70,15 +73,17 @@ int sprite_validation(char **map)
 	{
 		str = ft_split(map[i], 32);
 		if (str[2])
-			print_error("Invalid map", 1);
+			return(printf("Invalid map\n"), 1);
 		if (char_validation(*str))
 			return (printf("Invalid characters in textures\n"), 1);
-		if (!ft_strcmp(*str, "EA") || !ft_strcmp(*str, "SO") 
+		if (!ft_strcmp(*str, "EA") || !ft_strcmp(*str, "SO")
 			|| !ft_strcmp(*str, "WE") || !ft_strcmp(*str, "NO"))
 			sfile_validation(str[1]);
-		if (!ft_strcmp(*str, "C") || !ft_strcmp(*str, "F"))
+		else if (!ft_strcmp(*str, "C") || !ft_strcmp(*str, "F"))
 			if (color_validation(str[1]))
 				return (1);
+		// else
+		// 	return(printf("Wrong information on map textures\n"), 1); 
 	}
 
 	return (0);
@@ -90,15 +95,15 @@ int file_validation(char *map)
 
     file = ft_strchr(map, '.');
     if (file == NULL || !ft_strcmp(map, ".cub"))
-		return 1;
+		return (printf("Invalid file name\n"), 0);
 	while (ft_strchr(file + 1, '.'))
 		file = ft_strchr(file + 1, '.');
 	if(ft_strcmp(file, ".cub"))
-		return (1);
-    return (0);
+		return (printf("File name doesn't end with .cub\n"), 0);
+    return (1);
 }
 
-void map_validation(char *map)
+int map_validation(char *map)
 {
 	int		fd;
 	int		n_line;
@@ -108,18 +113,18 @@ void map_validation(char *map)
 
 	n_line = 0;
 	fd = open(map, O_RDONLY);
+	i = -1;
 	while((str = get_next_line(fd)))
 		n_line++;
 	close(fd);
 	if(n_line == 0)
-		print_error("Invalid number of lines", 0);
+		return (printf("Invalid number of lines"), 0);
 	fd = open(map, O_RDONLY);
-	i = -1;
 	lines = (char **)malloc(sizeof(char *) * n_line);	
 	while(++i < n_line)
 		lines[i] = get_next_line(fd);
 	i = -1;
-	if(sprite_validation(lines))
-		print_error("Invalid characters", 0);
-	
+	if(!sprite_validation(lines))
+		return (0);
+	return (1);
 }

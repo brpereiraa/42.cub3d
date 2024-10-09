@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/23 11:31:50 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/03 16:59:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+typedef struct s_game {
+    char **map;
+}       t_game;
+
 int	file_validation(char *map);
 int char_validation(char *map);
-void map_validation(char *map);
-void print_error(char *msg, int exit_code);
+int map_validation(char *map);
 
 
 #endif

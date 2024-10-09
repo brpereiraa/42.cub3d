@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2024/10/02 19:52:27 by bruno            ###   ########.fr        #
+#    Updated: 2024/10/03 16:58:45 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,28 @@ OBJS = $(SRC:.c=.o)
 LIBFT = libft
 LIBFT_N = libft/libft.a
 
+DOWNLOAD = https://cdn.intra.42.fr/document/document/25858/minilibx-linux.tgz
+MLX = ./minilibx-linux
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) --no-print-directory -C $(LIBFT)
 	cc -g $(OBJS) $(CFLAGS) $(LIBFT_N) -o $(NAME)
+
+update:
+	@if [ ! -d $(MLX) ]; then \
+		echo " Downloading mlx..."; \
+		mkdir -p $(MLX); \
+		wget $(DOWNLOAD) -O "./minilibx-linux.tgz"; \
+		tar -xzvf "./minilibx-linux.tgz" -C $(MLX); \
+		rm -fr "./minilibx-linux.tgz"; \
+	else \
+		echo "Folder already exists"; \
+	fi
+
+uclean:
+	rm -fr $(MLX)
 
 clean:
 	$(MAKE) --no-print-directory -C $(LIBFT) clean

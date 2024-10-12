@@ -14,6 +14,8 @@
 
 int main(int ac, char **av)
 {
+	t_game game;
+
 	if (ac != 2)
 		return (printf("Invalid number of arguments\n"), 1);
 	if (!file_validation(av[1]))
@@ -24,3 +26,4 @@ int main(int ac, char **av)
 	
 	return(0);
 }
+

@@ -12,40 +12,40 @@
 
 #include "../includes/cub3d.h"
 
-int color_validation(char *map)
+int	color_validation(char *map)
 {
 	char	**str;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = -1;
 	str = ft_split(map, ',');
-	while(str[++i])
+	while (str[++i])
 	{
 		j = -1;
-		while(str[i][++j])
-			if(str[i][j] < '0' || str[i][j] > '9')
-				return(printf("Invalid colors"), 1);
-		if(ft_atoi(str[i]) < 0 || ft_atoi(str[i]) > 255)
-			return(printf("Invalid colors"), 1);
+		while (str[i][++j])
+			if (str[i][j] < '0' || str[i][j] > '9')
+				return (printf("Invalid colors"), 1);
+		if (ft_atoi(str[i]) < 0 || ft_atoi(str[i]) > 255)
+			return (printf("Invalid colors"), 1);
 	}
 	return (0);
 }
 
-int char_validation(char *map)
+int	char_validation(char *map)
 {
 	int	i;
 
 	i = -1;
 	if (map == NULL) 
-	    return -1;
+	    return (1);
 	while (map[++i])
 		if (!ft_strchr(" 012NSEWAOFC\n", map[i]))
-			return (1);
+			return (printf("Invalid characters found in map\n"), 1);
 	return(0);
 }
 
-int sfile_validation(char *file)
+int	sfile_validation(char *file)
 {
 	int			fd;
 	char	*file1;
@@ -54,16 +54,11 @@ int sfile_validation(char *file)
 	free(file);
 	fd = open(file1, O_RDONLY);
 	if(fd == -1)
-	{
-		printf("'%s'\n", file1);
-		close(fd);
-		return (printf("Invalid sprite file"), 0);
-	}
-	close(fd);
-	return (1);
+		return (close(fd), printf("Invalid sprite file"), 0);
+	return (close(fd), 1);
 }
 
-int sprite_validation(char **map)
+int	sprite_validation(char **map)
 {
 	int	i;
 	char	**str;
@@ -73,7 +68,7 @@ int sprite_validation(char **map)
 	{
 		str = ft_split(map[i], 32);
 		if (str[2])
-			return(printf("Invalid map\n"), 1);
+			return (printf("Invalid map\n"), 1);
 		if (char_validation(*str))
 			return (printf("Invalid characters in textures\n"), 1);
 		if (!ft_strcmp(*str, "EA") || !ft_strcmp(*str, "SO")
@@ -82,14 +77,13 @@ int sprite_validation(char **map)
 		else if (!ft_strcmp(*str, "C") || !ft_strcmp(*str, "F"))
 			if (color_validation(str[1]))
 				return (1);
-		// else
-		// 	return(printf("Wrong information on map textures\n"), 1); 
+		else
+		return  (printf("Wrong information on map textures\n"), 1); 
 	}
-
 	return (0);
 }
 
-int file_validation(char *map)
+int	file_validation(char *map)
 {
     char *file;
 
@@ -128,3 +122,4 @@ int map_validation(char *map)
 		return (0);
 	return (1);
 }
+

@@ -6,14 +6,14 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2024/10/03 16:58:45 by marvin           ###   ########.fr        #
+#    Updated: 2024/11/01 17:36:52 by brpereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 CFLAGS = -Wall -Wextra -Werror
-SRC = ./src/main.c ./src/validations.c
+SRC = ./src/main.c ./src/map.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft

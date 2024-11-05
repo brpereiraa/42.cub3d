@@ -13,6 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../minilibx-linux/mlx.h" 
+# include "../minilibx-linux/mlx_int.h" 
 # include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
@@ -38,6 +40,11 @@ struct s_player {
 int	map_init(t_game *game, char *file);
 char	**map_read(char *file);
 int	map_lines(char *file);
+
+/*.........mlx.c..............*/
+
+int	minimap_loop(t_game *game);
+int	ft_mlx_init(t_game *game);
 
 /*..............................*/
 

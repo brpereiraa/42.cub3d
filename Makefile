@@ -12,8 +12,9 @@
 
 NAME = cub3d
 
-CFLAGS = -Wall -Wextra -Werror
-SRC = ./src/main.c ./src/map.c
+MLXFLAGS = -L ./mlx -lmlx -Ilmlx -lXext -lX11 
+CFLAGS = -Wall -Wextra -Werror -I
+SRC = ./src/main.c ./src/map.c ./src/mlx.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft
@@ -26,14 +27,15 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) --no-print-directory -C $(LIBFT)
-	cc -g $(OBJS) $(CFLAGS) $(LIBFT_N) -o $(NAME)
+	$(MAKE) $(MLX)
+	cc -g $(OBJS) $(CFLAGS) $(MLXFLAGS) $(LIBFT_N) -o $(NAME)
 
 update:
 	@if [ ! -d $(MLX) ]; then \
 		echo " Downloading mlx..."; \
 		mkdir -p $(MLX); \
 		wget $(DOWNLOAD) -O "./minilibx-linux.tgz"; \
-		tar -xzvf "./minilibx-linux.tgz" -C $(MLX); \
+		tar -xzvf "./minilibx-linux.tgz" -C .; \
 		rm -fr "./minilibx-linux.tgz"; \
 	else \
 		echo "Folder already exists"; \

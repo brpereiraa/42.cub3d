@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/11/01 18:06:37 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:23:48 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+# define ESC 65307
+
 typedef struct s_game t_game;
 typedef struct s_player t_player;
 
@@ -28,6 +30,7 @@ struct s_game {
 	char	**map;
 	void	*mlx;
 	void	*win;
+	void	*img;
 };
 
 struct s_player { 
@@ -43,14 +46,16 @@ int	map_lines(char *file);
 
 /*.........mlx.c..............*/
 
-int	minimap_loop(t_game *game);
+void	minimap_loop(t_game *game);
 int	ft_mlx_init(t_game *game);
+int	key_handler(int keycode, t_game *game);
+int	start_window(t_game *game);
 
-/*..............................*/
+// /*..............................*/
 
-int	file_validation(char *map);
-int	char_validation(char *map);
-int	map_validation(char *map);
+// int	file_validation(char *map);
+// int	char_validation(char *map);
+// int	map_validation(char *map);
 
 #endif
 

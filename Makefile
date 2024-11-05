@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2024/11/01 17:36:52 by brpereir         ###   ########.fr        #
+#    Updated: 2024/11/05 16:30:45 by brpereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-MLXFLAGS = -L ./mlx -lmlx -Ilmlx -lXext -lX11 
-CFLAGS = -Wall -Wextra -Werror -I
-SRC = ./src/main.c ./src/map.c ./src/mlx.c
+MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11
+CFLAGS = -Wall -Wextra -Werror -Iincludes
+SRC = src/main.c src/map.c src/mlx.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft
@@ -26,8 +26,13 @@ MLX = ./minilibx-linux
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@echo "SRC = $(SRC)"
+	@echo "OBJS = $(OBJS)"
+	@echo "MLXFLAGS = $(MLXFLAGS)"
+	@echo "CFLAGS = $(CFLAGS)"
+	@echo "LIBFT_N = $(LIBFT_N)"
 	$(MAKE) --no-print-directory -C $(LIBFT)
-	$(MAKE) $(MLX)
+	$(MAKE) -C $(MLX)
 	cc -g $(OBJS) $(CFLAGS) $(MLXFLAGS) $(LIBFT_N) -o $(NAME)
 
 update:

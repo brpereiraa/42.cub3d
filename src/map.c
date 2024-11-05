@@ -17,10 +17,6 @@ int	map_init(t_game *game, char *file)
 	game->map = map_read(file);
 	if (!game->map)	
 		return (0);
-	int	i = -1;
-	while(game->map[++i]){
-		printf("%s", game->map[i]);
-	}
 	return (1);
 }
 

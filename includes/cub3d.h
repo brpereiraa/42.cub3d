@@ -24,13 +24,24 @@
 
 typedef struct s_game t_game;
 typedef struct s_player t_player;
+typedef struct s_sprites t_sprites;
+
+struct s_sprites {
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
+	char	*floor;
+	char	*ceiling;
+};
 
 struct s_game {
-	t_game	*player;
-	char	**map;
-	void	*mlx;
-	void	*win;
-	void	*img;
+	t_sprites	*sprites;
+	t_player	*player;
+	char		**map;
+	void		*mlx;
+	void		*win;
+	void		*img;
 };
 
 struct s_player { 
@@ -51,8 +62,9 @@ int	ft_mlx_init(t_game *game);
 int	key_handler(int keycode, t_game *game);
 int	start_window(t_game *game);
 
-// /*..............................*/
+/*........checker.c...........*/
 
+int	check_extension(char *file);
 // int	file_validation(char *map);
 // int	char_validation(char *map);
 // int	map_validation(char *map);

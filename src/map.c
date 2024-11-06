@@ -14,6 +14,8 @@
 
 int	map_init(t_game *game, char *file)
 {
+	if(check_extension(file))
+		return (0);
 	game->map = map_read(file);
 	if (!game->map)	
 		return (0);
@@ -55,4 +57,27 @@ int	map_lines(char *file)
 	close(fd);
 	return (i);
 
+}
+
+void	sprite_info(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	game->sprites = (t_sprites *)malloc(sizeof(t_sprites));
+	while(game->map[++i])
+	{
+		if (!ft_strncmp(game->map[i], "SO", 2))
+			game->sprites->south = game->map[i];
+		if (!ft_strncmp(game->map[i], "EA", 2))
+			game->sprites->east = game->map[i];
+		if (!ft_strncmp(game->map[i], "NO", 2))
+			game->sprites->north = game->map[i];
+		if (!ft_strncmp(game->map[i], "WE", 2))
+			game->sprites->west = game->map[i];
+		if (!ft_strncmp(game->map[i], "C", 1))
+			game->sprites->ceiling = game->map[i];
+		if (!ft_strncmp(game->map[i], "F", 1))
+			game->sprites->floor = game->map[i];
+	}
 }

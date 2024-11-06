@@ -12,4 +12,16 @@
 
 #include "../includes/cub3d.h"
 
-int ()
+int	check_extension(char *map)
+{
+	char	*file;	
+
+	file = ft_strchr(map, '.');
+	if (file == NULL || !ft_strcmp(map, ".cub"))
+		return (1);
+	while (ft_strchr(file + 1, '.'))
+		file = ft_strchr(file + 1, '.');
+	if (ft_strcmp(file, ".cub"))
+		return (1);
+	return (0);
+}

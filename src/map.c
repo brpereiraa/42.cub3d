@@ -19,6 +19,9 @@ int	map_init(t_game *game, char *file)
 	game->map = map_read(file);
 	if (!game->map)	
 		return (0);
+	game->fmap = fmap_read(game);
+	if (!game->fmap)
+		return (printf("Error reading map.\n"),0);
 	return (1);
 }
 
@@ -80,4 +83,14 @@ void	sprite_info(t_game *game)
 		if (!ft_strncmp(game->map[i], "F", 1))
 			game->sprites->floor = game->map[i];
 	}
+}
+
+char	**fmap_read(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while(!ft_strchr("01", game->map[++i][0]))
+		;
+	return (&game->map[i]);
 }

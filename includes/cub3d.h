@@ -38,6 +38,7 @@ struct s_sprites {
 struct s_game {
 	t_sprites	*sprites;
 	t_player	*player;
+	char		**fmap;
 	char		**map;
 	void		*mlx;
 	void		*win;
@@ -54,6 +55,7 @@ struct s_player {
 int	map_init(t_game *game, char *file);
 char	**map_read(char *file);
 int	map_lines(char *file);
+char	**fmap_read(t_game *game);
 
 /*.........mlx.c..............*/
 

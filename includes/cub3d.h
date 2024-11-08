@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/11/05 18:23:48 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:29:33 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_game t_game;
 typedef struct s_player t_player;
 typedef struct s_sprites t_sprites;
+typedef struct s_data t_data;
 
 struct s_sprites {
 	char	*north;
@@ -35,14 +36,22 @@ struct s_sprites {
 	char	*ceiling;
 };
 
+struct s_data {
+	void	*mlx;
+	void	*win;
+	void	*img;
+	void	*addr;
+	int	bits;
+	int	len;
+	int	endian;
+};
+
 struct s_game {
 	t_sprites	*sprites;
 	t_player	*player;
+	t_data		*data;
 	char		**fmap;
 	char		**map;
-	void		*mlx;
-	void		*win;
-	void		*img;
 };
 
 struct s_player { 
@@ -57,12 +66,18 @@ char	**map_read(char *file);
 int	map_lines(char *file);
 char	**fmap_read(t_game *game);
 
+/*.......minimap.c............*/
+void	put_image(t_game *game);
+void	put_image_to_window(t_game *game, int i, int j);
+int	mmap_init(t_game *game);
+
 /*.........mlx.c..............*/
 
 void	minimap_loop(t_game *game);
 int	ft_mlx_init(t_game *game);
 int	key_handler(int keycode, t_game *game);
 int	start_window(t_game *game);
+void	mlx_pixel(t_data *data, int x, int y, int color);
 
 /*........checker.c...........*/
 

@@ -21,6 +21,10 @@
 # include <fcntl.h>
 
 # define ESC 65307
+# define W 19
+# define A 97
+# define S 115
+# define D 100
 
 typedef struct s_game t_game;
 typedef struct s_player t_player;

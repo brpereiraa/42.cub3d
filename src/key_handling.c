@@ -5,6 +5,32 @@ int	key_handler(int keycode, t_game *game)
 	(void)game;
 	(void)keycode;
 	if (keycode == ESC)
-			exit(1);
+		exit(1);
+	if (keycode == W)
+		game->player->pos_y--;
+	if (keycode == S)
+		game->player->pos_y++;
+	if (keycode == A)
+		game->player->pos_x--;
+	if (keycode == D)
+		game->player->pos_y++;
 	return (1);
+}
+
+void	player_pos(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while(game->fmap[++i])
+	{
+		j = -1;
+		while(game->fmap[i][++j])
+			if (game->fmap[i][j] == 'P')
+			{
+				game->player->pos_x = j;
+				game->player->pos_y = i;
+			}
+	}
 }

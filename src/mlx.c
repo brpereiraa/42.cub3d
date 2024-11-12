@@ -6,6 +6,7 @@ int	ft_mlx_init(t_game *game)
 	
 	start_window(game);
 	minimap_loop(game);
+	destroy_images(game);
 	return (1);
 }
 
@@ -37,7 +38,6 @@ int	start_window(t_game *game)
 	if (!data->win)
 		return (printf("Error starting img.\n"), 0);
 	mmap_init(game);
-	printf("Juan\n");
 	return (1);
 }
 
@@ -49,3 +49,6 @@ void	mlx_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void destroy_images(t_game *game){
+	mlx_clear_window(game->data->mlx, game->data->win);
+}

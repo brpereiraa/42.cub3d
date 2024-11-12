@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/01 17:56:05 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:41:28 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	map_init(t_game *game, char *file)
 	game->map = map_read(file);
 	if (!game->map)	
 		return (0);
+	game->player = (t_player *)malloc(sizeof(t_player));
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
 		return (printf("Error reading map.\n"),0);
@@ -88,9 +89,24 @@ void	sprite_info(t_game *game)
 char	**fmap_read(t_game *game)
 {
 	int	i;
+	int	j;
+	int	k;
 
 	i = -1;
+	j = -1;
 	while(!ft_strchr("01", game->map[++i][0]))
 		;
+	while(game->map[i + ++j])
+	{
+		k = -1;
+		while(game->map[i + j][++k])
+			if (game->map[i+j][k] == 'E')
+			{
+				printf("JUan\n");
+				game->player->pos_x = (double)k;
+				game->player->pos_y = (double)j;
+				return (&game->map[i]);
+			}
+	}
 	return (&game->map[i]);
 }

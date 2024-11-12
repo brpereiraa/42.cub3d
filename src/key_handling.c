@@ -7,13 +7,14 @@ int	key_handler(int keycode, t_game *game)
 	if (keycode == ESC)
 		exit(1);
 	if (keycode == W)
-		game->player->pos_y--;
+		game->player->pos_y -= 0.1;
 	if (keycode == S)
-		game->player->pos_y++;
+		game->player->pos_y += 0.1;
 	if (keycode == A)
-		game->player->pos_x--;
+		game->player->pos_x -= 0.1;
 	if (keycode == D)
-		game->player->pos_y++;
+		game->player->pos_x += 0.1;
+	mmap_init(game);
 	return (1);
 }
 

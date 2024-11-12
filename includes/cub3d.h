@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/11/08 18:29:33 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:40:16 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <unistd.h> 
 
 # define ESC 65307
-# define W 19
+# define W 119
 # define A 97
 # define S 115
 # define D 100
@@ -30,6 +31,7 @@ typedef struct s_game t_game;
 typedef struct s_player t_player;
 typedef struct s_sprites t_sprites;
 typedef struct s_data t_data;
+typedef struct s_vect t_vect;
 
 struct s_sprites {
 	char	*north;
@@ -59,8 +61,13 @@ struct s_game {
 };
 
 struct s_player { 
-	int	pos_x;
-	int	pos_y;
+	double	pos_x;
+	double	pos_y;
+};
+
+struct s_vect {
+	double	x;
+	double	y;
 };
 
 /*.........map.c..............*/
@@ -82,6 +89,7 @@ int	ft_mlx_init(t_game *game);
 int	key_handler(int keycode, t_game *game);
 int	start_window(t_game *game);
 void	mlx_pixel(t_data *data, int x, int y, int color);
+void destroy_images(t_game *game);
 
 /*........checker.c...........*/
 

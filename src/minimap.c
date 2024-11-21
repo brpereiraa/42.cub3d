@@ -21,6 +21,7 @@ void	put_image_to_window(t_game *game, int i, int j)
 	if (game->fmap[i][j] == '1')
 		mlx_put_image_to_window(data->mlx, data->win, wall, j * 50, i * 50);
 
+	ft_raycasting(game);
 	return ;
 }
 
@@ -41,7 +42,7 @@ void	put_image(t_game *game)
 
 	void	*player;
 	int size = 50;
-	player = mlx_xpm_file_to_image(data->mlx, "./sprites/player.xpm", &size, &size);
-	mlx_put_image_to_window(data->mlx, data->win, player, game->player->pos_x * 50, game->player->pos_y * 50);
+//	player = mlx_xpm_file_to_image(data->mlx, "./sprites/player.xpm", &size, &size);
+//	mlx_put_image_to_window(data->mlx, data->win, player, game->player->pos_x * 50, game->player->pos_y * 50);
 	return ;
 }

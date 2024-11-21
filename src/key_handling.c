@@ -14,6 +14,10 @@ int	key_handler(int keycode, t_game *game)
 		game->player->pos_x -= 0.1;
 	if (keycode == D)
 		game->player->pos_x += 0.1;
+	if (keycode == LEFT)
+		game->vector->x += 0.2;
+	if (keycode == RIGHT)
+		game->vector->x -= 0.2;
 	mmap_init(game);
 	return (1);
 }

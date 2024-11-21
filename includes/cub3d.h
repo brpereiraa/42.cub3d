@@ -26,6 +26,10 @@
 # define A 97
 # define S 115
 # define D 100
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
 
 typedef struct s_game t_game;
 typedef struct s_player t_player;
@@ -56,6 +60,7 @@ struct s_game {
 	t_sprites	*sprites;
 	t_player	*player;
 	t_data		*data;
+	t_vect		*vector;
 	char		**fmap;
 	char		**map;
 };
@@ -83,7 +88,6 @@ void	put_image_to_window(t_game *game, int i, int j);
 int	mmap_init(t_game *game);
 
 /*.........mlx.c..............*/
-
 void	minimap_loop(t_game *game);
 int	ft_mlx_init(t_game *game);
 int	key_handler(int keycode, t_game *game);
@@ -92,11 +96,12 @@ void	mlx_pixel(t_data *data, int x, int y, int color);
 void destroy_images(t_game *game);
 
 /*........checker.c...........*/
-
 int	check_extension(char *file);
 // int	file_validation(char *map);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
 
+
+int	ft_raycasting(t_game *game);
 #endif
 

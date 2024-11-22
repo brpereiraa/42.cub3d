@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/11/12 16:40:16 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:49:40 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h> 
+# include <math.h>
 
 # define ESC 65307
 # define W 119
@@ -60,7 +61,8 @@ struct s_game {
 	t_sprites	*sprites;
 	t_player	*player;
 	t_data		*data;
-	t_vect		*vector;
+	t_vect		*fv;
+	t_vect		*pv;
 	char		**fmap;
 	char		**map;
 };
@@ -101,6 +103,9 @@ int	check_extension(char *file);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
 
+
+int ft_render(t_game *game);
+void create_image(t_game *game);
 
 int	ft_raycasting(t_game *game);
 #endif

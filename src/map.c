@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/12 15:41:28 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:11:40 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ char	**fmap_read(t_game *game)
 
 	i = -1;
 	j = -1;
+	game->fv = (t_vect *)malloc(sizeof(t_vect));
+	game->fv->x = 1;
+	game->fv->y = 1;
 	while(!ft_strchr("01", game->map[++i][0]))
 		;
 	while(game->map[i + ++j])
@@ -102,7 +105,6 @@ char	**fmap_read(t_game *game)
 		while(game->map[i + j][++k])
 			if (game->map[i+j][k] == 'E')
 			{
-				printf("JUan\n");
 				game->player->pos_x = (double)k;
 				game->player->pos_y = (double)j;
 				return (&game->map[i]);

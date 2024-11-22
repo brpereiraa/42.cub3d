@@ -1,4 +1,5 @@
 #include "../includes/cub3d.h"
+#include <math.h>
 
 int	key_handler(int keycode, t_game *game)
 {
@@ -14,10 +15,12 @@ int	key_handler(int keycode, t_game *game)
 		game->player->pos_x -= 0.1;
 	if (keycode == D)
 		game->player->pos_x += 0.1;
-	if (keycode == LEFT)
-		game->vector->x += 0.2;
-	if (keycode == RIGHT)
-		game->vector->x -= 0.2;
+	// if (keycode == LEFT){
+	// 	game->fv->x = cos(3.1415*game->fv->x) - sin(3.1415*game->fv->y);	
+	// 	game->fv->y = sin(3.1415*game->fv->x) + cos(3.1415*game->fv->y);	
+	// }
+	// if (keycode == RIGHT)
+	// 	game->fv->x -= 0.2;
 	mmap_init(game);
 	return (1);
 }

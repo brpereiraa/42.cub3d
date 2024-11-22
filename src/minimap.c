@@ -2,9 +2,7 @@
 
 int mmap_init(t_game *game)
 {
-	destroy_images(game);
 	put_image(game);	
-
 	return (1);
 }
 
@@ -21,7 +19,6 @@ void	put_image_to_window(t_game *game, int i, int j)
 	if (game->fmap[i][j] == '1')
 		mlx_put_image_to_window(data->mlx, data->win, wall, j * 50, i * 50);
 
-	ft_raycasting(game);
 	return ;
 }
 

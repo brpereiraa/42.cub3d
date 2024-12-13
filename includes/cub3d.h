@@ -32,6 +32,8 @@
 # define LEFT 65361
 # define RIGHT 65363
 
+# define GREEN 	0x0000FF00
+
 typedef struct s_game t_game;
 typedef struct s_player t_player;
 typedef struct s_sprites t_sprites;
@@ -45,6 +47,7 @@ struct s_sprites {
 	char	*west;
 	char	*floor;
 	char	*ceiling;
+	void	*wall;
 };
 
 struct s_data {
@@ -85,7 +88,7 @@ int	map_lines(char *file);
 char	**fmap_read(t_game *game);
 
 /*.......minimap.c............*/
-void	put_image(t_game *game);
+void	render_images(t_game *game);
 void	put_image_to_window(t_game *game, int i, int j);
 int	mmap_init(t_game *game);
 

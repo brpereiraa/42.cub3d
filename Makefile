@@ -15,7 +15,7 @@ NAME = cub3d
 MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 #CFLAGS = -Wall -Wextra -Werror -Iincludes
 CFLAGS = -Iincludes
-SRC = src/main.c src/map.c src/minimap.c src/mlx.c src/checker.c src/key_handling.c src/raycasting/raycasting.c src/raycasting/render.c 
+SRC = src/main.c src/map.c src/minimap.c src/mlx.c src/checker.c src/key_handling.c src/raycasting/raycasting.c src/raycasting/render.c src/vector/vect_utils.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft

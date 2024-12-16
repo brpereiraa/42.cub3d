@@ -32,6 +32,7 @@
 # define LEFT 65361
 # define RIGHT 65363
 
+# define PI 3.14159265359
 # define GREEN 	0x0000FF00
 
 typedef struct s_game t_game;
@@ -48,6 +49,7 @@ struct s_sprites {
 	char	*floor;
 	char	*ceiling;
 	void	*wall;
+	void	*player;
 };
 
 struct s_data {
@@ -70,14 +72,16 @@ struct s_game {
 	char		**map;
 };
 
-struct s_player { 
-	double	pos_x;
-	double	pos_y;
-};
-
 struct s_vect {
 	double	x;
 	double	y;
+};
+
+struct s_player { 
+	double	pos_x;
+	double	pos_y;
+	t_vect	angle;
+	t_vect	perp;
 };
 
 /*.........map.c..............*/
@@ -106,10 +110,17 @@ int	check_extension(char *file);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
 
+/*........vect_utils..........*/
+t_vect *new_vect(double x, double y);
+void	rotate_vector(t_vect *vector, int degree);
+void	perp_vect(t_vect *v1, t_vect *v2);
+
 
 int ft_render(t_game *game);
 void create_image(t_game *game);
 
-int	ft_raycasting(t_game *game);
+/*........raycasting.c.........*/
+void	pixel_put(t_data *data, int pixelX, int pixelY);
+int		ft_raycasting(t_game *game);
 #endif
 

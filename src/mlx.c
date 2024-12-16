@@ -6,10 +6,11 @@ int	ft_mlx_init(t_game *game)
 
 	game->data = (t_data *)malloc(sizeof(t_data));
 	game->data->mlx = mlx_init();
-	game->data->win = mlx_new_window(game->data->mlx, 500, 700, "Cub3D");
+	game->data->win = mlx_new_window(game->data->mlx, 1300, 800, "Cub3D");
 	
 	game->sprites = malloc(sizeof(t_sprites));
 	game->sprites->wall = mlx_xpm_file_to_image(game->data->mlx, "./sprites/parede.xpm", &size, &size);
+	game->sprites->player = mlx_xpm_file_to_image(game->data->mlx, "./sprites/player.xpm", &size, &size);
 
 	minimap_loop(game);
 	return (1);

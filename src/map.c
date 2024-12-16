@@ -20,6 +20,8 @@ int	map_init(t_game *game, char *file)
 	if (!game->map)	
 		return (0);
 	game->player = (t_player *)malloc(sizeof(t_player));
+	game->player->angle = *new_vect(1, 0);  
+	game->player->perp = *new_vect(0, -1);
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
 		return (printf("Error reading map.\n"),0);

@@ -12,16 +12,33 @@
 
 #include "../includes/cub3d.h"
 
-void	rotate(t_game *game, int degree)
+void	rotate_vector(t_vect *vector, int degree)
 {
 	double angle;
-	double vx;
-	double vy;
+	double tx;
+	double ty;
 
-	vx = game->fv->x;
-	vy = game->fv->y;
-	angle = degree * ((double)3.1415 / 180);
-	game->fv->x = vx * cos(angle) - vy * sin(angle);
-	game->fv->y = vx * sin(angle) + vy * cos(angle);
-	
+	angle = degree * ((double)PI / 180);
+	tx = vector->x;
+	ty = vector->y;
+
+	vector->x = tx * cos(angle) - ty * sin(angle);
+	vector->y = tx * sin(angle) + ty * cos(angle);
+}
+
+t_vect *new_vect(double x, double y)
+{
+	t_vect *vector;
+
+	vector = malloc(sizeof(vector) + 1);
+	vector->x = x;
+	vector->y = y;
+
+	return (vector);
+}
+
+void	perp_vect(t_vect *v1, t_vect *v2)
+{
+	v2->x = v1->y;
+	v2->y = -v1->x;
 }

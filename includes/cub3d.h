@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/11/22 18:49:40 by brpereir         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:52:27 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 
 # define PI 3.14159265359
 # define GREEN 	0x0000FF00
+
+#define WIDTH 800
+#define HEIGHT 600
 
 typedef struct s_game t_game;
 typedef struct s_player t_player;
@@ -120,7 +123,9 @@ int ft_render(t_game *game);
 void create_image(t_game *game);
 
 /*........raycasting.c.........*/
-void	pixel_put(t_data *data, int pixelX, int pixelY);
+
+// void	pixel_put(t_data *data, int pixelX, int pixelY);
+void pixel_put(t_data *data, int x, int y);
 int		ft_raycasting(t_game *game);
 #endif
 

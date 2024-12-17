@@ -6,7 +6,7 @@ int	ft_mlx_init(t_game *game)
 
 	game->data = (t_data *)malloc(sizeof(t_data));
 	game->data->mlx = mlx_init();
-	game->data->win = mlx_new_window(game->data->mlx, 1300, 800, "Cub3D");
+	game->data->win = mlx_new_window(game->data->mlx, WIDTH, HEIGHT, "Cub3D");
 	
 	game->sprites = malloc(sizeof(t_sprites));
 	game->sprites->wall = mlx_xpm_file_to_image(game->data->mlx, "./sprites/parede.xpm", &size, &size);

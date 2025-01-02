@@ -37,6 +37,8 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+#define TEXTURE_SIZE 64
+
 
 typedef struct s_game t_game;
 typedef struct s_player t_player;
@@ -121,11 +123,11 @@ void	perp_vect(t_vect *v1, t_vect *v2);
 
 int ft_render(t_game *game);
 void create_image(t_game *game);
+void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side);
 
 /*........raycasting.c.........*/
 
-// void	pixel_put(t_data *data, int pixelX, int pixelY);
-void pixel_put(t_data *data, int x, int y);
+void pixel_put(t_data *data, int x, int y, int color);
 int		ft_raycasting(t_game *game);
 #endif
 

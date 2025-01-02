@@ -1,25 +1,57 @@
 #include "../includes/cub3d.h"
-#include <math.h>
 
-// Function prototypes
-void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int screen_x);
-void draw_vertical_line(t_data *data, int x, int wall_height);
-
-// Main raycasting function
-int ft_raycasting(t_game *game)
+unsigned int get_pixel_color(void *texture, int tex_x, int tex_y, int texture_width)
 {
-    double ray_dir_x, ray_dir_y;
+    char *data;
+    int bpp, size_line, endian;
 
-    for (int x = 0; x < WIDTH; x++)
+    data = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
+    int offset = (tex_y * size_line) + (tex_x * (bpp / 8));
+    return *(unsigned int *)(data + offset);
+}
+
+void pixel_put(t_data *data, int x, int y, int color)
+{
+    char *dst;
+
+    if (x < 0 || x >= 800 || y < 0 || y >= 600) // Replace 800/600 with SCREEN_WIDTH/SCREEN_HEIGHT macros if defined
+        return;
+
+    dst = data->addr + (y * data->len + x * (data->bits / 8));
+    *(unsigned int *)dst = color;
+}
+
+void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side)
+{
+    int start = -wall_height / 2 + 300; // 300 = SCREEN_HEIGHT / 2 (adjust if macro exists)
+    int end = wall_height / 2 + 300;
+
+    if (start < 0)
+        start = 0;
+    if (end >= 600) // Adjust SCREEN_HEIGHT if macro exists
+        end = 600 - 1;
+
+    int texture_width = 64;
+    int texture_height = 64;
+
+    // Select texture based on wall direction
+    void *texture = (side == 0) ? game->sprites->north : game->sprites->east;
+
+    int tex_x = (int)(wall_x * (double)texture_width);
+    if ((side == 0 && game->player->angle.x > 0) || (side == 1 && game->player->angle.y < 0))
+        tex_x = texture_width - tex_x - 1;
+
+    double step = 1.0 * texture_height / wall_height;
+    double tex_pos = (start - 300 + wall_height / 2) * step;
+
+    for (int y = start; y < end; y++)
     {
-        ray_dir_x = game->player->angle.x + (1 - 2 * (x / (double)WIDTH)) * game->player->perp.x;
-        ray_dir_y = game->player->angle.y + (1 - 2 * (x / (double)WIDTH)) * game->player->perp.y;
+        int tex_y = (int)tex_pos & (texture_height - 1);
+        tex_pos += step;
 
-        cast_single_ray(game, ray_dir_x, ray_dir_y, x);
+        unsigned int color = get_pixel_color(texture, tex_x, tex_y, texture_width);
+        pixel_put(game->data, screen_x, y, color);
     }
-
-    mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
-    return (1);
 }
 
 void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int screen_x)
@@ -32,7 +64,6 @@ void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int scree
     int map_x = (int)game->player->pos_x;
     int map_y = (int)game->player->pos_y;
 
-    // Determine step and initial side distances
     if (ray_dir_x < 0)
     {
         step_x = -1;
@@ -54,7 +85,6 @@ void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int scree
         side_dist_y = (map_y + 1.0 - game->player->pos_y) * delta_dist_y;
     }
 
-    // Perform DDA (Digital Differential Analysis)
     int hit = 0;
     int side;
     while (hit == 0)
@@ -63,52 +93,48 @@ void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int scree
         {
             side_dist_x += delta_dist_x;
             map_x += step_x;
-            side = 0; // Vertical wall hit
+            side = 0;
         }
         else
         {
             side_dist_y += delta_dist_y;
             map_y += step_y;
-            side = 1; // Horizontal wall hit
+            side = 1;
         }
 
-        // Check if ray has hit a wall
         if (game->fmap[map_y][map_x] == '1')
             hit = 1;
     }
 
-    // Calculate distance to wall
     double wall_dist = (side == 0) ? (side_dist_x - delta_dist_x) : (side_dist_y - delta_dist_y);
+    int wall_height = (int)(600 / wall_dist); // SCREEN_HEIGHT
 
-    // Project wall height to screen
-    int wall_height = (int)(HEIGHT / wall_dist);
+    double wall_x;
+    if (side == 0)
+        wall_x = game->player->pos_y + wall_dist * ray_dir_y;
+    else
+        wall_x = game->player->pos_x + wall_dist * ray_dir_x;
+    wall_x -= floor(wall_x);
 
-    // Draw the vertical line for this ray
-    draw_vertical_line(game->data, screen_x, wall_height);
+    draw_vertical_line(game, screen_x, wall_height, wall_x, side);
 }
 
-// Function to draw a vertical line (wall slice) for a ray
-void draw_vertical_line(t_data *data, int x, int wall_height)
+int ft_raycasting(t_game *game)
 {
-    int start = -wall_height / 2 + HEIGHT / 2;
-    int end = wall_height / 2 + HEIGHT / 2;
+    double plane_x = game->player->perp.x;
+    double plane_y = game->player->perp.y;
+    double dir_x = game->player->angle.x;
+    double dir_y = game->player->angle.y;
 
-    if (start < 0) start = 0;
-    if (end >= HEIGHT) end = HEIGHT - 1;
+    for (int x = 0; x < 800; x++) // SCREEN_WIDTH = 800
+    {
+        double camera_x = 2 * x / (double)800 - 1;
+        double ray_dir_x = dir_x + plane_x * camera_x;
+        double ray_dir_y = dir_y + plane_y * camera_x;
 
-    for (int y = start; y <= end; y++)
-        pixel_put(data, x, y); // Draw a pixel at (x, y)
-}
+        cast_single_ray(game, ray_dir_x, ray_dir_y, x);
+    }
 
-void pixel_put(t_data *data, int x, int y)
-{
-    char *dst;
-
-    if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-        return;
-
-    int line_length = data->len;
-    int bitsppx = data->bits;
-    dst = data->addr + (y * line_length + x * (bitsppx / 8));
-    *(unsigned int *)dst = 0x00FF00;
+    mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
+    return (1);
 }

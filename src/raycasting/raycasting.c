@@ -10,23 +10,18 @@ int ft_raycasting(t_game *game)
 {
     double ray_dir_x, ray_dir_y;
 
-    // Cast rays for each column of the screen
     for (int x = 0; x < WIDTH; x++)
     {
-        // Calculate ray direction using the forward vector (angle) and perpendicular vector
-        ray_dir_x = game->player->angle.x + (2 * (x / (double)WIDTH) - 1) * game->player->perp.x;
-        ray_dir_y = game->player->angle.y + (2 * (x / (double)WIDTH) - 1) * game->player->perp.y;
+        ray_dir_x = game->player->angle.x + (1 - 2 * (x / (double)WIDTH)) * game->player->perp.x;
+        ray_dir_y = game->player->angle.y + (1 - 2 * (x / (double)WIDTH)) * game->player->perp.y;
 
-        // Cast a single ray with the computed direction
         cast_single_ray(game, ray_dir_x, ray_dir_y, x);
     }
 
-    // Display the rendered image
     mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
     return (1);
 }
 
-// Function to cast a single ray
 void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int screen_x)
 {
     double delta_dist_x = fabs(1 / ray_dir_x);
@@ -102,9 +97,7 @@ void draw_vertical_line(t_data *data, int x, int wall_height)
     if (end >= HEIGHT) end = HEIGHT - 1;
 
     for (int y = start; y <= end; y++)
-    {
         pixel_put(data, x, y); // Draw a pixel at (x, y)
-    }
 }
 
 void pixel_put(t_data *data, int x, int y)
@@ -112,10 +105,10 @@ void pixel_put(t_data *data, int x, int y)
     char *dst;
 
     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-        return; // Prevent out-of-bounds errors
+        return;
 
     int line_length = data->len;
     int bitsppx = data->bits;
     dst = data->addr + (y * line_length + x * (bitsppx / 8));
-    *(unsigned int *)dst = 0x00FF00; // Color (Green)
+    *(unsigned int *)dst = 0x00FF00;
 }

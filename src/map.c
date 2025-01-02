@@ -40,7 +40,7 @@ char	**map_read(char *file)
 	if (!lines)
 		return (NULL);
 	fd = open(file, O_RDONLY);
-	map = (char **)malloc(sizeof(char *) * lines + 1);
+	map = (char **)malloc(sizeof(char *) * (lines + 1));
 	while(i < lines)
 		map[i++] = get_next_line(fd);
 	map[i] = NULL;

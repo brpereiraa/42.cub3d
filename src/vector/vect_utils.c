@@ -30,7 +30,7 @@ t_vect *new_vect(double x, double y)
 {
 	t_vect *vector;
 
-	vector = malloc(sizeof(vector) + 1);
+	vector = malloc(sizeof(t_vect));
 	vector->x = x;
 	vector->y = y;
 

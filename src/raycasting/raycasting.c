@@ -21,24 +21,30 @@ void pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int *)dst = color;
 }
 
-void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side)
+void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y)
 {
-    int start = -wall_height / 2 + 300; // 300 = SCREEN_HEIGHT / 2 (adjust if macro exists)
+    int start = -wall_height / 2 + 300; // Center of screen
     int end = wall_height / 2 + 300;
 
     if (start < 0)
         start = 0;
-    if (end >= 600) // Adjust SCREEN_HEIGHT if macro exists
+    if (end >= 600) // SCREEN_HEIGHT
         end = 600 - 1;
 
     int texture_width = 64;
     int texture_height = 64;
 
-    // Select texture based on wall direction
-    void *texture = (side == 0) ? game->sprites->north : game->sprites->east;
+    // Select texture based on wall side
+    void *texture;
+    if (side == 0)
+        texture = (ray_dir_x < 0) ? game->sprites->west : game->sprites->east;
+    else
+        texture = (ray_dir_y > 0) ? game->sprites->north : game->sprites->south;
 
     int tex_x = (int)(wall_x * (double)texture_width);
-    if ((side == 0 && game->player->angle.x > 0) || (side == 1 && game->player->angle.y < 0))
+    if (side == 0 && ray_dir_x < 0) // West wall
+        tex_x = texture_width - tex_x - 1;
+    else if (side == 1 && ray_dir_y > 0) // North wall
         tex_x = texture_width - tex_x - 1;
 
     double step = 1.0 * texture_height / wall_height;
@@ -116,7 +122,7 @@ void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int scree
         wall_x = game->player->pos_x + wall_dist * ray_dir_x;
     wall_x -= floor(wall_x);
 
-    draw_vertical_line(game, screen_x, wall_height, wall_x, side);
+    draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir_x, ray_dir_y);
 }
 
 int ft_raycasting(t_game *game)
@@ -128,7 +134,7 @@ int ft_raycasting(t_game *game)
 
     for (int x = 0; x < 800; x++) // SCREEN_WIDTH = 800
     {
-        double camera_x = 2 * x / (double)800 - 1;
+        double camera_x = 1 - 2 * x / (double)800;
         double ray_dir_x = dir_x + plane_x * camera_x;
         double ray_dir_y = dir_y + plane_y * camera_x;
 

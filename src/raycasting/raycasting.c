@@ -14,7 +14,7 @@ void pixel_put(t_data *data, int x, int y, int color)
 {
     char *dst;
 
-    if (x < 0 || x >= 800 || y < 0 || y >= 600) // Replace 800/600 with SCREEN_WIDTH/SCREEN_HEIGHT macros if defined
+    if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) // Replace WIDTH/HEIGHT with SCREEN_WIDTH/SCREEN_HEIGHT macros if defined
         return;
 
     dst = data->addr + (y * data->len + x * (data->bits / 8));
@@ -28,8 +28,8 @@ void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 
     if (start < 0)
         start = 0;
-    if (end >= 600) // SCREEN_HEIGHT
-        end = 600 - 1;
+    if (end >= HEIGHT) // SCREEN_HEIGHT
+        end = HEIGHT - 1;
 
     int texture_width = 64;
     int texture_height = 64;
@@ -113,7 +113,7 @@ void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int scree
     }
 
     double wall_dist = (side == 0) ? (side_dist_x - delta_dist_x) : (side_dist_y - delta_dist_y);
-    int wall_height = (int)(600 / wall_dist); // SCREEN_HEIGHT
+    int wall_height = (int)(HEIGHT / wall_dist); // SCREEN_HEIGHT
 
     double wall_x;
     if (side == 0)
@@ -132,9 +132,9 @@ int ft_raycasting(t_game *game)
     double dir_x = game->player->angle.x;
     double dir_y = game->player->angle.y;
 
-    for (int x = 0; x < 800; x++) // SCREEN_WIDTH = 800
+    for (int x = 0; x < WIDTH; x++) // SCREEN_WIDTH = WIDTH
     {
-        double camera_x = 1 - 2 * x / (double)800;
+        double camera_x = 1 - 2 * x / (double)WIDTH;
         double ray_dir_x = dir_x + plane_x * camera_x;
         double ray_dir_y = dir_y + plane_y * camera_x;
 

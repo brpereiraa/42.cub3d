@@ -105,7 +105,7 @@ char	**fmap_read(t_game *game)
 		k = -1;
 		while (game->map[i + j][++k])
 		{
-			if (game->map[i + j][k] == 'E')
+			if (game->map[i + j][k] == 'E' || game->map[i + j][k] == 'W' || game->map[i + j][k] == 'S' || game->map[i + j][k] == 'N')
 			{
 				game->player->pos_x = (double)k;
 				game->player->pos_y = (double)j;

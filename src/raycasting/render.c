@@ -17,7 +17,7 @@ void	create_image(t_game *game)
 	t_data *data;
 
 	data = game->data;
-	data->img = mlx_new_image(data->mlx, 800, 600);
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits, &data->len, &data->endian);
 }
 
@@ -25,7 +25,7 @@ int	ft_render(t_game *game)
 {
 	create_image(game);
 	start_window(game);
-	ft_raycasting(game);
+	// ft_raycasting(game);
 	mmap_init(game);
 	destroy_images(game);
 	return (0);

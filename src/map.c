@@ -81,17 +81,9 @@ void	sprite_info(t_game *game)
 		if (!ft_strncmp(game->map[i], "WE", 2))
 			game->sprites->west = game->map[i];
 		if (!ft_strncmp(game->map[i], "C", 1))
-		{
-			if (check_colors(game->map[i])
-				return (0);
 			game->sprites->ceiling = game->map[i];
-		}
 		if (!ft_strncmp(game->map[i], "F", 1))
-		{
-			if (check_colors(game->map[i])
-				return (0);
 			game->sprites->floor = game->map[i];
-		}
 	}
 }
 

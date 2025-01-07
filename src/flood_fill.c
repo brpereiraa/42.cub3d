@@ -6,7 +6,7 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/07 16:48:41 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:03:57 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -45,10 +45,9 @@ int	check_colors(char *input)
 	rgb = ft_split(input, ',');
 	while (rgb[i++])
 	{
-		if (ft_atoi(rgb[i]) > 255) || ft_atoi(rgb[i] < 0))
+		if ((ft_atoi(rgb[i]) > 255) || (ft_atoi(rgb[i] < 0)))
 			return ("error color");
 	}
-	return (0);
 }
 
 int	only_digits(char *input)

@@ -115,6 +115,7 @@ void	destroy_images(t_game *game);
 
 /*........checker.c...........*/
 int		check_extension(char *file);
+int		check_colors(char *input);
 // int	file_validation(char *map);
 // int	char_validation(char *map);
 // int	map_validation(char *map);

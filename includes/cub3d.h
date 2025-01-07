@@ -33,20 +33,20 @@
 # define RIGHT 65363
 
 # define PI 3.14159265359
-# define GREEN 	0x0000FF00
+# define GREEN 0x0000FF00
 
-#define WIDTH 800
-#define HEIGHT 600
-#define TEXTURE_SIZE 64
+# define WIDTH 800
+# define HEIGHT 600
+# define TEXTURE_SIZE 64
 
+typedef struct s_game		t_game;
+typedef struct s_player		t_player;
+typedef struct s_sprites	t_sprites;
+typedef struct s_data		t_data;
+typedef struct s_vect		t_vect;
 
-typedef struct s_game t_game;
-typedef struct s_player t_player;
-typedef struct s_sprites t_sprites;
-typedef struct s_data t_data;
-typedef struct s_vect t_vect;
-
-struct s_sprites {
+struct s_sprites
+{
 	char	*north;
 	char	*south;
 	char	*east;
@@ -57,17 +57,19 @@ struct s_sprites {
 	void	*player;
 };
 
-struct s_data {
+struct s_data
+{
 	void	*mlx;
 	void	*win;
 	void	*img;
 	void	*addr;
-	int	bits;
-	int	len;
-	int	endian;
+	int		bits;
+	int		len;
+	int		endian;
 };
 
-struct s_game {
+struct s_game
+{
 	t_sprites	*sprites;
 	t_player	*player;
 	t_data		*data;
@@ -77,12 +79,14 @@ struct s_game {
 	char		**map;
 };
 
-struct s_vect {
+struct s_vect
+{
 	double	x;
 	double	y;
 };
 
-struct s_player { 
+struct s_player
+{
 	double	pos_x;
 	double	pos_y;
 	t_vect	angle;
@@ -91,44 +95,40 @@ struct s_player {
 
 /*.........map.c..............*/
 
-int	map_init(t_game *game, char *file);
+int		map_init(t_game *game, char *file);
 char	**map_read(char *file);
-int	map_lines(char *file);
+int		map_lines(char *file);
 char	**fmap_read(t_game *game);
 
 /*.......minimap.c............*/
 void	render_images(t_game *game);
 void	put_image_to_window(t_game *game, int i, int j);
-int	mmap_init(t_game *game);
+int		mmap_init(t_game *game);
 
 /*.........mlx.c..............*/
 void	minimap_loop(t_game *game);
-int	ft_mlx_init(t_game *game);
-int	key_handler(int keycode, t_game *game);
-int	start_window(t_game *game);
+int		ft_mlx_init(t_game *game);
+int		key_handler(int keycode, t_game *game);
+int		start_window(t_game *game);
 void	mlx_pixel(t_data *data, int x, int y, int color);
-void destroy_images(t_game *game);
+void	destroy_images(t_game *game);
 
 /*........checker.c...........*/
-int	check_extension(char *file);
+int		check_extension(char *file);
 // int	file_validation(char *map);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
 
 /*........vect_utils..........*/
-t_vect *new_vect(double x, double y);
+t_vect	*new_vect(double x, double y);
 void	rotate_vector(t_vect *vector, int degree);
 void	perp_vect(t_vect *v1, t_vect *v2);
-
-
-int ft_render(t_game *game);
-void create_image(t_game *game);
+int		ft_render(t_game *game);
+void	create_image(t_game *game);
 // void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side);
-void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y);
+void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y);
 
 /*........raycasting.c.........*/
-
-void pixel_put(t_data *data, int x, int y, int color);
+void	pixel_put(t_data *data, int x, int y, int color);
 int		ft_raycasting(t_game *game);
 #endif
-

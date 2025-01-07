@@ -14,25 +14,25 @@
 
 int	map_init(t_game *game, char *file)
 {
-	if(check_extension(file))
+	if (check_extension(file))
 		return (0);
 	game->map = map_read(file);
-	if (!game->map)	
+	if (!game->map)
 		return (0);
 	game->player = (t_player *)malloc(sizeof(t_player));
-	game->player->angle = *new_vect(1, 0);  
+	game->player->angle = *new_vect(1, 0);
 	game->player->perp = *new_vect(0, -1);
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
-		return (printf("Error reading map.\n"),0);
+		return (printf("Error reading map.\n"), 0);
 	return (1);
 }
 
 char	**map_read(char *file)
 {
-	int	fd;
-	int	lines;
-	int	i;
+	int		fd;
+	int		lines;
+	int		i;
 	char	**map;
 
 	i = 0;
@@ -41,7 +41,7 @@ char	**map_read(char *file)
 		return (NULL);
 	fd = open(file, O_RDONLY);
 	map = (char **)malloc(sizeof(char *) * (lines + 1));
-	while(i < lines)
+	while (i < lines)
 		map[i++] = get_next_line(fd);
 	map[i] = NULL;
 	return (map);
@@ -56,13 +56,12 @@ int	map_lines(char *file)
 	if (fd == -1)
 		return (close(fd), printf("Error while trying to open map.\n"), 0);
 	i = 0;
-	while(get_next_line(fd))
+	while (get_next_line(fd))
 		i++;
 	if (i == 0)
 		return (close(fd), printf("Invalid map: Empty file for map.\n"), 0);
 	close(fd);
 	return (i);
-
 }
 
 void	sprite_info(t_game *game)
@@ -71,7 +70,7 @@ void	sprite_info(t_game *game)
 
 	i = 0;
 	game->sprites = (t_sprites *)malloc(sizeof(t_sprites));
-	while(game->map[++i])
+	while (game->map[++i])
 	{
 		if (!ft_strncmp(game->map[i], "SO", 2))
 			game->sprites->south = game->map[i];
@@ -99,18 +98,20 @@ char	**fmap_read(t_game *game)
 	game->fv = (t_vect *)malloc(sizeof(t_vect));
 	game->fv->x = 1;
 	game->fv->y = 1;
-	while(!ft_strchr("01", game->map[++i][0]))
+	while (!ft_strchr("01", game->map[++i][0]))
 		;
-	while(game->map[i + ++j])
+	while (game->map[i + ++j])
 	{
 		k = -1;
-		while(game->map[i + j][++k])
-			if (game->map[i+j][k] == 'E')
+		while (game->map[i + j][++k])
+		{
+			if (game->map[i + j][k] == 'E')
 			{
 				game->player->pos_x = (double)k;
 				game->player->pos_y = (double)j;
 				return (&game->map[i]);
 			}
+		}
 	}
 	return (&game->map[i]);
 }

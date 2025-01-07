@@ -2,12 +2,11 @@
 
 int	ft_mlx_init(t_game *game)
 {
-	int size = 50;
+	int	size = 50;
 
 	game->data = (t_data *)malloc(sizeof(t_data));
 	game->data->mlx = mlx_init();
 	game->data->win = mlx_new_window(game->data->mlx, WIDTH, HEIGHT, "Cub3D");
-	
 	game->sprites = malloc(sizeof(t_sprites));
 	// game->sprites->wall = mlx_xpm_file_to_image(game->data->mlx, "./sprites/parede.xpm", &size, &size);
 	// game->sprites->player = mlx_xpm_file_to_image(game->data->mlx, "./sprites/player.xpm", &size, &size);
@@ -15,24 +14,20 @@ int	ft_mlx_init(t_game *game)
 	game->sprites->north = mlx_xpm_file_to_image(game->data->mlx, "./sprites/north_wall.xpm", &size, &size);
 	game->sprites->west = mlx_xpm_file_to_image(game->data->mlx, "./sprites/west_wall.xpm", &size, &size);
 	game->sprites->east = mlx_xpm_file_to_image(game->data->mlx, "./sprites/east_wall.xpm", &size, &size);
-	
-
 	minimap_loop(game);
 	return (1);
 }
 
 void	minimap_loop(t_game *game)
 {
-	t_data *data;
-	
+	t_data	*data;
+
 	data = game->data;
 	mlx_hook (data->win, 2, 1L << 0, key_handler, game);
 	mlx_loop_hook(data->mlx, ft_render, game);
 	mlx_loop (data->mlx);
 	return ;
 }
-
-
 
 void	mlx_pixel(t_data *data, int x, int y, int color)
 {
@@ -42,6 +37,7 @@ void	mlx_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void destroy_images(t_game *game){
+void	destroy_images(t_game *game)
+{
 	mlx_destroy_image(game->data->mlx, game->data->img);
 }

@@ -12,16 +12,14 @@
 
 #include "../includes/cub3d.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_game game;
-	
+	t_game	game;
+
 	if (ac != 2)
 		return (printf("Invalid number of arguments\n"), 1);
 	if (!map_init((&game), av[1]))
 		return (printf("Invalid map\n"), 1);
-	ft_mlx_init(&game);	
-	
-	return(0);
+	ft_mlx_init(&game);
+	return (0);
 }
-

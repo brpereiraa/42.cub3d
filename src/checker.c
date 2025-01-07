@@ -14,7 +14,7 @@
 
 int	check_extension(char *map)
 {
-	char	*file;	
+	char	*file;
 
 	file = ft_strchr(map, '.');
 	if (file == NULL || !ft_strcmp(map, ".cub"))

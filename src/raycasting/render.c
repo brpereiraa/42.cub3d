@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void create_image(t_game *game)
+void	create_image(t_game *game)
 {
 	t_data *data;
 
@@ -21,21 +21,20 @@ void create_image(t_game *game)
 	data->addr = mlx_get_data_addr(data->img, &data->bits, &data->len, &data->endian);
 }
 
-int ft_render(t_game *game)
+int	ft_render(t_game *game)
 {
 	create_image(game);
 	start_window(game);
 	ft_raycasting(game);
 	mmap_init(game);
 	destroy_images(game);
-	
 	return (0);
 }
 
 int	start_window(t_game *game)
 {
 	t_data	*data;
-	
+
 	data = game->data;
 	if (!data->mlx)
 		return (printf("Error starting mlx.\n"), 0);

@@ -34,9 +34,12 @@
 
 # define PI 3.14159265359
 # define GREEN 0x0000FF00
+# define BLACK 0x000000
+# define GREY 0x9c9c9c
+# define WHITE 0xFFFFFF
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1600
+# define HEIGHT 1000
 # define TEXTURE_SIZE 64
 
 typedef struct s_game		t_game;
@@ -99,6 +102,7 @@ int		map_init(t_game *game, char *file);
 char	**map_read(char *file);
 int		map_lines(char *file);
 char	**fmap_read(t_game *game);
+void	player_fov(t_game *game, char c);
 
 /*.......minimap.c............*/
 void	render_images(t_game *game);

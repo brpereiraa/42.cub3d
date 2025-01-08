@@ -41,7 +41,6 @@ int	key_handler(int keycode, t_game *game)
 		rotate_vector(&game->player->angle, -1), perp_vect(&game->player->angle, &game->player->perp);
 	if (keycode == RIGHT)
 		rotate_vector(&game->player->angle, 1), perp_vect(&game->player->angle, &game->player->perp);
-	mmap_init(game);
 	return (1);
 }
 

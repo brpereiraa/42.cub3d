@@ -20,8 +20,6 @@ int	map_init(t_game *game, char *file)
 	if (!game->map)
 		return (0);
 	game->player = (t_player *)malloc(sizeof(t_player));
-	game->player->angle = *new_vect(1, 0);
-	game->player->perp = *new_vect(0, -1);
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
 		return (printf("Error reading map.\n"), 0);
@@ -107,11 +105,25 @@ char	**fmap_read(t_game *game)
 		{
 			if (game->map[i + j][k] == 'E' || game->map[i + j][k] == 'W' || game->map[i + j][k] == 'S' || game->map[i + j][k] == 'N')
 			{
-				game->player->pos_x = (double)k;
-				game->player->pos_y = (double)j;
+				game->player->pos_x = (double)k + 0,5;
+				game->player->pos_y = (double)j + 0,5;
+				player_fov(game, game->map[i + j][k]);				
 				return (&game->map[i]);
 			}
 		}
 	}
 	return (&game->map[i]);
+}
+
+void	player_fov(t_game *game, char c)
+{
+	if (c == 'E')
+		game->player->angle = *new_vect(-1, 0);
+	if (c == 'W')
+		game->player->angle = *new_vect(1, 0);
+	if (c == 'S')
+		game->player->angle = *new_vect(0, 1);
+	if (c == 'N')
+		game->player->angle = *new_vect(0, -1);
+	perp_vect(&game->player->angle, &game->player->perp);
 }

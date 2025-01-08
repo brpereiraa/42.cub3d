@@ -25,7 +25,7 @@ int	ft_render(t_game *game)
 {
 	create_image(game);
 	start_window(game);
-	// ft_raycasting(game);
+	ft_raycasting(game);
 	mmap_init(game);
 	destroy_images(game);
 	return (0);

@@ -23,8 +23,8 @@ void pixel_put(t_data *data, int x, int y, int color)
 
 void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y)
 {
-    int start = -wall_height / 2 + 300; // Center of screen
-    int end = wall_height / 2 + 300;
+    int start = -wall_height / 2 + HEIGHT / 2; // Start of wall
+    int end = wall_height / 2 + HEIGHT / 2;   // End of wall
 
     if (start < 0)
         start = 0;
@@ -48,8 +48,13 @@ void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
         tex_x = texture_width - tex_x - 1;
 
     double step = 1.0 * texture_height / wall_height;
-    double tex_pos = (start - 300 + wall_height / 2) * step;
+    double tex_pos = (start - HEIGHT / 2 + wall_height / 2) * step;
 
+    // Draw ceiling
+    for (int y = 0; y < start; y++)
+        pixel_put(game->data, screen_x, y, WHITE);
+
+    // Draw wall
     for (int y = start; y < end; y++)
     {
         int tex_y = (int)tex_pos & (texture_height - 1);
@@ -58,7 +63,12 @@ void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
         unsigned int color = get_pixel_color(texture, tex_x, tex_y, texture_width);
         pixel_put(game->data, screen_x, y, color);
     }
+
+    // Draw floor
+    for (int y = end; y < HEIGHT; y++)
+        pixel_put(game->data, screen_x, y, GREY);
 }
+
 
 void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int screen_x)
 {

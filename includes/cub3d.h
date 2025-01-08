@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2024/12/17 18:52:27 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/01/08 03:08:11 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ struct s_sprites
 	char	*south;
 	char	*east;
 	char	*west;
-	char	*floor;
-	char	*ceiling;
+	int		floor;
+	int		ceiling;
 	void	*wall;
 	void	*player;
 };
@@ -124,7 +124,7 @@ int		check_colors(char *input);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
 
-/*........vect_utils..........*/
+/*........vect_utils.c..........*/
 t_vect	*new_vect(double x, double y);
 void	rotate_vector(t_vect *vector, int degree);
 void	perp_vect(t_vect *v1, t_vect *v2);
@@ -137,3 +137,7 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 void	pixel_put(t_data *data, int x, int y, int color);
 int		ft_raycasting(t_game *game);
 #endif
+
+int color_init(t_game *game, char *line);
+int	shift_color(int *rgb);
+void	sprites_init(t_game *game);

@@ -11,13 +11,12 @@ int mmap_init(t_game *game)
 
 void	put_image_to_window(t_game *game, int i, int j)
 {
-
 	int size = 50;
 
 	if (game->fmap[i][j] == '1')
-		draw_wall(game, j*10, i*10, BLACK);
+		draw_wall(game, j * 10, i * 10, BLACK);
 	if (game->fmap[i][j] == '0' || game->fmap[i][j] == 'W' || game->fmap[i][j] == 'E' || game->fmap[i][j] == 'S' || game->fmap[i][j] == 'N' )
-		draw_wall(game, j*10, i*10, GREY);
+		draw_wall(game, j * 10, i * 10, GREY);
 	return ;
 }
 

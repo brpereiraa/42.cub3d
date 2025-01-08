@@ -52,7 +52,7 @@ void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 
     // Draw ceiling
     for (int y = 0; y < start; y++)
-        pixel_put(game->data, screen_x, y, WHITE);
+        pixel_put(game->data, screen_x, y, game->sprites->ceiling);
 
     // Draw wall
     for (int y = start; y < end; y++)
@@ -66,7 +66,7 @@ void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 
     // Draw floor
     for (int y = end; y < HEIGHT; y++)
-        pixel_put(game->data, screen_x, y, GREY);
+        pixel_put(game->data, screen_x, y, game->sprites->floor);
 }
 
 

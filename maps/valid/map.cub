@@ -1,5 +1,5 @@
 EA ./sprites/east_wall.xpm
-C 0,0,0
+C 120,120,0
 SO ./sprites/south_wall.xpm
 WE ./sprites/wall.xpm
 F 225,255,255

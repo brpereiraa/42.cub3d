@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+         #
+#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2024/11/22 18:30:51 by brpereir         ###   ########.fr        #
+#    Updated: 2025/01/08 03:23:31 by bruno            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = cub3d
 MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 #CFLAGS = -Wall -Wextra -Werror -Iincludes
 CFLAGS = -Iincludes
-SRC = src/main.c src/map.c src/minimap.c src/mlx.c src/checker.c src/key_handling.c src/raycasting/raycasting.c src/raycasting/render.c src/vector/vect_utils.c 
+SRC = src/main.c src/mlx.c src/key_handling.c src/map/map.c src/map/minimap.c src/map/checker.c \
+		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c src/vector/vect_utils.c 
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft

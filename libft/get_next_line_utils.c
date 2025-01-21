@@ -27,6 +27,16 @@ unsigned int	ft_strchr_l(const char *str)
 	return (0);
 }
 
+char	*check_new_line(char *line)
+{
+	if (line[0] == '\0')
+	{
+		free(line);
+		line = 0;
+	}
+	return (line);
+}
+
 char	*join_string(char *s1, char *s2)
 {
 	char	*ret;

@@ -43,12 +43,10 @@ int	check_rgb(int *color)
 	int	i;
 
 	i = -1;
-	while (color[++i])
-	{
-		printf("%d", color[i]);
+	while (++i < 3)
 		if (color[i] > 255 || color[i] < 0)
 			return (1);
-	}
+	printf("\n");
 	return (0);
 }
 
@@ -56,12 +54,9 @@ int	only_digits(char *input)
 {
 	int	i;
 
-	i = 0;
-	printf("%s", input);
-	while (input[i++])
-	{
-		if (input[i] <= '0' || input[i] >= '9')
+	i = -1;
+	while (input[++i])
+		if (input[i] < '0' || input[i] > '9')
 			return (1);
-	}
 	return (0);
 }

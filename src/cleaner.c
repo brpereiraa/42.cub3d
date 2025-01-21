@@ -12,20 +12,20 @@
 
 #include "../includes/cub3d.h"
 
-void	map_cleaner(char **map)
+void	dp_cleaner(char **var)
 {
 	int	i;
 
 	i = 0;
-	if (!map)
+	if (!var)
 		return ;
-	while (map[i] != NULL && map[i] != 0)
+	while (var[i] != NULL && var[i] != 0)
 	{
-		if (map[i])
-			free(map[i]);
+		if (var[i])
+			free(var[i]);
 		i++;
 	}
-//	free(map);
+	free(var);
 }
 
 static void	clear_mlx(t_game *game)
@@ -43,10 +43,6 @@ static void	clean_project(t_game *game)
 		free(game->map);
 	if (game->player)
 		free(game->player);
-	if (game->sprites->ceiling)
-		free(game->sprites->ceiling);
-	if (game->sprites->floor)
-		free(game->sprites->floor);
 	if (game->sprites)
 		free(game->sprites);
 	if (game->fv)
@@ -57,9 +53,11 @@ static void	clean_project(t_game *game)
 
 void	exit_project(t_game *game, char *msg)
 {
-	printf("%s\n", msg);
 	clean_project(game);
 	if (msg)
+	{
+		printf("Error\n%s", msg);
 		exit(1);
+	}
 	exit(0);
 }

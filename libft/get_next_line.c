@@ -32,7 +32,7 @@ static char	*clean_line(char *str)
 		temp[j] = str[j];
 		j++;
 	}
-	temp[i] = 0;
+	temp[i] = '\0';
 	return (temp);
 }
 
@@ -84,7 +84,7 @@ static char	*get_text(char *str, int fd)
 		temp[nbytes] = 0;
 		str = join_string(str, temp);
 	}
-	free (temp);
+	free(temp);
 	return (str);
 }
 

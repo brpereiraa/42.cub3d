@@ -19,8 +19,7 @@ void	map_init(t_game *game, char *file)
 	game->map = map_read(file);
 	if (!game->map)
 		exit_project(game, "Couldn't create map\nInvalid map\n");
-	if (!check_flood_fill(game))
-		exit_project(game, "Map not closed\nInvalid map\n");
+	check_flood_fill(game);
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (!game->player)
 		exit_project(game, "Couldn't alloc player struct\n");
@@ -30,6 +29,7 @@ void	map_init(t_game *game, char *file)
 	game->sprites = (t_sprites *)malloc(sizeof(t_sprites));
 	if (!game->sprites)
 		exit_project(game, "Couldn't alloc sprites\n");
+	game->data = (t_data *)malloc(sizeof(t_data));
 	sprites_init(game);
 }
 
@@ -91,7 +91,7 @@ char	**fmap_read(t_game *game)
 			{
 				game->player->pos_x = (double)k + 0.5;
 				game->player->pos_y = (double)j + 0.5;
-				player_fov(game, game->map[i + j][k]);				
+				player_fov(game, game->map[i + j][k]);
 				return (&game->map[i]);
 			}
 		}

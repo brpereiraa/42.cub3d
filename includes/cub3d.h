@@ -125,13 +125,10 @@ void	destroy_images(t_game *game);
 /*........flood_fill.c...........*/
 int		check_extension(char *file);
 int		check_colors(char *input);
-int		flood_fill(int x, int y, char **map, t_game *game);
+int		flood_fill(int x, int y, t_game *game);
 int		check_flood_fill(t_game *game);
 char		**create_flood_map(t_game *game);
 void		flood_map_utils(int start, t_game *game);
-// int	file_validation(char *map);
-// int	char_validation(char *map);
-// int	map_validation(char *map);
 
 /*........checker.c..............*/
 int		check_extension(char *file);
@@ -153,11 +150,11 @@ void	pixel_put(t_data *data, int x, int y, int color);
 int		ft_raycasting(t_game *game);
 
 /*.........cleaner.c............*/
-void	map_cleaner(char **map);
+void	dp_cleaner(char **var);
 void	exit_project(t_game *game, char *msg);
 
-int color_init(t_game *game, char *line);
-int	shift_color(int *rgb);
+int		color_init(t_game *game, char *line);
+int		shift_color(int *rgb);
 void	sprites_init(t_game *game);
 
 #endif

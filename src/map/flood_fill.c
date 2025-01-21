@@ -11,20 +11,31 @@
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
 
-int	flood_fill(int x, int y, char **map, t_game *game)
+int	flood_fill(int x, int y, t_game *game)
 {
+	int	i = 0;
+
+/*	while (game->flood_map[i])
+		printf("%s", game->flood_map[i++]);
+	printf("\n\n");*/
 	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x)
-		return (1);
-	if (map[x][y] == '1')
+	{
+		dp_cleaner(game->flood_map);
+		exit_project(game, "Map is open\n");
+	}
+	if (game->flood_map[x][y] == '1')
 		return (0);
-	else if (map[x][y] != '0' && map[x][y] != 'N' \
-			&& map[x][y] != 'S' && map[x][y] != 'E' && map[x][y] != 'W')
-		return (1);
-	map[x][y] = '1';
-	flood_fill(x - 1, y, map, game);
-	flood_fill(x + 1, y, map, game);
-	flood_fill(x, y - 1, map, game);
-	flood_fill(x, y + 1, map, game);
+	else if (game->flood_map[x][y] != '0' && game->flood_map[x][y] != 'N' \
+			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] != 'E' && game->flood_map[x][y] != 'W')
+	{
+		dp_cleaner(game->flood_map);
+		exit_project(game, "Map is open\n");
+	}
+	game->flood_map[x][y] = '1';
+	flood_fill(x - 1, y, game);
+	flood_fill(x + 1, y, game);
+	flood_fill(x, y - 1, game);
+	flood_fill(x, y + 1, game);
 	return (0);
 }
 
@@ -62,15 +73,9 @@ int	only_digits(char *input)
 */
 int	check_flood_fill(t_game *game)
 {
-	char	**flood_map;
-
-	flood_map = create_flood_map(game);
-	if (flood_fill(game->start_y, game->start_x, flood_map, game))
-	{
-		free(flood_map);
-		return (printf("Map is open\n"), 0);
-	}
-	free(flood_map);
+	game->flood_map = create_flood_map(game);
+	flood_fill(game->start_y, game->start_x, game);
+	dp_cleaner(game->flood_map);
 	return (1);
 }
 
@@ -88,8 +93,8 @@ char	**create_flood_map(t_game *game)
 		;
 	only_map = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
-	while (game->map[reach_map + i])
-		only_map[i] = game->map[reach_map + ++i];
+	while (game->map[reach_map + ++i])
+		only_map[i] = ft_strdup(game->map[reach_map + i]);
 	only_map[i] = NULL;
 	flood_map_utils(reach_map, game);
 	return (only_map);
@@ -114,6 +119,7 @@ void	flood_map_utils(int start, t_game *game)
 			}
 		}
 	}
-	game->max_x = j - 1;
-	game->max_y = i - 1;
+	game->max_x = j;
+	game->max_y = i;
+	printf("%d %d\n", game->max_y, game->max_x);
 }

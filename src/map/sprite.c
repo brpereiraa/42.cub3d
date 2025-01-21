@@ -14,39 +14,41 @@
 
 void	sprites_init(t_game *game)
 {
-	int	i;
+	int		i;
+	char	*line_form;
 
 	i = 0;
 	while (game->map[++i])
 	{
+		line_form = ft_strtrim(game->map[i], "\n");
 		if (!ft_strncmp(game->map[i], "SO", 2))
 		{
-			if (check_sprite_syntax(game->map[i]))
+			if (check_sprite_syntax(line_form))
 				exit_project(game, "Wrong sprite extension for SO\n");
-			game->sprites->south = game->map[i];
+			game->sprites->south = line_form;
 		}
 		if (!ft_strncmp(game->map[i], "EA", 2))
 		{
-			if (check_sprite_syntax(game->map[i]))
+			if (check_sprite_syntax(line_form))
 				exit_project(game, "Wrong sprite extension for EA\n");
-			game->sprites->east = game->map[i];
+			game->sprites->east = line_form;
 		}
 		if (!ft_strncmp(game->map[i], "NO", 2))
 		{
-			if (check_sprite_syntax(game->map[i]))
+			if (check_sprite_syntax(line_form))
 				exit_project(game, "Wrong sprite extension for NO\n");
-			game->sprites->north = game->map[i];
+			game->sprites->north = line_form;
 		}
 		if (!ft_strncmp(game->map[i], "WE", 2))
 		{
-			if (check_sprite_syntax(game->map[i]))
+			if (check_sprite_syntax(line_form))
 				exit_project(game, "Wrong sprite extension for WE\n");
-			game->sprites->west = game->map[i];
+			game->sprites->west = line_form;
 		}
 		if (!ft_strncmp(game->map[i], "C", 1))
-			game->sprites->ceiling = color_init(game, game->map[i]);
+			game->sprites->ceiling = color_init(game, line_form);
 		if (!ft_strncmp(game->map[i], "F", 1))
-			game->sprites->floor = color_init(game, game->map[i]);
+			game->sprites->floor = color_init(game, line_form);
 	}
 }
 
@@ -54,20 +56,25 @@ int	color_init(t_game *game, char *line)
 {
 	char	**values;
 	char	**rgb;
-	int	rgb_i[3];
+	int		rgb_i[3];
+	int		i;
 
-	if (only_digits(line))
-		exit_project(game, "Color code has invalid characters\n");
-	printf("%s\n", line);
 	values = ft_split(line, ' ');
 	if (values[2] || !values[1])
 		exit_project(game, "Invalid sprite information\n");
 	rgb = ft_split(values[1], ',');
+	i = 0;
+	while (rgb[i])
+		if (only_digits(rgb[i++]))
+			exit_project(game, "Color code has invalid characters\n");
 	if (rgb[3] || !rgb[2])
-		exit_project(game, "Invalid sprite information\n");    
+		exit_project(game, "Invalid sprite information\n");
+	dp_cleaner(values);
 	rgb_i[0] = ft_atoi(rgb[0]);
 	rgb_i[1] = ft_atoi(rgb[1]);
 	rgb_i[2] = ft_atoi(rgb[2]);
+//	rgb_i[3] = NULL;
+	dp_cleaner(rgb);
 	if (check_rgb(rgb_i))
 		exit_project(game, "Invalid color values\n");
 	return (shift_color(rgb_i));

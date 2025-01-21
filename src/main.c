@@ -16,6 +16,7 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
+	ft_bzero(&game, sizeof(t_game));
 	if (ac != 2)
 		return (printf("Invalid number of arguments\n"), 1);
 	map_init((&game), av[1]);

@@ -91,5 +91,6 @@ int				ft_print_decimal(int c);
 int				ft_print_hex(unsigned int c, char casing);
 int				ft_printf(const char *str, ...);
 unsigned int	ft_strchr_l(const char *str);
+char			*check_new_line(char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:06:47 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/03 15:06:47 by marvin           ###   ########.fr       */
+/*   Updated: 2025/01/20 18:54:19 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,45 @@ int	check_extension(char *map)
 		file = ft_strchr(file + 1, '.');
 	if (ft_strcmp(file, ".cub"))
 		return (1);
+	return (0);
+}
+
+int	check_sprite_syntax(char *sprite)
+{
+	int	i;
+	char	*ext;
+
+	i = 0;
+	ext = ft_strchr(sprite, '.');
+	if (ext == NULL || !ft_strcmp(ext, ".xpm"))
+		return (1);
+	return (0);
+}
+
+int	check_rgb(int *color)
+{
+	int	i;
+
+	i = -1;
+	while (color[++i])
+	{
+		printf("%d", color[i]);
+		if (color[i] > 255 || color[i] < 0)
+			return (1);
+	}
+	return (0);
+}
+
+int	only_digits(char *input)
+{
+	int	i;
+
+	i = 0;
+	printf("%s", input);
+	while (input[i++])
+	{
+		if (input[i] <= '0' || input[i] >= '9')
+			return (1);
+	}
 	return (0);
 }

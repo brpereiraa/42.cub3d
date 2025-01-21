@@ -1,9 +1,9 @@
 #include "../includes/cub3d.h"
 
-void draw_wall(t_game *game, int i, int j, int color);
-int ft_fov(t_game *game);
+void	draw_wall(t_game *game, int i, int j, int color);
+int	ft_fov(t_game *game);
 
-int mmap_init(t_game *game)
+int	mmap_init(t_game *game)
 {
 	render_images(game);	
 	return (1);
@@ -11,8 +11,9 @@ int mmap_init(t_game *game)
 
 void	put_image_to_window(t_game *game, int i, int j)
 {
-	int size = 50;
+	int	size;
 
+	size = 50;
 	if (game->fmap[i][j] == '1')
 		draw_wall(game, j * 10, i * 10, BLACK);
 	if (game->fmap[i][j] == '0' || game->fmap[i][j] == 'W' || game->fmap[i][j] == 'E' || game->fmap[i][j] == 'S' || game->fmap[i][j] == 'N' )
@@ -28,10 +29,10 @@ void	render_images(t_game *game)
 
 	i = -1;
 	data = game->data;
-	while(game->fmap[++i])
+	while (game->fmap[++i])
 	{
 		j = -1;
-		while(game->fmap[i][++j])
+		while (game->fmap[i][++j])
 			put_image_to_window(game, i, j);
 	}
 	ft_fov(game);
@@ -39,26 +40,31 @@ void	render_images(t_game *game)
 	return ;
 }
 
-void draw_wall(t_game *game, int i, int j, int color)
+void	draw_wall(t_game *game, int i, int j, int color)
 {
-	int size = 10;
-	int k = -1;
-	int l = -1;
+	int	size;
+	int	k;
+	int	l;
 
-	while(++k < size){
+	size = 10;
+	k = -1;
+	l = -1;
+	while (++k < size)
+	{
 		l = -1;
-		while(++l < size)
+		while (++l < size)
 			pixel_put(game->data, i + l, j + k, color);
 	}
 }
 
-void cast_rays(t_game *game, t_vect *perp)
+void	cast_rays(t_game *game, t_vect *perp)
 {
-	t_vect vect;
+	t_vect	vect;
+	double	i;
 
-	double i = 0;
+	i = 0;
 	vect = *new_vect(game->player->pos_x, game->player->pos_y);
-	while(game->fmap[(int)vect.y][(int)vect.x] != '1')
+	while (game->fmap[(int)vect.y][(int)vect.x] != '1')
 	{
 		vect.x += game->player->angle.x * i + perp->x * i;
 		vect.y += game->player->angle.y * i + perp->y * i;
@@ -67,27 +73,26 @@ void cast_rays(t_game *game, t_vect *perp)
 	}
 }
 
-int ft_fov(t_game *game)
+int	ft_fov(t_game *game)
 {
-    int x, y;
-    double t;
-    t_vect ray_dir;
+	int	x;
+	int	y;
+	double	t;
+	t_vect	ray_dir;
 
-    x = (game->player->pos_x * 60);
-    y = (game->player->pos_y * 60);
-
-    t = 0;
-    while (t <= 1)
-    {
-        ray_dir.x = t * game->player->perp.x;
-        ray_dir.y = t * game->player->perp.y;
-        cast_rays(game, &ray_dir);
-        ray_dir.x = t * -game->player->perp.x;
-        ray_dir.y = t * -game->player->perp.y;
-        cast_rays(game, &ray_dir);
-        t += 0.001;
-    }
-
-    mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
-    return (1);
+	x = (game->player->pos_x * 60);
+	y = (game->player->pos_y * 60);
+	t = 0;
+	while (t <= 1)
+	{
+		ray_dir.x = t * game->player->perp.x;
+		ray_dir.y = t * game->player->perp.y;
+		cast_rays(game, &ray_dir);
+		ray_dir.x = t * -game->player->perp.x;
+		ray_dir.y = t * -game->player->perp.y;
+		cast_rays(game, &ray_dir);
+		t += 0.001;
+	}
+	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
+	return (1);
 }

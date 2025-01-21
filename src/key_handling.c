@@ -8,7 +8,7 @@ int	key_handler(int keycode, t_game *game)
 	(void)game;
 	(void)keycode;
 	if (keycode == ESC)
-		exit(1);
+		exit_project(game, NULL);
 	if (keycode == W)
 	{
 		if (check_wall(game, 0))

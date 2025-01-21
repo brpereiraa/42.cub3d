@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/08 03:08:11 by bruno            ###   ########.fr       */
+/*   Updated: 2025/01/20 18:49:56 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ struct s_game
 	t_vect		*pv;
 	char		**fmap;
 	char		**map;
+	char		**flood_map;
+	int		start_x;
+	int		start_y;
+	int		max_x;
+	int		max_y;
 };
 
 struct s_vect
@@ -98,7 +103,7 @@ struct s_player
 
 /*.........map.c..............*/
 
-int		map_init(t_game *game, char *file);
+void		map_init(t_game *game, char *file);
 char	**map_read(char *file);
 int		map_lines(char *file);
 char	**fmap_read(t_game *game);
@@ -117,12 +122,22 @@ int		start_window(t_game *game);
 void	mlx_pixel(t_data *data, int x, int y, int color);
 void	destroy_images(t_game *game);
 
-/*........checker.c...........*/
+/*........flood_fill.c...........*/
 int		check_extension(char *file);
 int		check_colors(char *input);
+int		flood_fill(int x, int y, char **map, t_game *game);
+int		check_flood_fill(t_game *game);
+char		**create_flood_map(t_game *game);
+void		flood_map_utils(int start, t_game *game);
 // int	file_validation(char *map);
 // int	char_validation(char *map);
 // int	map_validation(char *map);
+
+/*........checker.c..............*/
+int		check_extension(char *file);
+int		check_sprite_syntax(char *sprite);
+int		check_rgb(int *color);
+int		only_digits(char *input);
 
 /*........vect_utils.c..........*/
 t_vect	*new_vect(double x, double y);
@@ -136,8 +151,13 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 /*........raycasting.c.........*/
 void	pixel_put(t_data *data, int x, int y, int color);
 int		ft_raycasting(t_game *game);
-#endif
+
+/*.........cleaner.c............*/
+void	map_cleaner(char **map);
+void	exit_project(t_game *game, char *msg);
 
 int color_init(t_game *game, char *line);
 int	shift_color(int *rgb);
 void	sprites_init(t_game *game);
+
+#endif

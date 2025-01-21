@@ -6,12 +6,11 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/08 03:22:23 by bruno            ###   ########.fr       */
+/*   Updated: 2025/01/20 18:57:35 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
+#include "../includes/cub3d.h"
 
 void	sprites_init(t_game *game)
 {
@@ -21,13 +20,29 @@ void	sprites_init(t_game *game)
 	while (game->map[++i])
 	{
 		if (!ft_strncmp(game->map[i], "SO", 2))
+		{
+			if (check_sprite_syntax(game->map[i]))
+				exit_project(game, "Wrong sprite extension for SO\n");
 			game->sprites->south = game->map[i];
+		}
 		if (!ft_strncmp(game->map[i], "EA", 2))
+		{
+			if (check_sprite_syntax(game->map[i]))
+				exit_project(game, "Wrong sprite extension for EA\n");
 			game->sprites->east = game->map[i];
+		}
 		if (!ft_strncmp(game->map[i], "NO", 2))
+		{
+			if (check_sprite_syntax(game->map[i]))
+				exit_project(game, "Wrong sprite extension for NO\n");
 			game->sprites->north = game->map[i];
+		}
 		if (!ft_strncmp(game->map[i], "WE", 2))
+		{
+			if (check_sprite_syntax(game->map[i]))
+				exit_project(game, "Wrong sprite extension for WE\n");
 			game->sprites->west = game->map[i];
+		}
 		if (!ft_strncmp(game->map[i], "C", 1))
 			game->sprites->ceiling = color_init(game, game->map[i]);
 		if (!ft_strncmp(game->map[i], "F", 1))
@@ -35,23 +50,27 @@ void	sprites_init(t_game *game)
 	}
 }
 
-int color_init(t_game *game, char *line)
+int	color_init(t_game *game, char *line)
 {
-    char **values;
-    char **rgb;
-    int  rgb_i[3];
+	char	**values;
+	char	**rgb;
+	int	rgb_i[3];
 
-    printf("%s\n", line);
-    values = ft_split(line, ' ');
-    if(values[2] || !values[1])
-        return (printf("Invalid sprite information\n"), 0);
-    rgb = ft_split(values[1], ',');
-    if(rgb[3] || !rgb[2])
-        return (printf("Invalid sprite information\n"), 0);    
-    rgb_i[0] = ft_atoi(rgb[0]);
-    rgb_i[1] = ft_atoi(rgb[1]);
-    rgb_i[2] = ft_atoi(rgb[2]);
-    return (shift_color(rgb_i));
+	if (only_digits(line))
+		exit_project(game, "Color code has invalid characters\n");
+	printf("%s\n", line);
+	values = ft_split(line, ' ');
+	if (values[2] || !values[1])
+		exit_project(game, "Invalid sprite information\n");
+	rgb = ft_split(values[1], ',');
+	if (rgb[3] || !rgb[2])
+		exit_project(game, "Invalid sprite information\n");    
+	rgb_i[0] = ft_atoi(rgb[0]);
+	rgb_i[1] = ft_atoi(rgb[1]);
+	rgb_i[2] = ft_atoi(rgb[2]);
+	if (check_rgb(rgb_i))
+		exit_project(game, "Invalid color values\n");
+	return (shift_color(rgb_i));
 }
 
 int	shift_color(int *rgb)

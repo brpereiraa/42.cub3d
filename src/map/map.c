@@ -6,28 +6,31 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/22 16:11:40 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:32:23 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	map_init(t_game *game, char *file)
+void	map_init(t_game *game, char *file)
 {
 	if (check_extension(file))
-		return (0);
+		exit_project(game, "File has wrong extension\nInvalid map\n");
 	game->map = map_read(file);
 	if (!game->map)
-		return (0);
+		exit_project(game, "Couldn't create map\nInvalid map\n");
+	if (!check_flood_fill(game))
+		exit_project(game, "Map not closed\nInvalid map\n");
 	game->player = (t_player *)malloc(sizeof(t_player));
+	if (!game->player)
+		exit_project(game, "Couldn't alloc player struct\n");
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
-		return (printf("Error reading map.\n"), 0);
+		exit_project(game, "Error reading map.\n");
 	game->sprites = (t_sprites *)malloc(sizeof(t_sprites));
-	// if(!sprites_init(game))
-	// 	return (0);
+	if (!game->sprites)
+		exit_project(game, "Couldn't alloc sprites\n");
 	sprites_init(game);
-	return (1);
 }
 
 char	**map_read(char *file)

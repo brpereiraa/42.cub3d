@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:06:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/20 18:54:19 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:40:58 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	check_rgb(int *color)
 	while (++i < 3)
 		if (color[i] > 255 || color[i] < 0)
 			return (1);
-	printf("\n");
 	return (0);
 }
 

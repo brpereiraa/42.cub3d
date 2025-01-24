@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/20 18:57:35 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:11:41 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 void	sprites_init(t_game *game)
 {
 	int		i;
-	char	*line_form;
+	char		*line_form;
 
-	i = 0;
+	i = -1;
+	line_form = NULL;
 	while (game->map[++i])
 	{
 		line_form = ft_strtrim(game->map[i], "\n");
+		if (!line_form)
+			free(line_form);
 		if (!ft_strncmp(game->map[i], "SO", 2))
 		{
 			if (check_sprite_syntax(line_form))
@@ -50,6 +53,7 @@ void	sprites_init(t_game *game)
 		if (!ft_strncmp(game->map[i], "F", 1))
 			game->sprites->floor = color_init(game, line_form);
 	}
+	free(line_form);
 }
 
 int	color_init(t_game *game, char *line)
@@ -75,6 +79,7 @@ int	color_init(t_game *game, char *line)
 	rgb_i[2] = ft_atoi(rgb[2]);
 //	rgb_i[3] = NULL;
 	dp_cleaner(rgb);
+	free(line);
 	if (check_rgb(rgb_i))
 		exit_project(game, "Invalid color values\n");
 	return (shift_color(rgb_i));

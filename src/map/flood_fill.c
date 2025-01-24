@@ -6,7 +6,7 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/20 18:40:11 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:38:40 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -104,10 +104,14 @@ void	flood_map_utils(int start, t_game *game)
 {
 	int	i;
 	int	j;
+	int	max_x;
 
 	i = -1;
+	max_x = ft_strlen(game->map[start]);
 	while (game->map[start + ++i])
 	{
+		if (ft_strlen(game->map[start + i]) > max_x)
+			max_x = ft_strlen(game->map[start + i]);
 		j = -1;
 		while (game->map[start + i][++j])
 		{
@@ -119,7 +123,6 @@ void	flood_map_utils(int start, t_game *game)
 			}
 		}
 	}
-	game->max_x = j;
+	game->max_x = max_x;
 	game->max_y = i;
-	printf("%d %d\n", game->max_y, game->max_x);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2025/01/17 02:44:35 by davioliv         ###   ########.fr        #
+#    Updated: 2025/01/29 17:50:15 by brpereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 #CFLAGS = -Wall -Wextra -Werror -Iincludes
 CFLAGS = -Iincludes
 SRC = src/main.c src/mlx.c src/key_handling.c src/map/map.c src/map/minimap.c src/map/checker.c \
-		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c src/vector/vect_utils.c \
+		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/utils.c src/raycasting/render.c src/vector/vect_utils.c \
 		src/cleaner.c src/map/flood_fill.c
 
 OBJS = $(SRC:.c=.o)

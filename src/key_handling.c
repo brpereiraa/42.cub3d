@@ -2,6 +2,7 @@
 #include <math.h>
 
 int	check_wall(t_game *game, int flag);
+void	get_next(t_game *game, int flag, double *next_x, double *next_y);
 
 int	key_handler(int keycode, t_game *game)
 {
@@ -66,25 +67,44 @@ void	player_pos(t_game *game)
 
 int	check_wall(t_game *game, int flag)
 {
-	if (flag == 0)
+	double next_x, next_y;
+
+	get_next(game, flag, &next_x, &next_y);
+	if (game->fmap[(int)next_y][(int)next_x] == '1' || 
+		game->fmap[(int)(next_y + 0.1)][(int)next_x] == '1' ||
+		game->fmap[(int)next_y][(int)(next_x + 0.1)] == '1' || 
+		game->fmap[(int)(next_y - 0.1)][(int)next_x] == '1' ||
+		game->fmap[(int)next_y][(int)(next_x - 0.1)] == '1')
 	{
-		if (game->fmap[(int)(game->player->pos_y + game->player->angle.y * 0.1)][(int)(game->player->pos_x + game->player->angle.x * 0.1)] == '1')
-			return (1);
-	}
-	if (flag == 1)
-	{
-		if (game->fmap[(int)(game->player->pos_y - game->player->angle.y * 0.1)][(int)(game->player->pos_x - game->player->angle.x * 0.1)] == '1')
-			return (1);
-	}
-	if (flag == 2)
-	{
-		if (game->fmap[(int)(game->player->pos_y + game->player->perp.y * 0.1)][(int)(game->player->pos_x + game->player->perp.x * 0.1)] == '1')
-			return (1);
-	}
-	if (flag == 3)
-	{
-		if (game->fmap[(int)(game->player->pos_y - game->player->perp.y * 0.1)][(int)(game->player->pos_x - game->player->perp.x * 0.1)] == '1')
-			return (1);
+		return (1);
 	}
 	return (0);
+}
+
+
+void	get_next(t_game *game, int flag, double *next_x, double *next_y)
+{
+	double offset;
+
+	offset = 0.3;
+	if (flag == 0)
+	{
+		*next_x = game->player->pos_x + game->player->angle.x * offset;
+		*next_y = game->player->pos_y + game->player->angle.y * offset;
+	}
+	else if (flag == 1)
+	{
+		*next_x = game->player->pos_x - game->player->angle.x * offset;
+		*next_y = game->player->pos_y - game->player->angle.y * offset;
+	}
+	else if (flag == 2)
+	{
+		*next_x = game->player->pos_x + game->player->perp.x * offset;
+		*next_y = game->player->pos_y + game->player->perp.y * offset;
+	}
+	else if (flag == 3)
+	{
+		*next_x = game->player->pos_x - game->player->perp.x * offset;
+		*next_y = game->player->pos_y - game->player->perp.y * offset;
+	}
 }

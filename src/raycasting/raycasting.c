@@ -1,171 +1,143 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
+/*   Updated: 2025/01/29 19:10:03 by brpereir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
-
-unsigned int get_pixel_color(void *texture, int tex_x, int tex_y, int texture_width)
-{
-	char *data;
-	int bpp, size_line, endian;
-
-	data = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
-	int offset = (tex_y * size_line) + (tex_x * (bpp / 8));
-	return *(unsigned int *)(data + offset);
-}
-
-void pixel_put(t_data *data, int x, int y, int color)
-{
-	char *dst;
-
-	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-		return;
-
-	dst = data->addr + (y * data->len + x * (data->bits / 8));
-	*(unsigned int *)dst = color;
-}
-
-void	draw_walls();
 
 void	draw_ceiling_floor(t_game *game, int start, int end, int screen_x)
 {
 	int	y;
 
 	y = -1;
-	while(++y < start)
+	while (++y < start)
 		pixel_put(game->data, screen_x, y, game->sprites->ceiling);
-	y = -1;
-	for (int y = end; y < HEIGHT; y++)
+	y = end - 1;
+	while (++y < HEIGHT)
 		pixel_put(game->data, screen_x, y, game->sprites->floor);
 }
 
-void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y)
+void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir)
 {
 	void	*texture;
+	t_vect	*tex;
 	int		start;
 	int		end;
 
+	tex = (t_vect *)malloc(sizeof(t_vect));
 	start = -wall_height / 2 + HEIGHT / 2;
 	end = wall_height / 2 + HEIGHT / 2;
-
 	if (start < 0)
 		start = 0;
 	if (end >= HEIGHT)
 		end = HEIGHT - 1;
-
-	if (!side)
-	{
-		if (ray_dir_x < 0)
-			texture = game->sprites->west;
-		else
-			texture = game->sprites->east;
-	}
-	else
-	{
-		if (ray_dir_y < 0)
-			texture = game->sprites->north;
-		else
-			texture = game->sprites->south;
-	}
-	int tex_x = (int)(wall_x * (double)TEXTURE_SIZE);
-	if (side == 0 && ray_dir_x < 0) // West wall
-		tex_x = TEXTURE_SIZE - tex_x - 1;
-	else if (side == 1 && ray_dir_y > 0) // North wall
-		tex_x = TEXTURE_SIZE - tex_x - 1;
-
+	texture = ft_texture(game, texture, side, ray_dir);
+	tex->x = (int)(wall_x * (double)TEXTURE_SIZE);
+	if (side == 0 && ray_dir->x < 0)
+		tex->x = TEXTURE_SIZE - tex->x - 1;
+	else if (side == 1 && ray_dir->y > 0)
+		tex->x = TEXTURE_SIZE - tex->x - 1;
 	double step = 1.0 * TEXTURE_SIZE / wall_height;
 	double tex_pos = (start - HEIGHT / 2 + wall_height / 2) * step;
-
 	draw_ceiling_floor(game, start, end, screen_x);
-
 	for (int y = start; y < end; y++)
 	{
-		int tex_y = (int)tex_pos & (TEXTURE_SIZE - 1);
+		tex->y = (int)tex_pos & (TEXTURE_SIZE - 1);
 		tex_pos += step;
-
-		unsigned int color = get_pixel_color(texture, tex_x, tex_y, TEXTURE_SIZE);
-		pixel_put(game->data, screen_x, y, color);
+		pixel_put(game->data, screen_x, y, get_pixel_color(texture, tex->x, tex->y, TEXTURE_SIZE));
 	}
 }
 
-
-void cast_single_ray(t_game *game, double ray_dir_x, double ray_dir_y, int screen_x)
+void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 {
-	double delta_dist_x = fabs(1 / ray_dir_x);
-	double delta_dist_y = fabs(1 / ray_dir_y);
-	double side_dist_x, side_dist_y;
-	int step_x, step_y;
-
-	int map_x = (int)game->player->pos_x;
-	int map_y = (int)game->player->pos_y;
-
-	if (ray_dir_x < 0)
-	{
-		step_x = -1;
-		side_dist_x = (game->player->pos_x - map_x) * delta_dist_x;
-	}
-	else
-	{
-		step_x = 1;
-		side_dist_x = (map_x + 1.0 - game->player->pos_x) * delta_dist_x;
-	}
-	if (ray_dir_y < 0)
-	{
-		step_y = -1;
-		side_dist_y = (game->player->pos_y - map_y) * delta_dist_y;
-	}
-	else
-	{
-		step_y = 1;
-		side_dist_y = (map_y + 1.0 - game->player->pos_y) * delta_dist_y;
-	}
-
-	int hit = 0;
+	t_vect	*delta_dist;
+	t_vect	*side_dist;
+	t_vect	*map;
+	t_vect	*step;
 	int side;
-	while (hit == 0)
+
+	delta_dist = new_vect(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
+	side_dist = (t_vect *)malloc(sizeof(t_vect));
+	step = (t_vect *)malloc(sizeof(t_vect));
+	map = new_vect((int)game->player->pos_x, (int)game->player->pos_y);
+	if (ray_dir->x < 0)
 	{
-		if (side_dist_x < side_dist_y)
+		step->x = -1;
+		side_dist->x = (game->player->pos_x - map->x) * delta_dist->x;
+	}
+	else
+	{
+		step->x = 1;
+		side_dist->x = (map->x + 1.0 - game->player->pos_x) * delta_dist->x;
+	}
+	if (ray_dir->y < 0)
+	{
+		step->y = -1;
+		side_dist->y = (game->player->pos_y - map->y) * delta_dist->y;
+	}
+	else
+	{
+		step->y = 1;
+		side_dist->y = (map->y + 1.0 - game->player->pos_y) * delta_dist->y;
+	}
+	while (1)
+	{
+		if (side_dist->x < side_dist->y)
 		{
-			side_dist_x += delta_dist_x;
-			map_x += step_x;
+			side_dist->x += delta_dist->x;
+			map->x += step->x;
 			side = 0;
 		}
 		else
 		{
-			side_dist_y += delta_dist_y;
-			map_y += step_y;
+			side_dist->y += delta_dist->y;
+			map->y += step->y;
 			side = 1;
 		}
-
-		if (game->fmap[map_y][map_x] == '1')
-			hit = 1;
+		if (game->fmap[(int)map->y][(int)map->x] == '1')
+			break;
 	}
-
-	double wall_dist = (side == 0) ? (side_dist_x - delta_dist_x) : (side_dist_y - delta_dist_y);
+	double wall_dist = (side == 0) ? (side_dist->x - delta_dist->x) : (side_dist->y - delta_dist->y);
 	int wall_height = (int)(HEIGHT / wall_dist);
-
 	double wall_x;
 	if (side == 0)
-		wall_x = game->player->pos_y + wall_dist * ray_dir_y;
+		wall_x = game->player->pos_y + wall_dist * ray_dir->y;
 	else
-		wall_x = game->player->pos_x + wall_dist * ray_dir_x;
+		wall_x = game->player->pos_x + wall_dist * ray_dir->x;
 	wall_x -= floor(wall_x);
-
-	draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir_x, ray_dir_y);
+	draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir);
+	free(delta_dist);
+	free(side_dist);
+	free(step);
+	free(map);
 }
 
 int ft_raycasting(t_game *game)
 {
-	double plane_x = game->player->perp.x;
-	double plane_y = game->player->perp.y;
-	double dir_x = game->player->angle.x;
-	double dir_y = game->player->angle.y;
+	t_vect	*plane;
+	t_vect	*dir;
+	t_vect	*ray_dir;
+	double	camera_x;
+	int		x;
 
-	for (int x = 0; x < WIDTH; x++)
+	dir = &game->player->angle;
+	plane = &game->player->perp;
+	ray_dir = (t_vect *)malloc(sizeof(t_vect));
+	x = -1;
+	while (++x < WIDTH)
 	{
-		double camera_x = 1 - 2 * x / (double)WIDTH;
-		double ray_dir_x = dir_x + plane_x * camera_x;
-		double ray_dir_y = dir_y + plane_y * camera_x;
-
-		cast_single_ray(game, ray_dir_x, ray_dir_y, x);
+		camera_x = 1 - 2 * x / (double)WIDTH;
+		ray_dir->x = dir->x + plane->x * camera_x;
+		ray_dir->y = dir->y + plane->y * camera_x;
+		cast_single_ray(game, ray_dir, x);
 	}
-
 	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
 	return (1);
 }

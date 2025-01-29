@@ -60,16 +60,27 @@ void	draw_wall(t_game *game, int i, int j, int color)
 void	cast_rays(t_game *game, t_vect *perp)
 {
 	t_vect	vect;
-	double	i;
+	double	step_size;
+	double	next_x, next_y;
 
-	i = 0;
+	step_size = 0.01;
 	vect = *new_vect(game->player->pos_x, game->player->pos_y);
-	while (game->fmap[(int)vect.y][(int)vect.x] != '1')
+	while (1)
 	{
-		vect.x += game->player->angle.x * i + perp->x * i;
-		vect.y += game->player->angle.y * i + perp->y * i;
+		next_x = vect.x + game->player->angle.x * step_size + perp->x * step_size;
+		next_y = vect.y + game->player->angle.y * step_size + perp->y * step_size;
+		if (game->fmap[(int)next_y][(int)next_x] == '1' || 
+			game->fmap[(int)(next_y + 0.1)][(int)next_x] == '1' ||
+			game->fmap[(int)next_y][(int)(next_x + 0.1)] == '1' || 
+			game->fmap[(int)(next_y - 0.1)][(int)next_x] == '1' ||
+			game->fmap[(int)next_y][(int)(next_x - 0.1)] == '1')
+		{
+			break;
+		}
+		vect.x = next_x;
+		vect.y = next_y;
 		pixel_put(game->data, vect.x * 10, vect.y * 10, WHITE);
-		i += 0.0001;
+		step_size += 0.0001;
 	}
 }
 

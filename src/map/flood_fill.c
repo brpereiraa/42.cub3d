@@ -6,18 +6,13 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/24 17:38:40 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/28 22:04:40 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	int	i = 0;
-
-/*	while (game->flood_map[i])
-		printf("%s", game->flood_map[i++]);
-	printf("\n\n");*/
 	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x)
 	{
 		dp_cleaner(game->flood_map);
@@ -73,6 +68,8 @@ int	only_digits(char *input)
 */
 int	check_flood_fill(t_game *game)
 {
+	if (check_invalid_chars(game->map))
+		exit_project(game, "Invalid character detected\n");
 	game->flood_map = create_flood_map(game);
 	flood_fill(game->start_y, game->start_x, game);
 	dp_cleaner(game->flood_map);

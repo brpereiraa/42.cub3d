@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/20 18:32:23 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:47:32 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	map_init(t_game *game, char *file)
 	if (!game->sprites)
 		exit_project(game, "Couldn't alloc sprites\n");
 	game->data = (t_data *)malloc(sizeof(t_data));
+	start_sprites(game);
 	sprites_init(game);
 }
 
@@ -38,7 +39,7 @@ char	**map_read(char *file)
 	int		fd;
 	int		lines;
 	int		i;
-	char	**map;
+	char		**map;
 
 	i = 0;
 	lines = map_lines(file);
@@ -47,7 +48,7 @@ char	**map_read(char *file)
 	fd = open(file, O_RDONLY);
 	map = (char **)malloc(sizeof(char *) * (lines + 1));
 	while (i < lines)
-		map[i++] = get_next_line(fd);
+		map[i++] = ft_strtrim(get_next_line(fd), " ");
 	map[i] = NULL;
 	return (map);
 }

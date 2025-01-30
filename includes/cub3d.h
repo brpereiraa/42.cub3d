@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/29 18:37:28 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:42:36 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ struct s_game
 	char		**fmap;
 	char		**map;
 	char		**flood_map;
-	void		*texture;
-	int			start_x;
-	int			start_y;
-	int			max_x;
-	int			max_y;
+	int		start_x;
+	int		start_y;
+	int		max_x;
+	int		max_y;
 };
 
 struct s_vect
@@ -144,22 +143,24 @@ void	perp_vect(t_vect *v1, t_vect *v2);
 int		ft_render(t_game *game);
 void	create_image(t_game *game);
 // void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side);
-// void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y);
-void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir);
-void	*ft_texture(t_game *game, void *texture, int side, t_vect *ray_dir);
-
+void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, double ray_dir_x, double ray_dir_y);
 
 /*........raycasting.c.........*/
 void	pixel_put(t_data *data, int x, int y, int color);
-unsigned int	get_pixel_color(void *texture, int tex_x, int tex_y, int texture_width);
 int		ft_raycasting(t_game *game);
 
 /*.........cleaner.c............*/
 void	dp_cleaner(char **var);
 void	exit_project(t_game *game, char *msg);
 
+/*.........sprite.c...............*/
 int		color_init(t_game *game, char *line);
 int		shift_color(int *rgb);
 void	sprites_init(t_game *game);
+
+/*.........utils.c...............*/
+int		check_invalid_chars(char **map);
+int		skip_spaces(char *line);
+void	start_sprites(t_game *game);
 
 #endif

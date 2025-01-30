@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/24 18:11:41 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:42:23 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,61 @@
 void	sprites_init(t_game *game)
 {
 	int		i;
+	int		j;
 	char		*line_form;
 
-	i = -1;
+	i = -1;	
+	j = 0;
 	line_form = NULL;
 	while (game->map[++i])
 	{
 		line_form = ft_strtrim(game->map[i], "\n");
 		if (!line_form)
+		{
 			free(line_form);
+			exit_project(game, "Unable to trim newline");
+		}
 		if (!ft_strncmp(game->map[i], "SO", 2))
 		{
-			if (check_sprite_syntax(line_form))
+			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
 				exit_project(game, "Wrong sprite extension for SO\n");
 			game->sprites->south = line_form;
+			j++;
 		}
 		if (!ft_strncmp(game->map[i], "EA", 2))
 		{
-			if (check_sprite_syntax(line_form))
+			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
 				exit_project(game, "Wrong sprite extension for EA\n");
 			game->sprites->east = line_form;
+			j++;
 		}
 		if (!ft_strncmp(game->map[i], "NO", 2))
 		{
-			if (check_sprite_syntax(line_form))
+			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
 				exit_project(game, "Wrong sprite extension for NO\n");
 			game->sprites->north = line_form;
+			j++;
 		}
 		if (!ft_strncmp(game->map[i], "WE", 2))
 		{
-			if (check_sprite_syntax(line_form))
+			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
 				exit_project(game, "Wrong sprite extension for WE\n");
 			game->sprites->west = line_form;
+			j++;
 		}
 		if (!ft_strncmp(game->map[i], "C", 1))
+		{
 			game->sprites->ceiling = color_init(game, line_form);
+			j++;
+		}
 		if (!ft_strncmp(game->map[i], "F", 1))
+		{
 			game->sprites->floor = color_init(game, line_form);
+			j++;
+		}
 	}
+	if (j != 6)
+		exit_project(game, "Wrong number of sprite configurations\n");
 	free(line_form);
 }
 
@@ -71,13 +88,12 @@ int	color_init(t_game *game, char *line)
 	while (rgb[i])
 		if (only_digits(rgb[i++]))
 			exit_project(game, "Color code has invalid characters\n");
-	if (rgb[3] || !rgb[2])
+	if (i != 3)
 		exit_project(game, "Invalid sprite information\n");
 	dp_cleaner(values);
 	rgb_i[0] = ft_atoi(rgb[0]);
 	rgb_i[1] = ft_atoi(rgb[1]);
 	rgb_i[2] = ft_atoi(rgb[2]);
-//	rgb_i[3] = NULL;
 	dp_cleaner(rgb);
 	free(line);
 	if (check_rgb(rgb_i))

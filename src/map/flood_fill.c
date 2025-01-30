@@ -6,7 +6,7 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/28 22:04:40 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:59:12 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -101,9 +101,11 @@ void	flood_map_utils(int start, t_game *game)
 {
 	int	i;
 	int	j;
+	int	check_num_p;
 	int	max_x;
 
 	i = -1;
+	check_num_p = 0;
 	max_x = ft_strlen(game->map[start]);
 	while (game->map[start + ++i])
 	{
@@ -115,11 +117,14 @@ void	flood_map_utils(int start, t_game *game)
 			if (game->map[start + i][j] == 'N' || game->map[start + i][j] == 'S' \
 					|| game->map[start + i][j] == 'E' || game->map[start + i][j] == 'W')
 			{
+				check_num_p++;
 				game->start_x = j;
 				game->start_y = i;
 			}
 		}
 	}
+	if (check_num_p != 1)
+		exit_project(game, "Wrong number of players\n");
 	game->max_x = max_x;
 	game->max_y = i;
 }

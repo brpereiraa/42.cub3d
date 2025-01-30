@@ -6,7 +6,7 @@
 #    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2025/01/30 22:02:48 by davioliv         ###   ########.fr        #
+#    Updated: 2025/01/30 22:13:09 by davioliv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 CFLAGS = -Iincludes
 SRC = src/main.c src/mlx.c src/key_handling.c src/map/map.c src/map/minimap.c src/map/checker.c \
 		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c  src/raycasting/utils.c \
-		src/vector/vect_utils.c src/cleaner.c src/map/flood_fill.c src/utils.c
+		src/vector/vect_utils.c src/cleaner.c src/map/flood_fill.c src/game_utils.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/28 21:47:32 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:55:39 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,25 @@ char	**map_read(char *file)
 	int		lines;
 	int		i;
 	char		**map;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	lines = map_lines(file);
 	if (!lines)
 		return (NULL);
 	fd = open(file, O_RDONLY);
 	map = (char **)malloc(sizeof(char *) * (lines + 1));
 	while (i < lines)
+	{
+		
 		map[i++] = ft_strtrim(get_next_line(fd), " ");
+		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
+			flag = 1;
+	}
 	map[i] = NULL;
+	if (flag == 0)
+		return (NULL);
 	return (map);
 }
 

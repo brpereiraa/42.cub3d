@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davioliv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 02:06:28 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/24 18:00:39 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:27:29 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static void	clear_mlx(t_game *game)
 
 static void	clear_sprites(t_game *game)
 {
-	if (game->sprites->south)
-		free(game->sprites->south);
-	if (game->sprites->east)
-		free(game->sprites->east);
-	if (game->sprites->north)
-		free(game->sprites->north);
-	if (game->sprites->west)
-		free(game->sprites->west);
+	// if (game->sprites->south)
+	// 	free(game->sprites->south);
+	// if (game->sprites->east)
+	// 	free(game->sprites->east);
+	// if (game->sprites->north)
+	// 	free(game->sprites->north);
+	// if (game->sprites->west)
+	// 	free(game->sprites->west);
 	free(game->sprites);
 }
 

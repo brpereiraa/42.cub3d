@@ -1,7 +1,7 @@
 EA ./sprites/east_wall.xpm
 C 120,120,0
 SO ./sprites/south_wall.xpm
-WE ./sprites/wall.xpm
+WE ./sprites/west_wall.xpm
 F 225,255,255
 NO ./sprites/north_wall.xpm
 

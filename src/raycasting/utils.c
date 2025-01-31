@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:46:54 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/31 13:13:06 by bruno            ###   ########.fr       */
+/*   Updated: 2025/01/31 17:20:06 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,5 @@ void	pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->len + x * (data->bits / 8));
 	*(unsigned int *)dst = color;
 }
+
+// void	calc_step_textures()

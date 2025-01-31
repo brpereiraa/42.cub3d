@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/31 14:21:04 by bruno            ###   ########.fr       */
+/*   Updated: 2025/01/31 18:08:16 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,29 @@ void	sprites_init(t_game *game)
 		if (!ft_strncmp(game->map[i], "SO", 2))
 		{
 			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, "Wrong sprite extension for SO\n");
-			game->sprites->south = line_form;
+				exit_project(game, NULL);
+			game->sprites->south = (line_form + 2) + skip_spaces(line_form + 2);
 			j++;
 		}
 		if (!ft_strncmp(game->map[i], "EA", 2))
 		{
 			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, "Wrong sprite extension for EA\n");
-			game->sprites->east = line_form;
+				exit_project(game, NULL);
+			game->sprites->east = (line_form + 2) + skip_spaces(line_form + 2);
 			j++;
 		}
 		if (!ft_strncmp(game->map[i], "NO", 2))
 		{
 			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, "Wrong sprite extension for NO\n");
-			game->sprites->north = line_form;
+				exit_project(game, NULL);
+			game->sprites->north = (line_form + 2) + skip_spaces(line_form + 2);
 			j++;
 		}
 		if (!ft_strncmp(game->map[i], "WE", 2))
 		{
 			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, "Wrong sprite extension for WE\n");
-			game->sprites->west = line_form;
+				exit_project(game, NULL);
+			game->sprites->west = (line_form + 2) + skip_spaces(line_form + 2);
 			j++;
 		}
 		if (!ft_strncmp(game->map[i], "C", 1))

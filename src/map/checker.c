@@ -34,10 +34,10 @@ int	check_sprite_syntax(char *sprite)
 	ext = sprite + 1;
 	ext = ft_strchr(ext, '.');
 	if (ext == NULL || ft_strcmp(ext, ".xpm") != 0)
-		return (1);
+		return (ft_printf("Wrong sprite extensions\n"), 1);
 	fd = open(sprite, O_RDONLY);
 	if (fd == -1)
-		return (1);
+		return (ft_printf("Unable to open sprite file\n"), 1);
 	close(fd);
 	return (0);
 }

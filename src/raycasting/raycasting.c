@@ -3,18 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/29 19:10:03 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:12:06 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	draw_ceiling_floor(t_game *game, int start, int end, int screen_x)
+void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 {
 	int	y;
+	int	start;
+	int	end;
+
+	start = -wall_height / 2 + HEIGHT / 2;
+	end = wall_height / 2 + HEIGHT / 2;
+
+	if (start < 0)
+		start = 0;
+	if (end >= HEIGHT)
+		end = HEIGHT - 1;
 
 	y = -1;
 	while (++y < start)
@@ -24,10 +34,19 @@ void	draw_ceiling_floor(t_game *game, int start, int end, int screen_x)
 		pixel_put(game->data, screen_x, y, game->sprites->floor);
 }
 
+void	calc_textures(t_game *game, int wall_height, int screen_x){
+	t_vect	*tex;
+	double	tex_pos;
+	double	step;
+	int		start;
+	int		end;
+}
+
 void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir)
 {
-	void	*texture;
 	t_vect	*tex;
+	double	step;
+	double	tex_pos;
 	int		start;
 	int		end;
 
@@ -38,20 +57,19 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 		start = 0;
 	if (end >= HEIGHT)
 		end = HEIGHT - 1;
-	texture = ft_texture(game, texture, side, ray_dir);
+	game->texture = ft_texture(game, side, ray_dir);
 	tex->x = (int)(wall_x * (double)TEXTURE_SIZE);
 	if (side == 0 && ray_dir->x < 0)
 		tex->x = TEXTURE_SIZE - tex->x - 1;
 	else if (side == 1 && ray_dir->y > 0)
 		tex->x = TEXTURE_SIZE - tex->x - 1;
-	double step = 1.0 * TEXTURE_SIZE / wall_height;
-	double tex_pos = (start - HEIGHT / 2 + wall_height / 2) * step;
-	draw_ceiling_floor(game, start, end, screen_x);
+	step = 1.0 * TEXTURE_SIZE / wall_height;
+	tex_pos = (start - HEIGHT / 2 + wall_height / 2) * step;
 	for (int y = start; y < end; y++)
 	{
 		tex->y = (int)tex_pos & (TEXTURE_SIZE - 1);
 		tex_pos += step;
-		pixel_put(game->data, screen_x, y, get_pixel_color(texture, tex->x, tex->y, TEXTURE_SIZE));
+		pixel_put(game->data, screen_x, y, get_pixel_color(game->texture, tex->x, tex->y, TEXTURE_SIZE));
 	}
 }
 
@@ -112,6 +130,7 @@ void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 	else
 		wall_x = game->player->pos_x + wall_dist * ray_dir->x;
 	wall_x -= floor(wall_x);
+	draw_ceiling_floor(game, screen_x, wall_height);
 	draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir);
 	free(delta_dist);
 	free(side_dist);

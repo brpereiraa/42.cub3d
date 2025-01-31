@@ -3,33 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:46:54 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/29 17:55:54 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:13:06 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	*ft_texture(t_game *game, void *texture, int side, t_vect *ray_dir)
+char	*ft_texture(t_game *game, int side, t_vect *ray_dir)
 {
 	if (!side)
 	{
 		if (ray_dir->x < 0)
-			texture = game->sprites->west;
+			return (game->sprites->west);
 		else
-			texture = game->sprites->east;
+			return (game->sprites->east);
 	}
 	else
 	{
 		if (ray_dir->y < 0)
-			texture = game->sprites->north;
+			return (game->sprites->north);
 		else
-			texture = game->sprites->south;
+			return (game->sprites->south);
 	}
-
-	return (texture);
 }
 
 unsigned int	get_pixel_color(void *texture,

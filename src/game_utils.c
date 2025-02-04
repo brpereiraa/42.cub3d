@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: davioliv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/28 21:52:05 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:25:29 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,22 @@ int	set_sprite_walls(t_game *game, char *line, int i)
 		exit_project(game, NULL);
 	if (!ft_strncmp(game->map[i], "SO", 2))
 	{
-		game->sprites->south = (line_form + 2) + skip_spaces(line_form + 2);
+		game->sprites->south = (line + 2) + skip_spaces(line + 2);
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "EA", 2))
 	{
-		game->sprites->east = (line_form + 2) + skip_spaces(line_form + 2);
+		game->sprites->east = (line + 2) + skip_spaces(line + 2);
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "NO", 2))
 	{
-		game->sprites->north = (line_form + 2) + skip_spaces(line_form + 2);
+		game->sprites->north = (line + 2) + skip_spaces(line + 2);
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "WE", 2))
 	{
-		game->sprites->west = (line_form + 2) + skip_spaces(line_form + 2);
+		game->sprites->west = (line + 2) + skip_spaces(line + 2);
 		return (1);
 	}
 	return (0);
@@ -111,12 +111,12 @@ int	set_colors(t_game *game, char *line, int i)
 {
 	if (!ft_strncmp(game->map[i], "C", 1))
 	{
-		game->sprites->ceiling = color_init(game, line_form);
+		game->sprites->ceiling = color_init(game, line);
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "F", 1))
 	{
-		game->sprites->ceiling = color_init(game, line_form);
+		game->sprites->ceiling = color_init(game, line);
 		return (1);
 	}
 	return (0);

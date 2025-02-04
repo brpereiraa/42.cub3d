@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/31 18:08:16 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/04 18:24:34 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ void	sprites_init(t_game *game)
 			free(line_form);
 			exit_project(game, "Unable to trim newline");
 		}
-		if (set_sprite_walls(game, line_form, i))
-			j++;
+		if (!ft_strncmp(game->map[i], "SO", 2) \
+				|| !ft_strncmp(game->map[i], "EA", 2) \
+				|| !ft_strncmp(game->map[i], "WE", 2) \
+				|| !ft_strncmp(game->map[i], "NO", 2))
+			if (set_sprite_walls(game, line_form, i))
+				j++;
 		if (set_colors(game, line_form, i))
 			j++;
 	}

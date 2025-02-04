@@ -28,10 +28,7 @@ void	sprites_init(t_game *game)
 			free(line_form);
 			exit_project(game, "Unable to trim newline");
 		}
-		if (!ft_strncmp(game->map[i], "SO", 2) \
-				|| !ft_strncmp(game->map[i], "EA", 2) \
-				|| !ft_strncmp(game->map[i], "WE", 2) \
-				|| !ft_strncmp(game->map[i], "NO", 2))
+		if (check_if_wall(game->map[i]))
 			if (set_sprite_walls(game, line_form, i))
 				j++;
 		if (set_colors(game, line_form, i))
@@ -77,4 +74,14 @@ int	shift_color(int *rgb)
 	color = (rgb[0] << 16 | rgb[1] << 8
 			| rgb[2]);
 	return (color);
+}
+
+int	check_if_wall(char *line)
+{
+	if (!ft_strncmp(line, "SO", 2) \
+		|| !ft_strncmp(line, "EA", 2) \
+		|| !ft_strncmp(line, "WE", 2) \
+		|| !ft_strncmp(line, "NO", 2))
+		return (1);
+	return (0);
 }

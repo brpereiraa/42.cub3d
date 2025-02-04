@@ -16,11 +16,10 @@ void	sprites_init(t_game *game)
 {
 	int		i;
 	int		j;
-	char		*line_form;
+	char	*line_form;
 
-	i = -1;	
+	i = -1;
 	j = 0;
-	line_form = NULL;
 	while (game->map[++i])
 	{
 		line_form = ft_strtrim(game->map[i], "\n");
@@ -29,44 +28,10 @@ void	sprites_init(t_game *game)
 			free(line_form);
 			exit_project(game, "Unable to trim newline");
 		}
-		if (!ft_strncmp(game->map[i], "SO", 2))
-		{
-			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, NULL);
-			game->sprites->south = (line_form + 2) + skip_spaces(line_form + 2);
+		if (set_sprite_walls(game, line_form, i))
 			j++;
-		}
-		if (!ft_strncmp(game->map[i], "EA", 2))
-		{
-			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, NULL);
-			game->sprites->east = (line_form + 2) + skip_spaces(line_form + 2);
+		if (set_colors(game, line_form, i))
 			j++;
-		}
-		if (!ft_strncmp(game->map[i], "NO", 2))
-		{
-			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, NULL);
-			game->sprites->north = (line_form + 2) + skip_spaces(line_form + 2);
-			j++;
-		}
-		if (!ft_strncmp(game->map[i], "WE", 2))
-		{
-			if (check_sprite_syntax((line_form + 2) + skip_spaces(line_form + 2)))
-				exit_project(game, NULL);
-			game->sprites->west = (line_form + 2) + skip_spaces(line_form + 2);
-			j++;
-		}
-		if (!ft_strncmp(game->map[i], "C", 1))
-		{
-			game->sprites->ceiling = color_init(game, line_form);
-			j++;
-		}
-		if (!ft_strncmp(game->map[i], "F", 1))
-		{
-			game->sprites->floor = color_init(game, line_form);
-			j++;
-		}
 	}
 	if (j != 6)
 		exit_project(game, "Wrong number of sprite configurations\n");

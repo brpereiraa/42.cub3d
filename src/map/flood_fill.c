@@ -21,7 +21,8 @@ int	flood_fill(int x, int y, t_game *game)
 	if (game->flood_map[x][y] == '1')
 		return (0);
 	else if (game->flood_map[x][y] != '0' && game->flood_map[x][y] != 'N' \
-			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] != 'E' && game->flood_map[x][y] != 'W')
+			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] \
+			!= 'E' && game->flood_map[x][y] != 'W')
 	{
 		dp_cleaner(game->flood_map);
 		exit_project(game, "Map is open\n");
@@ -34,38 +35,6 @@ int	flood_fill(int x, int y, t_game *game)
 	return (0);
 }
 
-/*int	check_colors(char *input)
-{
-	int		i;
-	int		j;
-	char	**rgb;
-
-	i = 0;
-	j = 0;
-	ft_strtrim(input, " ");
-	if (only_digits(input))
-		return ("color code has more than digits");
-	rgb = ft_split(input, ',');
-	while (rgb[i++])
-	{
-		if ((ft_atoi(rgb[i]) > 255) || (ft_atoi(rgb[i]) < 0))
-			return ("error color");
-	}
-}
-
-int	only_digits(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i++])
-	{
-		if (input[i] <= '0' || input[i] >= '9')
-			return (1);
-	}
-	return (0);
-}
-*/
 int	check_flood_fill(t_game *game)
 {
 	if (check_invalid_chars(game->map))
@@ -79,8 +48,8 @@ int	check_flood_fill(t_game *game)
 char	**create_flood_map(t_game *game)
 {
 	char	**only_map;
-	int	i;
-	int	reach_map;
+	int		i;
+	int		reach_map;
 
 	reach_map = -1;
 	while (!ft_strchr("01", game->map[++reach_map][0]))
@@ -114,17 +83,23 @@ void	flood_map_utils(int start, t_game *game)
 		j = -1;
 		while (game->map[start + i][++j])
 		{
-			if (game->map[start + i][j] == 'N' || game->map[start + i][j] == 'S' \
-					|| game->map[start + i][j] == 'E' || game->map[start + i][j] == 'W')
-			{
+			if (!check_player(game->map[start + i][j], game, i, j))
 				check_num_p++;
-				game->start_x = j;
-				game->start_y = i;
-			}
 		}
 	}
 	if (check_num_p != 1)
 		exit_project(game, "Wrong number of players\n");
 	game->max_x = max_x;
 	game->max_y = i;
+}
+
+int	check_player(char c, t_game *game, int i, int j)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	{
+		game->start_x = j;
+		game->start_y = i;
+		return (0);
+	}
+	return (1);
 }

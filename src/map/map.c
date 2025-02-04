@@ -39,7 +39,7 @@ char	**map_read(char *file)
 	int		fd;
 	int		lines;
 	int		i;
-	char		**map;
+	char	**map;
 	int		flag;
 
 	i = 0;
@@ -51,7 +51,6 @@ char	**map_read(char *file)
 	map = (char **)malloc(sizeof(char *) * (lines + 1));
 	while (i < lines)
 	{
-		
 		map[i++] = ft_strtrim(get_next_line(fd), " ");
 		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
 			flag = 1;
@@ -82,31 +81,14 @@ int	map_lines(char *file)
 char	**fmap_read(t_game *game)
 {
 	int	i;
-	int	j;
-	int	k;
 
 	i = -1;
-	j = -1;
 	game->fv = (t_vect *)malloc(sizeof(t_vect));
 	game->fv->x = 1;
 	game->fv->y = 1;
 	while (!ft_strchr("01", game->map[++i][0]))
 		;
-	while (game->map[i + ++j])
-	{
-		k = -1;
-		while (game->map[i + j][++k])
-		{
-			if (game->map[i + j][k] == 'E' || game->map[i + j][k] == 'W' || game->map[i + j][k] == 'S' || game->map[i + j][k] == 'N')
-			{
-				game->player->pos_x = (double)k + 0.5;
-				game->player->pos_y = (double)j + 0.5;
-				player_fov(game, game->map[i + j][k]);
-				return (&game->map[i]);
-			}
-		}
-	}
-	return (&game->map[i]);
+	return (fmap_utils(game, i));
 }
 
 void	player_fov(t_game *game, char c)

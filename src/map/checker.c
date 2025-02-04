@@ -28,7 +28,7 @@ int	check_extension(char *map)
 
 int	check_sprite_syntax(char *sprite)
 {
-	int	fd;
+	int		fd;
 	char	*ext;
 
 	ext = sprite + 1;

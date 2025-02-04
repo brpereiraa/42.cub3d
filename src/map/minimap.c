@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: davioliv <davioliv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/04 16:34:55 by davioliv          #+#    #+#             */
+/*   Updated: 2025/02/04 16:35:05 by davioliv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-void	draw_wall(t_game *game, int i, int j, int color);
-int	ft_fov(t_game *game);
+int		ft_fov(t_game *game);
 
 int	mmap_init(t_game *game)
 {
-	render_images(game);	
+	render_images(game);
 	return (1);
 }
 
@@ -16,7 +27,9 @@ void	put_image_to_window(t_game *game, int i, int j)
 	size = 50;
 	if (game->fmap[i][j] == '1')
 		draw_wall(game, j * 10, i * 10, BLACK);
-	if (game->fmap[i][j] == '0' || game->fmap[i][j] == 'W' || game->fmap[i][j] == 'E' || game->fmap[i][j] == 'S' || game->fmap[i][j] == 'N' )
+	if (game->fmap[i][j] == '0' || game->fmap[i][j] == 'W' \
+		|| game->fmap[i][j] == 'E' || game->fmap[i][j] == 'S' \
+		|| game->fmap[i][j] == 'N' )
 		draw_wall(game, j * 10, i * 10, GREY);
 	return ;
 }
@@ -24,8 +37,8 @@ void	put_image_to_window(t_game *game, int i, int j)
 void	render_images(t_game *game)
 {
 	t_data	*data;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = -1;
 	data = game->data;
@@ -40,43 +53,27 @@ void	render_images(t_game *game)
 	return ;
 }
 
-void	draw_wall(t_game *game, int i, int j, int color)
-{
-	int	size;
-	int	k;
-	int	l;
-
-	size = 10;
-	k = -1;
-	l = -1;
-	while (++k < size)
-	{
-		l = -1;
-		while (++l < size)
-			pixel_put(game->data, i + l, j + k, color);
-	}
-}
-
 void	cast_rays(t_game *game, t_vect *perp)
 {
 	t_vect	vect;
 	double	step_size;
-	double	next_x, next_y;
+	double	next_x;
+	double	next_y;
 
 	step_size = 0.01;
 	vect = *new_vect(game->player->pos_x, game->player->pos_y);
 	while (1)
 	{
-		next_x = vect.x + game->player->angle.x * step_size + perp->x * step_size;
-		next_y = vect.y + game->player->angle.y * step_size + perp->y * step_size;
-		if (game->fmap[(int)next_y][(int)next_x] == '1' || 
+		next_x = vect.x + game->player->angle.x \
+			* step_size + perp->x * step_size;
+		next_y = vect.y + game->player->angle.y \
+			* step_size + perp->y * step_size;
+		if (game->fmap[(int)next_y][(int)next_x] == '1' ||
 			game->fmap[(int)(next_y + 0.1)][(int)next_x] == '1' ||
-			game->fmap[(int)next_y][(int)(next_x + 0.1)] == '1' || 
+			game->fmap[(int)next_y][(int)(next_x + 0.1)] == '1' ||
 			game->fmap[(int)(next_y - 0.1)][(int)next_x] == '1' ||
 			game->fmap[(int)next_y][(int)(next_x - 0.1)] == '1')
-		{
-			break;
-		}
+			break ;
 		vect.x = next_x;
 		vect.y = next_y;
 		pixel_put(game->data, vect.x * 10, vect.y * 10, WHITE);
@@ -86,8 +83,8 @@ void	cast_rays(t_game *game, t_vect *perp)
 
 int	ft_fov(t_game *game)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	double	t;
 	t_vect	ray_dir;
 
@@ -104,6 +101,7 @@ int	ft_fov(t_game *game)
 		cast_rays(game, &ray_dir);
 		t += 0.001;
 	}
-	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
+	mlx_put_image_to_window(game->data->mlx, \
+			game->data->win, game->data->img, 0, 0);
 	return (1);
 }

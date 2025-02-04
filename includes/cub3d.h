@@ -124,12 +124,12 @@ void	mlx_pixel(t_data *data, int x, int y, int color);
 void	destroy_images(t_game *game);
 
 /*........flood_fill.c...........*/
-int		check_extension(char *file);
 int		check_colors(char *input);
 int		flood_fill(int x, int y, t_game *game);
 int		check_flood_fill(t_game *game);
 char		**create_flood_map(t_game *game);
 void		flood_map_utils(int start, t_game *game);
+int		check_player(char c, t_game *game, int i, int j);
 
 /*........checker.c..............*/
 int		check_extension(char *file);
@@ -165,5 +165,9 @@ void	sprites_init(t_game *game);
 int		check_invalid_chars(char **map);
 int		skip_spaces(char *line);
 void	start_sprites(t_game *game);
+char	**fmap_utils(t_game *game, int start);
+void	draw_wall(t_game *game, int i, int j, int color);
+int		set_colors(t_game *game, char *line, int i);
+int		set_sprite_walls(t_game *game, char *line, int i);
 
 #endif

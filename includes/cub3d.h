@@ -160,6 +160,7 @@ void	exit_project(t_game *game, char *msg);
 int		color_init(t_game *game, char *line);
 int		shift_color(int *rgb);
 void	sprites_init(t_game *game);
+int	check_if_wall(char *line);
 
 /*.........utils.c...............*/
 int		check_invalid_chars(char **map);

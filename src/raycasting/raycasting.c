@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/31 14:12:06 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/06 16:28:36 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 
 	start = -wall_height / 2 + HEIGHT / 2;
 	end = wall_height / 2 + HEIGHT / 2;
-
 	if (start < 0)
 		start = 0;
 	if (end >= HEIGHT)
 		end = HEIGHT - 1;
-
 	y = -1;
 	while (++y < start)
 		pixel_put(game->data, screen_x, y, game->sprites->ceiling);
@@ -34,7 +32,8 @@ void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 		pixel_put(game->data, screen_x, y, game->sprites->floor);
 }
 
-void	calc_textures(t_game *game, int wall_height, int screen_x){
+void	calc_textures(t_game *game, int wall_height, int screen_x)
+{
 	t_vect	*tex;
 	double	tex_pos;
 	double	step;
@@ -71,6 +70,7 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 		tex_pos += step;
 		pixel_put(game->data, screen_x, y, get_pixel_color(game->texture, tex->x, tex->y, TEXTURE_SIZE));
 	}
+	free(tex);
 }
 
 void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
@@ -157,6 +157,7 @@ int ft_raycasting(t_game *game)
 		ray_dir->y = dir->y + plane->y * camera_x;
 		cast_single_ray(game, ray_dir, x);
 	}
+	free(ray_dir);
 	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
 	return (1);
 }

@@ -31,7 +31,8 @@ int	check_invalid_chars(char **map)
 			if (map[reach_map + i][j] != '0' && map[reach_map + i][j] != '1' \
 				&& map[reach_map + i][j] != 'N' && map[reach_map + i][j] != 'W' \
 				&& map[reach_map + i][j] != 'E' && map[reach_map + i][j] != 'S' \
-				&& map[reach_map + i][j] != ' ' && map[reach_map + i][j] != '\n')
+				&& map[reach_map + i][j] != ' ' \
+				&& map[reach_map + i][j] != '\n')
 				return (1);
 		}
 	}
@@ -49,8 +50,10 @@ char	**fmap_utils(t_game *game, int start)
 		k = -1;
 		while (game->map[start + j][++k])
 		{
-			if (game->map[start + j][k] == 'E' || game->map[start + j][k] == 'W' \
-				|| game->map[start + j][k] == 'S' || game->map[start + j][k] == 'N')
+			if (game->map[start + j][k] == 'E' \
+				|| game->map[start + j][k] == 'W' \
+				|| game->map[start + j][k] == 'S' \
+				|| game->map[start + j][k] == 'N')
 			{
 				game->player->pos_x = (double)k + 0.5;
 				game->player->pos_y = (double)j + 0.5;

@@ -13,13 +13,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../minilibx-linux/mlx.h" 
-# include "../minilibx-linux/mlx_int.h" 
+# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
 # include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <unistd.h> 
+# include <unistd.h>
 # include <math.h>
 
 # define ESC 65307
@@ -82,10 +82,10 @@ struct s_game
 	char		**map;
 	char		**flood_map;
 	void		*texture;
-	int		start_x;
-	int		start_y;
-	int		max_x;
-	int		max_y;
+	int			start_x;
+	int			start_y;
+	int			max_x;
+	int			max_y;
 };
 
 struct s_vect
@@ -104,71 +104,74 @@ struct s_player
 
 /*.........map.c..............*/
 
-void		map_init(t_game *game, char *file);
-char	**map_read(char *file);
-int		map_lines(char *file);
-char	**fmap_read(t_game *game);
-void	player_fov(t_game *game, char c);
+void			map_init(t_game *game, char *file);
+char			**map_read(char *file);
+int				map_lines(char *file);
+char			**fmap_read(t_game *game);
+void			player_fov(t_game *game, char c);
 
 /*.......minimap.c............*/
-void	render_images(t_game *game);
-void	put_image_to_window(t_game *game, int i, int j);
-int		mmap_init(t_game *game);
+void			render_images(t_game *game);
+void			put_image_to_window(t_game *game, int i, int j);
+int				mmap_init(t_game *game);
 
 /*.........mlx.c..............*/
-void	minimap_loop(t_game *game);
-int		ft_mlx_init(t_game *game);
-int		key_handler(int keycode, t_game *game);
-int		start_window(t_game *game);
-void	mlx_pixel(t_data *data, int x, int y, int color);
-void	destroy_images(t_game *game);
+void			minimap_loop(t_game *game);
+int				ft_mlx_init(t_game *game);
+int				key_handler(int keycode, t_game *game);
+int				start_window(t_game *game);
+void			mlx_pixel(t_data *data, int x, int y, int color);
+void			destroy_images(t_game *game);
 
 /*........flood_fill.c...........*/
-int		check_colors(char *input);
-int		flood_fill(int x, int y, t_game *game);
-int		check_flood_fill(t_game *game);
-char		**create_flood_map(t_game *game);
-void		flood_map_utils(int start, t_game *game);
-int		check_player(char c, t_game *game, int i, int j);
+int				check_colors(char *input);
+int				flood_fill(int x, int y, t_game *game);
+int				check_flood_fill(t_game *game);
+char			**create_flood_map(t_game *game);
+void			flood_map_utils(int start, t_game *game);
+int				check_player(char c, t_game *game, int i, int j);
 
 /*........checker.c..............*/
-int		check_extension(char *file);
-int		check_sprite_syntax(char *sprite);
-int		check_rgb(int *color);
-int		only_digits(char *input);
+int				check_extension(char *file);
+int				check_sprite_syntax(char *sprite);
+int				check_rgb(int *color);
+int				only_digits(char *input);
 
 /*........vect_utils.c..........*/
-t_vect	*new_vect(double x, double y);
-void	rotate_vector(t_vect *vector, int degree);
-void	perp_vect(t_vect *v1, t_vect *v2);
-int		ft_render(t_game *game);
-void	create_image(t_game *game);
+t_vect			*new_vect(double x, double y);
+void			rotate_vector(t_vect *vector, int degree);
+void			perp_vect(t_vect *v1, t_vect *v2);
+int				ft_render(t_game *game);
+void			create_image(t_game *game);
 // void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side);
-void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir);
-char	*ft_texture(t_game *game, int side, t_vect *ray_dir);
+void			draw_vertical_line(t_game *game, int screen_x, \
+				int wall_height, double wall_x, \
+				int side, t_vect *ray_dir);
+char			*ft_texture(t_game *game, int side, t_vect *ray_dir);
 
 /*........raycasting.c.........*/
-void	pixel_put(t_data *data, int x, int y, int color);
-unsigned int	get_pixel_color(void *texture, int tex_x, int tex_y, int texture_width);
-int		ft_raycasting(t_game *game);
+void			pixel_put(t_data *data, int x, int y, int color);
+unsigned int	get_pixel_color(void *texture, int tex_x, \
+			int tex_y, int texture_width);
+int				ft_raycasting(t_game *game);
 
 /*.........cleaner.c............*/
-void	dp_cleaner(char **var);
-void	exit_project(t_game *game, char *msg);
+void			dp_cleaner(char **var);
+void			exit_project(t_game *game, char *msg);
 
 /*.........sprite.c...............*/
-int		color_init(t_game *game, char *line);
-int		shift_color(int *rgb);
-void	sprites_init(t_game *game);
-int	check_if_wall(char *line);
+int				color_init(t_game *game, char *line);
+int				shift_color(int *rgb);
+void			sprites_init(t_game *game);
+int				check_if_wall(char *line);
 
 /*.........utils.c...............*/
-int		check_invalid_chars(char **map);
-int		skip_spaces(char *line);
-void	start_sprites(t_game *game);
-char	**fmap_utils(t_game *game, int start);
-void	draw_wall(t_game *game, int i, int j, int color);
-int		set_colors(t_game *game, char *line, int i);
-int		set_sprite_walls(t_game *game, char *line, int i);
+int				check_invalid_chars(char **map);
+int				skip_spaces(char *line);
+void			start_sprites(t_game *game);
+char			**fmap_utils(t_game *game, int start);
+void			draw_wall(t_game *game, int i, int j, int color);
+int				set_colors(t_game *game, char *line, int i);
+int				set_sprite_walls(t_game *game, char *line, int i);
 
 #endif

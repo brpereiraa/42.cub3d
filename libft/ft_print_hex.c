@@ -48,7 +48,7 @@ static void	print(unsigned int c, char casing)
 
 int	ft_print_hex(unsigned int c, char casing)
 {
-	if(c == 0)
+	if (c == 0)
 		return (write(1, "0", 1));
 	print(c, casing);
 	return (print_len(c));

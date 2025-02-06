@@ -29,9 +29,9 @@ static unsigned int	count(unsigned int n)
 
 char	*ft_itoa_long(unsigned int n)
 {
-	char		*c;
-	unsigned int		num;
-	unsigned int		nb;
+	char			*c;
+	unsigned int	num;
+	unsigned int	nb;
 
 	nb = n;
 	num = count (nb);

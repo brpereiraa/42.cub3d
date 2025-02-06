@@ -37,7 +37,7 @@ void	print_hex(unsigned long c)
 		if (c <= 9)
 			ft_print_char(c + '0');
 		else
-			ft_print_char(c	- 10 + 'a');
+			ft_print_char(c - 10 + 'a');
 	}
 }
 

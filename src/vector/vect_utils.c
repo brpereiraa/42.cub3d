@@ -14,26 +14,24 @@
 
 void	rotate_vector(t_vect *vector, int degree)
 {
-	double angle;
-	double tx;
-	double ty;
+	double	angle;
+	double	tx;
+	double	ty;
 
 	angle = degree * ((double)PI / 180);
 	tx = vector->x;
 	ty = vector->y;
-
 	vector->x = tx * cos(angle) - ty * sin(angle);
 	vector->y = tx * sin(angle) + ty * cos(angle);
 }
 
-t_vect *new_vect(double x, double y)
+t_vect	*new_vect(double x, double y)
 {
-	t_vect *vector;
+	t_vect	*vector;
 
 	vector = malloc(sizeof(t_vect));
 	vector->x = x;
 	vector->y = y;
-
 	return (vector);
 }
 

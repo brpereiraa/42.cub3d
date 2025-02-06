@@ -14,11 +14,12 @@
 
 void	create_image(t_game *game)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = game->data;
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bits, &data->len, &data->endian);
+	data->addr = mlx_get_data_addr \
+		(data->img, &data->bits, &data->len, &data->endian);
 }
 
 int	ft_render(t_game *game)

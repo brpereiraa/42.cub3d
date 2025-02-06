@@ -35,7 +35,7 @@ unsigned int	get_pixel_color(void *texture,
 {
 	char	*data;
 	int		bpp;
-	int		size_line; 
+	int		size_line;
 	int		endian;
 	int		offset;
 

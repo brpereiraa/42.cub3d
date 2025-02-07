@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/01/31 13:14:03 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:09:41 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ void			draw_wall(t_game *game, int i, int j, int color);
 int				set_colors(t_game *game, char *line, int i);
 int				set_sprite_walls(t_game *game, char *line, int i);
 int				left_utils(t_game *game, int keycode);
+int				check_wall(t_game *game, int flag);
 
 #endif

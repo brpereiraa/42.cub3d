@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key.c                                              :+:      :+:    :+:   */
+/*   key_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: davioliv <davioliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:53:58 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/06 16:54:04 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:09:45 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <math.h>
 
-int		check_wall(t_game *game, int flag);
 void	get_next(t_game *game, int flag, double *next_x, double *next_y);
 int		right_utils(t_game *game, int keycode);
 
@@ -30,11 +29,15 @@ int	key_handler(int keycode, t_game *game)
 		if (left_utils(game, keycode))
 			return (1);
 	if (keycode == LEFT)
-		rotate_vector((&game->player->angle, -1), \
-		perp_vect(&game->player->angle, &game->player->perp));
+	{
+		rotate_vector(&game->player->angle, -1);
+		perp_vect(&game->player->angle, &game->player->perp);
+	}
 	if (keycode == RIGHT)
-		rotate_vector((&game->player->angle, 1), \
-		perp_vect(&game->player->angle, &game->player->perp));
+	{
+		rotate_vector(&game->player->angle, 1);
+		perp_vect(&game->player->angle, &game->player->perp);
+	}
 	return (1);
 }
 

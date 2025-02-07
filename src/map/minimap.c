@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davioliv <davioliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:34:55 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/04 16:35:05 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:50:12 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void	render_images(t_game *game)
 
 void	cast_rays(t_game *game, t_vect *perp)
 {
-	t_vect	vect;
+	t_vect	*vect;
 	double	step_size;
 	double	next_x;
 	double	next_y;
 
 	step_size = 0.01;
-	vect = *new_vect(game->player->pos_x, game->player->pos_y);
+	vect = new_vect(game->player->pos_x, game->player->pos_y);
 	while (1)
 	{
-		next_x = vect.x + game->player->angle.x \
+		next_x = vect->x + game->player->angle->x \
 			* step_size + perp->x * step_size;
-		next_y = vect.y + game->player->angle.y \
+		next_y = vect->y + game->player->angle->y \
 			* step_size + perp->y * step_size;
 		if (game->fmap[(int)next_y][(int)next_x] == '1' ||
 			game->fmap[(int)(next_y + 0.1)][(int)next_x] == '1' ||
@@ -74,11 +74,12 @@ void	cast_rays(t_game *game, t_vect *perp)
 			game->fmap[(int)(next_y - 0.1)][(int)next_x] == '1' ||
 			game->fmap[(int)next_y][(int)(next_x - 0.1)] == '1')
 			break ;
-		vect.x = next_x;
-		vect.y = next_y;
-		pixel_put(game->data, vect.x * 10, vect.y * 10, WHITE);
+		vect->x = next_x;
+		vect->y = next_y;
+		pixel_put(game->data, vect->x * 10, vect->y * 10, WHITE);
 		step_size += 0.0001;
 	}
+	free(vect);
 }
 
 int	ft_fov(t_game *game)
@@ -93,11 +94,11 @@ int	ft_fov(t_game *game)
 	t = 0;
 	while (t <= 1)
 	{
-		ray_dir.x = t * game->player->perp.x;
-		ray_dir.y = t * game->player->perp.y;
+		ray_dir.x = t * game->player->perp->x;
+		ray_dir.y = t * game->player->perp->y;
 		cast_rays(game, &ray_dir);
-		ray_dir.x = t * -game->player->perp.x;
-		ray_dir.y = t * -game->player->perp.y;
+		ray_dir.x = t * -game->player->perp->x;
+		ray_dir.y = t * -game->player->perp->y;
 		cast_rays(game, &ray_dir);
 		t += 0.001;
 	}

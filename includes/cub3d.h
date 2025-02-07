@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/07 18:09:41 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:35:17 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ struct s_player
 {
 	double	pos_x;
 	double	pos_y;
-	t_vect	angle;
-	t_vect	perp;
+	t_vect	*angle;
+	t_vect	*perp;
 };
 
 /*.........map.c..............*/

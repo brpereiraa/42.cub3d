@@ -23,6 +23,7 @@ void	map_init(t_game *game, char *file)
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (!game->player)
 		exit_project(game, "Couldn't alloc player struct\n");
+	game->player->perp = (t_vect *)malloc(sizeof(t_vect));
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
 		exit_project(game, "Error reading map.\n");
@@ -63,15 +64,22 @@ char	**map_read(char *file)
 
 int	map_lines(char *file)
 {
-	int	fd;
-	int	i;
+	char	*str;
+	int		fd;
+	int		i;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (close(fd), printf("Error while trying to open map.\n"), 0);
 	i = 0;
-	while (get_next_line(fd))
+	str = get_next_line(fd);
+	while (str)
+	{
+		free(str);
 		i++;
+		str = get_next_line(fd);
+	}
+	free(str);
 	if (i == 0)
 		return (close(fd), printf("Invalid map: Empty file for map.\n"), 0);
 	close(fd);
@@ -94,12 +102,12 @@ char	**fmap_read(t_game *game)
 void	player_fov(t_game *game, char c)
 {
 	if (c == 'E')
-		game->player->angle = *new_vect(-1, 0);
+		game->player->angle = new_vect(-1, 0);
 	if (c == 'W')
-		game->player->angle = *new_vect(1, 0);
+		game->player->angle = new_vect(1, 0);
 	if (c == 'S')
-		game->player->angle = *new_vect(0, 1);
+		game->player->angle = new_vect(0, 1);
 	if (c == 'N')
-		game->player->angle = *new_vect(0, -1);
-	perp_vect(&game->player->angle, &game->player->perp);
+		game->player->angle = new_vect(0, -1);
+	perp_vect(game->player->angle, game->player->perp);
 }

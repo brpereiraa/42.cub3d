@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:12:13 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/29 17:58:02 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:47:22 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_render(t_game *game)
 	start_window(game);
 	ft_raycasting(game);
 	mmap_init(game);
-	destroy_images(game);
+	mlx_destroy_image(game->data->mlx, game->data->img);
+	// destroy_images(game);
 	return (0);
 }
 

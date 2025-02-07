@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 02:06:28 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/31 17:27:29 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/07 23:03:04 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,27 @@ static void	clear_mlx(t_game *game)
 	free(game->data);
 }
 
-static void	clear_sprites(t_game *game)
+static void clear_sprites(t_game *game)
 {
-	// if (game->sprites->south)
-	// 	free(game->sprites->south);
-	// if (game->sprites->east)
-	// 	free(game->sprites->east);
-	// if (game->sprites->north)
-	// 	free(game->sprites->north);
-	// if (game->sprites->west)
-	// 	free(game->sprites->west);
-	free(game->sprites);
+    if (game->sprites->south)
+        mlx_destroy_image(game->data->mlx, game->sprites->south);
+    if (game->sprites->east)
+        mlx_destroy_image(game->data->mlx, game->sprites->east);
+    if (game->sprites->north)
+        mlx_destroy_image(game->data->mlx, game->sprites->north);
+    if (game->sprites->west)
+        mlx_destroy_image(game->data->mlx, game->sprites->west);
+    free(game->sprites);
 }
 
 static void	clean_project(t_game *game)
 {
 	if (game->map)
-		free(game->map);
+		dp_cleaner(game->map);
+	if (game->player->angle)
+		free(game->player->angle);
+	if (game->player->perp)
+		free(game->player->perp);
 	if (game->player)
 		free(game->player);
 	if (game->sprites)

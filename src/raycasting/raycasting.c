@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/06 16:28:36 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:48:47 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 	else
 		wall_x = game->player->pos_x + wall_dist * ray_dir->x;
 	wall_x -= floor(wall_x);
+
 	draw_ceiling_floor(game, screen_x, wall_height);
 	draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir);
 	free(delta_dist);
@@ -145,19 +146,26 @@ int ft_raycasting(t_game *game)
 	t_vect	*ray_dir;
 	double	camera_x;
 	int		x;
-
-	dir = &game->player->angle;
-	plane = &game->player->perp;
+	
+	dir = (t_vect *)malloc(sizeof(t_vect));
+	plane = (t_vect *)malloc(sizeof(t_vect));
+	dir->x = game->player->angle->x;
+	dir->y = game->player->angle->y;
+	plane->x = game->player->perp->x;
+	plane->y = game->player->perp->y;
 	ray_dir = (t_vect *)malloc(sizeof(t_vect));
 	x = -1;
 	while (++x < WIDTH)
 	{
+
 		camera_x = 1 - 2 * x / (double)WIDTH;
 		ray_dir->x = dir->x + plane->x * camera_x;
 		ray_dir->y = dir->y + plane->y * camera_x;
 		cast_single_ray(game, ray_dir, x);
 	}
 	free(ray_dir);
+	free(dir);
+	free(plane);
 	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
 	return (1);
 }

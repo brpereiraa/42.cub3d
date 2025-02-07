@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davioliv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/04 18:25:29 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:09:13 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	set_colors(t_game *game, char *line, int i)
 	}
 	if (!ft_strncmp(game->map[i], "F", 1))
 	{
-		game->sprites->ceiling = color_init(game, line);
+		game->sprites->floor = color_init(game, line);
 		return (1);
 	}
 	return (0);

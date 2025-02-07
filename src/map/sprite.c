@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/04 18:24:34 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:14:11 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	sprites_init(t_game *game)
 	j = 0;
 	while (game->map[++i])
 	{
+		if (game->map[i][0] == 10)
+			continue ;
 		line_form = ft_strtrim(game->map[i], "\n");
 		if (!line_form)
 		{

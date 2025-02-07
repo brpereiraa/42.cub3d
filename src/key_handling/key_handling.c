@@ -15,6 +15,7 @@
 
 int		check_wall(t_game *game, int flag);
 void	get_next(t_game *game, int flag, double *next_x, double *next_y);
+int		right_utils(t_game *game, int keycode);
 
 int	key_handler(int keycode, t_game *game)
 {
@@ -22,34 +23,12 @@ int	key_handler(int keycode, t_game *game)
 	(void)keycode;
 	if (keycode == ESC)
 		exit_project(game, NULL);
-	if (keycode == W)
-	{
-		if (check_wall(game, 0))
+	if (keycode == W || keycode == S)
+		if (right_utils(game, keycode))
 			return (1);
-		game->player->pos_x += game->player->angle.x * 0.1;
-		game->player->pos_y += game->player->angle.y * 0.1;
-	}
-	if (keycode == S)
-	{
-		if (check_wall(game, 1))
+	if (keycode == A || keycode == D)
+		if (left_utils(game, keycode))
 			return (1);
-		game->player->pos_x += -game->player->angle.x * 0.1;
-		game->player->pos_y += -game->player->angle.y * 0.1;
-	}
-	if (keycode == A)
-	{
-		if (check_wall(game, 2))
-			return (1);
-		game->player->pos_x += game->player->perp.x * 0.1;
-		game->player->pos_y += game->player->perp.y * 0.1;
-	}
-	if (keycode == D)
-	{
-		if (check_wall(game, 3))
-			return (1);
-		game->player->pos_x += -game->player->perp.x * 0.1;
-		game->player->pos_y += -game->player->perp.y * 0.1;
-	}
 	if (keycode == LEFT)
 		rotate_vector((&game->player->angle, -1), \
 		perp_vect(&game->player->angle, &game->player->perp));
@@ -121,4 +100,23 @@ void	get_next(t_game *game, int flag, double *next_x, double *next_y)
 		*next_x = game->player->pos_x - game->player->perp.x * offset;
 		*next_y = game->player->pos_y - game->player->perp.y * offset;
 	}
+}
+
+int	right_utils(t_game *game, int keycode)
+{
+	if (keycode == W)
+	{
+		if (check_wall(game, 0))
+			return (1);
+		game->player->pos_x += game->player->angle.x * 0.1;
+		game->player->pos_y += game->player->angle.y * 0.1;
+	}
+	if (keycode == S)
+	{
+		if (check_wall(game, 1))
+			return (1);
+		game->player->pos_x += -game->player->angle.x * 0.1;
+		game->player->pos_y += -game->player->angle.y * 0.1;
+	}
+	return (0);
 }

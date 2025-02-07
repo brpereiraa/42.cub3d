@@ -15,7 +15,8 @@ NAME = cub3d
 MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 #CFLAGS = -Wall -Wextra -Werror -Iincludes
 CFLAGS = -Iincludes
-SRC = src/main.c src/mlx.c src/key_handling.c src/map/map.c src/map/minimap.c src/map/checker.c \
+SRC = src/main.c src/mlx.c src/key_handling/key_handling.c src/key_handling/key_utils.c \
+		src/map/map.c src/map/minimap.c src/map/checker.c \
 		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c  src/raycasting/utils.c \
 		src/vector/vect_utils.c src/cleaner.c src/map/flood_fill.c src/game_utils.c
 

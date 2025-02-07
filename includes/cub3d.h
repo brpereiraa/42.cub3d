@@ -173,5 +173,6 @@ char			**fmap_utils(t_game *game, int start);
 void			draw_wall(t_game *game, int i, int j, int color);
 int				set_colors(t_game *game, char *line, int i);
 int				set_sprite_walls(t_game *game, char *line, int i);
+int				left_utils(t_game *game, int keycode);
 
 #endif

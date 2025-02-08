@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/07 22:35:17 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/08 19:35:31 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_player		t_player;
 typedef struct s_sprites	t_sprites;
 typedef struct s_data		t_data;
 typedef struct s_vect		t_vect;
+typedef struct s_cast		t_cast;
 
 struct s_sprites
 {
@@ -58,6 +59,18 @@ struct s_sprites
 	int		ceiling;
 	void	*wall;
 	void	*player;
+};
+
+struct s_cast
+{
+    t_vect *delta_dist;
+    t_vect *side_dist;
+    t_vect *map;
+    t_vect *step;
+    double wall_dist;
+    double wall_x;
+	int wall_height;
+    int side;
 };
 
 struct s_data

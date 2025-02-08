@@ -6,11 +6,37 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/07 22:48:47 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/08 19:39:43 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void calculate_wall_distance_and_x(t_cast *data, int side, t_vect *ray_dir, t_game *game);
+
+void initialize_side_and_step(t_vect *ray_dir, t_cast *data, t_game *game, t_vect *map)
+{
+    if (ray_dir->x < 0)
+	{
+		data->step->x = -1;
+		data->side_dist->x = (game->player->pos_x - map->x) * data->delta_dist->x;
+	}
+	else
+	{
+		data->step->x = 1;
+		data->side_dist->x = (map->x + 1.0 - game->player->pos_x) * data->delta_dist->x;
+	}
+	if (ray_dir->y < 0)
+	{
+		data->step->y = -1;
+		data->side_dist->y = (game->player->pos_y - map->y) * data->delta_dist->y;
+	}
+	else
+	{
+		data->step->y = 1;
+		data->side_dist->y = (map->y + 1.0 - game->player->pos_y) * data->delta_dist->y;
+	}
+}
 
 void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 {
@@ -30,15 +56,6 @@ void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 	y = end - 1;
 	while (++y < HEIGHT)
 		pixel_put(game->data, screen_x, y, game->sprites->floor);
-}
-
-void	calc_textures(t_game *game, int wall_height, int screen_x)
-{
-	t_vect	*tex;
-	double	tex_pos;
-	double	step;
-	int		start;
-	int		end;
 }
 
 void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir)
@@ -73,70 +90,73 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 	free(tex);
 }
 
-void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
+int	perform_dda(t_cast *data, t_vect *map, t_game *game)
 {
-	t_vect	*delta_dist;
-	t_vect	*side_dist;
-	t_vect	*map;
-	t_vect	*step;
 	int side;
 
-	delta_dist = new_vect(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
-	side_dist = (t_vect *)malloc(sizeof(t_vect));
-	step = (t_vect *)malloc(sizeof(t_vect));
-	map = new_vect((int)game->player->pos_x, (int)game->player->pos_y);
-	if (ray_dir->x < 0)
-	{
-		step->x = -1;
-		side_dist->x = (game->player->pos_x - map->x) * delta_dist->x;
-	}
-	else
-	{
-		step->x = 1;
-		side_dist->x = (map->x + 1.0 - game->player->pos_x) * delta_dist->x;
-	}
-	if (ray_dir->y < 0)
-	{
-		step->y = -1;
-		side_dist->y = (game->player->pos_y - map->y) * delta_dist->y;
-	}
-	else
-	{
-		step->y = 1;
-		side_dist->y = (map->y + 1.0 - game->player->pos_y) * delta_dist->y;
-	}
 	while (1)
 	{
-		if (side_dist->x < side_dist->y)
+		if (data->side_dist->x < data->side_dist->y)
 		{
-			side_dist->x += delta_dist->x;
-			map->x += step->x;
+			data->side_dist->x += data->delta_dist->x;
+			map->x += data->step->x;
 			side = 0;
 		}
 		else
 		{
-			side_dist->y += delta_dist->y;
-			map->y += step->y;
+			data->side_dist->y += data->delta_dist->y;
+			map->y += data->step->y;
 			side = 1;
 		}
 		if (game->fmap[(int)map->y][(int)map->x] == '1')
 			break;
 	}
-	double wall_dist = (side == 0) ? (side_dist->x - delta_dist->x) : (side_dist->y - delta_dist->y);
-	int wall_height = (int)(HEIGHT / wall_dist);
-	double wall_x;
-	if (side == 0)
-		wall_x = game->player->pos_y + wall_dist * ray_dir->y;
-	else
-		wall_x = game->player->pos_x + wall_dist * ray_dir->x;
-	wall_x -= floor(wall_x);
+	return side;
+}
 
-	draw_ceiling_floor(game, screen_x, wall_height);
-	draw_vertical_line(game, screen_x, wall_height, wall_x, side, ray_dir);
-	free(delta_dist);
-	free(side_dist);
-	free(step);
+void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
+{
+	t_cast	*data;
+	t_vect	*map;
+	int side;
+	double wall_dist;
+
+	data = (t_cast *)malloc(sizeof(t_cast));
+	data->delta_dist = new_vect(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
+	data->side_dist = (t_vect *)malloc(sizeof(t_vect));
+	data->step = (t_vect *)malloc(sizeof(t_vect));
+	map = new_vect((int)game->player->pos_x, (int)game->player->pos_y);
+	initialize_side_and_step(ray_dir, data, game, map);
+	side = perform_dda(data, map, game);
+	calculate_wall_distance_and_x(data, side, ray_dir, game);
+	draw_ceiling_floor(game, screen_x, data->wall_height);
+	draw_vertical_line(game, screen_x, data->wall_height, data->wall_x, side, ray_dir);
+	free(data->delta_dist);
+	free(data->side_dist);
+	free(data->step);
+	free(data);
 	free(map);
+}
+
+void calculate_wall_distance_and_x(t_cast *data, int side, t_vect *ray_dir, t_game *game)
+{
+    double wall_dist;
+
+    if (side == 0)
+        wall_dist = data->side_dist->x - data->delta_dist->x;
+    else
+        wall_dist = data->side_dist->y - data->delta_dist->y;
+    if (side == 0)
+        data->wall_x = game->player->pos_y + wall_dist * ray_dir->y;
+    else
+        data->wall_x = game->player->pos_x + wall_dist * ray_dir->x;
+    data->wall_x -= floor(data->wall_x);
+
+	if (side == 0)
+		wall_dist = data->side_dist->x - data->delta_dist->x;
+	else
+		wall_dist = data->side_dist->y - data->delta_dist->y;
+	data->wall_height = (int)(HEIGHT / wall_dist);
 }
 
 int ft_raycasting(t_game *game)
@@ -147,13 +167,9 @@ int ft_raycasting(t_game *game)
 	double	camera_x;
 	int		x;
 	
-	dir = (t_vect *)malloc(sizeof(t_vect));
-	plane = (t_vect *)malloc(sizeof(t_vect));
-	dir->x = game->player->angle->x;
-	dir->y = game->player->angle->y;
-	plane->x = game->player->perp->x;
-	plane->y = game->player->perp->y;
 	ray_dir = (t_vect *)malloc(sizeof(t_vect));
+	dir = new_vect(game->player->angle->x, game->player->angle->y);
+	plane = new_vect(game->player->perp->x, game->player->perp->y);
 	x = -1;
 	while (++x < WIDTH)
 	{
@@ -169,3 +185,4 @@ int ft_raycasting(t_game *game)
 	mlx_put_image_to_window(game->data->mlx, game->data->win, game->data->img, 0, 0);
 	return (1);
 }
+

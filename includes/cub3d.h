@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/07 22:35:17 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/08 00:02:39 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ struct s_player
 /*.........map.c..............*/
 
 void			map_init(t_game *game, char *file);
-char			**map_read(char *file);
+char			**map_read(char *file, char *str);
 int				map_lines(char *file);
 char			**fmap_read(t_game *game);
 void			player_fov(t_game *game, char c);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/30 22:55:39 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/10 03:34:44 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	map_init(t_game *game, char *file)
 {
 	if (check_extension(file))
 		exit_project(game, "File has wrong extension\nInvalid map\n");
-	game->map = map_read(file);
+	game->map = map_read(file, NULL);
 	if (!game->map)
 		exit_project(game, "Couldn't create map\nInvalid map\n");
 	check_flood_fill(game);
@@ -35,7 +35,7 @@ void	map_init(t_game *game, char *file)
 	sprites_init(game);
 }
 
-char	**map_read(char *file)
+char	**map_read(char *file, char *str)
 {
 	int		fd;
 	int		lines;
@@ -52,7 +52,9 @@ char	**map_read(char *file)
 	map = (char **)malloc(sizeof(char *) * (lines + 1));
 	while (i < lines)
 	{
-		map[i++] = ft_strtrim(get_next_line(fd), " ");
+		str = get_next_line(fd);
+		map[i++] = ft_strtrim(str, " ");
+		free(str);
 		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
 			flag = 1;
 	}

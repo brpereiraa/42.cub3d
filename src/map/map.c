@@ -58,6 +58,7 @@ char	**map_read(char *file, char *str)
 		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
 			flag = 1;
 	}
+	get_next_line(-1);
 	map[i] = NULL;
 	if (flag == 0)
 		return (NULL);

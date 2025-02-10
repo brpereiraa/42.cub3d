@@ -35,10 +35,10 @@ void	sprites_init(t_game *game)
 				j++;
 		if (set_colors(game, line_form, i))
 			j++;
+		free(line_form);
 	}
 	if (j != 6)
 		exit_project(game, "Wrong number of sprite configurations\n");
-	free(line_form);
 }
 
 int	color_init(t_game *game, char *line)
@@ -63,7 +63,6 @@ int	color_init(t_game *game, char *line)
 	rgb_i[1] = ft_atoi(rgb[1]);
 	rgb_i[2] = ft_atoi(rgb[2]);
 	dp_cleaner(rgb);
-	free(line);
 	if (check_rgb(rgb_i))
 		exit_project(game, "Invalid color values\n");
 	return (shift_color(rgb_i));

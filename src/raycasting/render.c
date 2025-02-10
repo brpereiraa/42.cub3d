@@ -29,7 +29,6 @@ int	ft_render(t_game *game)
 	ft_raycasting(game);
 	mmap_init(game);
 	mlx_destroy_image(game->data->mlx, game->data->img);
-	// destroy_images(game);
 	return (0);
 }
 

@@ -84,27 +84,29 @@ void	draw_wall(t_game *game, int i, int j, int color)
 
 int	set_sprite_walls(t_game *game, char *line, int i)
 {
-	if (check_sprite_syntax((line + 2) \
-		+ skip_spaces(line + 2)))
+	if (check_sprite_syntax((line + 2) + skip_spaces(line + 2)))
+	{
+		free(line);
 		exit_project(game, NULL);
+	}
 	if (!ft_strncmp(game->map[i], "SO", 2))
 	{
-		game->sprites->south = (line + 2) + skip_spaces(line + 2);
+		game->sprites->csouth = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "EA", 2))
 	{
-		game->sprites->east = (line + 2) + skip_spaces(line + 2);
+		game->sprites->ceast = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "NO", 2))
 	{
-		game->sprites->north = (line + 2) + skip_spaces(line + 2);
+		game->sprites->cnorth = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "WE", 2))
 	{
-		game->sprites->west = (line + 2) + skip_spaces(line + 2);
+		game->sprites->cwest = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	return (0);

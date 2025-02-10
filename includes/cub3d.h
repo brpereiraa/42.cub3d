@@ -52,9 +52,13 @@ typedef struct s_cast		t_cast;
 struct s_sprites
 {
 	char	*north;
+	char	*cnorth;
 	char	*south;
+	char	*csouth;
 	char	*east;
+	char	*ceast;
 	char	*west;
+	char	*cwest;
 	int		floor;
 	int		ceiling;
 	void	*wall;

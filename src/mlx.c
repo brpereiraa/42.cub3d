@@ -20,13 +20,13 @@ int	ft_mlx_init(t_game *game)
 	game->data->mlx = mlx_init();
 	game->data->win = mlx_new_window(game->data->mlx, WIDTH, HEIGHT, "Cub3D");
 	game->sprites->south = mlx_xpm_file_to_image \
-		(game->data->mlx, game->sprites->south, &size, &size);
+		(game->data->mlx, game->sprites->csouth, &size, &size);
 	game->sprites->north = mlx_xpm_file_to_image \
-		(game->data->mlx, game->sprites->north, &size, &size);
+		(game->data->mlx, game->sprites->cnorth, &size, &size);
 	game->sprites->west = mlx_xpm_file_to_image \
-		(game->data->mlx, game->sprites->west, &size, &size);
+		(game->data->mlx, game->sprites->cwest, &size, &size);
 	game->sprites->east = mlx_xpm_file_to_image \
-		(game->data->mlx, game->sprites->east, &size, &size);
+		(game->data->mlx, game->sprites->ceast, &size, &size);
 	minimap_loop(game);
 	return (1);
 }

@@ -92,7 +92,8 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*line;
-
+	if(fd == -1)
+		free(str);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str = get_text(str, fd);

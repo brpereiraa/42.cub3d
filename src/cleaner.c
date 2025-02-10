@@ -19,7 +19,7 @@ void	dp_cleaner(char **var)
 	i = 0;
 	if (!var)
 		return ;
-	while (var[i] != NULL && var[i] != 0)
+	while (var[i] != NULL)
 	{
 		if (var[i])
 			free(var[i]);
@@ -33,21 +33,32 @@ static void	clear_mlx(t_game *game)
 	if (game->data->win)
 		mlx_destroy_window(game->data->mlx, game->data->win);
 	if (game->data->mlx)
+	{
 		mlx_destroy_display(game->data->mlx);
+		free(game->data->mlx);
+	}
 	free(game->data);
 }
 
-static void clear_sprites(t_game *game)
+static void	clear_sprites(t_game *game)
 {
-    if (game->sprites->south)
-        mlx_destroy_image(game->data->mlx, game->sprites->south);
-    if (game->sprites->east)
-        mlx_destroy_image(game->data->mlx, game->sprites->east);
-    if (game->sprites->north)
-        mlx_destroy_image(game->data->mlx, game->sprites->north);
-    if (game->sprites->west)
-        mlx_destroy_image(game->data->mlx, game->sprites->west);
-    free(game->sprites);
+	if (game->sprites->csouth)
+		free(game->sprites->csouth);
+	if (game->sprites->ceast)
+		free(game->sprites->ceast);
+	if (game->sprites->cnorth)
+		free(game->sprites->cnorth);
+	if (game->sprites->cwest)
+		free(game->sprites->cwest);
+	if (game->sprites->east)
+		mlx_destroy_image(game->data->mlx, game->sprites->east);
+	if (game->sprites->north)
+		mlx_destroy_image(game->data->mlx, game->sprites->north);
+	if (game->sprites->south)
+		mlx_destroy_image(game->data->mlx, game->sprites->south);
+	if (game->sprites->west)
+		mlx_destroy_image(game->data->mlx, game->sprites->west);
+	free(game->sprites);
 }
 
 static void	clean_project(t_game *game)

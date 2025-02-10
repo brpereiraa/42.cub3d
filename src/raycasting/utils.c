@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:46:54 by brpereir          #+#    #+#             */
-/*   Updated: 2025/01/31 17:20:06 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/08 19:05:36 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,52 @@ void	pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-// void	calc_step_textures()
+// void	calc_steps(t_vect *ray_dir, t_vect *step, t_vect side_dist)
+// {
+// 	if (ray_dir->x < 0)
+// 	{
+// 		step->x = -1;
+// 		side_dist->x = (game->player->pos_x - map->x) * delta_dist->x;
+// 	}
+// 	else
+// 	{
+// 		step->x = 1;
+// 		side_dist->x = (map->x + 1.0 - game->player->pos_x) * delta_dist->x;
+// 	}
+// 	if (ray_dir->y < 0)
+// 	{
+// 		step->y = -1;
+// 		side_dist->y = (game->player->pos_y - map->y) * delta_dist->y;
+// 	}
+// 	else
+// 	{
+// 		step->y = 1;
+// 		side_dist->y = (map->y + 1.0 - game->player->pos_y) * delta_dist->y;
+// 	}
+// }
+
+// void	calc_dist(t_vect *side_dist, t_vect *delta_dist, )
+// {
+// 	t_vect	*delta_dist;
+	
+
+// 	delta_dist = new_vect(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));
+
+// 	while (1)
+// 	{
+// 		if (side_dist->x < side_dist->y)
+// 		{
+// 			side_dist->x += delta_dist->x;
+// 			map->x += step->x;
+// 			side = 0;
+// 		}
+// 		else
+// 		{
+// 			side_dist->y += delta_dist->y;
+// 			map->y += step->y;
+// 			side = 1;
+// 		}
+// 		if (game->fmap[(int)map->y][(int)map->x] == '1')
+// 			break;
+// 	}
+// }

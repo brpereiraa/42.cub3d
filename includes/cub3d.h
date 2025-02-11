@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/10 15:16:53 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/11 01:39:38 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ struct s_sprites
 
 struct s_cast
 {
-    t_vect *delta_dist;
-    t_vect *side_dist;
-    t_vect *map;
-    t_vect *step;
-    double wall_dist;
-    double wall_x;
-	int wall_height;
-    int side;
+	t_vect	*delta_dist;
+	t_vect	*side_dist;
+	t_vect	*map;
+	t_vect	*step;
+	double	wall_dist;
+	double	wall_x;
+	int 		wall_height;
+	int		side;
 };
 
 struct s_data
@@ -145,7 +145,7 @@ int				check_colors(char *input);
 int				flood_fill(int x, int y, t_game *game);
 int				check_flood_fill(t_game *game);
 char			**create_flood_map(t_game *game);
-void			flood_map_utils(int start, t_game *game);
+int			flood_map_utils(int start, t_game *game);
 int				check_player(char c, t_game *game, int i, int j);
 
 /*........checker.c..............*/

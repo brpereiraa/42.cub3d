@@ -6,14 +6,15 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/01/30 22:59:12 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/11 02:06:46 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x)
+	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x \
+			|| !game->flood_map[x][y])
 	{
 		dp_cleaner(game->flood_map);
 		exit_project(game, "Map is open\n");
@@ -21,8 +22,8 @@ int	flood_fill(int x, int y, t_game *game)
 	if (game->flood_map[x][y] == '1')
 		return (0);
 	else if (game->flood_map[x][y] != '0' && game->flood_map[x][y] != 'N' \
-			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] \
-			!= 'E' && game->flood_map[x][y] != 'W')
+			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] != 'E' \
+			&& game->flood_map[x][y] != 'W')
 	{
 		dp_cleaner(game->flood_map);
 		exit_project(game, "Map is open\n");
@@ -62,11 +63,15 @@ char	**create_flood_map(t_game *game)
 	while (game->map[reach_map + ++i])
 		only_map[i] = ft_strdup(game->map[reach_map + i]);
 	only_map[i] = NULL;
-	flood_map_utils(reach_map, game);
+	if (flood_map_utils(reach_map, game))
+	{
+		dp_cleaner(only_map);
+		exit_project(game, "Wrong number of players\n");
+	}	
 	return (only_map);
 }
 
-void	flood_map_utils(int start, t_game *game)
+int	flood_map_utils(int start, t_game *game)
 {
 	int	i;
 	int	j;
@@ -88,9 +93,10 @@ void	flood_map_utils(int start, t_game *game)
 		}
 	}
 	if (check_num_p != 1)
-		exit_project(game, "Wrong number of players\n");
+		return (1);
 	game->max_x = max_x;
 	game->max_y = i;
+	return (0);
 }
 
 int	check_player(char c, t_game *game, int i, int j)

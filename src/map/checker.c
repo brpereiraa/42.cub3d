@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:06:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/28 21:43:27 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/11 02:27:29 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ int	check_sprite_syntax(char *sprite)
 	int		fd;
 	char	*ext;
 
+	if (!sprite)
+		return (1);
 	ext = sprite + 1;
 	ext = ft_strchr(ext, '.');
 	if (ext == NULL || ft_strcmp(ext, ".xpm") != 0)
-		return (ft_printf("Wrong sprite extensions\n"), 1);
+		return (1);
 	fd = open(sprite, O_RDONLY);
 	if (fd == -1)
-		return (ft_printf("Unable to open sprite file\n"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }

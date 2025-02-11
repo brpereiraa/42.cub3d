@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:35:10 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/07 22:48:11 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/11 01:11:16 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av)
 	t_game	game;
 
 	ft_bzero(&game, sizeof(t_game));
+	start_sprites(&game);
 	if (ac != 2)
 		return (printf("Invalid number of arguments\n"), 1);
 	map_init((&game), av[1]);
@@ -27,6 +28,10 @@ int	main(int ac, char **av)
 
 void	start_sprites(t_game *game)
 {
+	game->player = malloc(sizeof(t_player));
+	game->sprites = malloc(sizeof(t_sprites));
+	game->data = malloc(sizeof(t_data));
+	ft_memset(game->player, 0, sizeof(t_player));
 	ft_memset(game->sprites, 0, sizeof(t_sprites));
 	ft_memset(game->data, 0, sizeof(t_data));
 }

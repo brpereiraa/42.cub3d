@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/07 22:09:13 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/11 02:16:17 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,30 @@ int	set_sprite_walls(t_game *game, char *line, int i)
 	if (check_sprite_syntax((line + 2) + skip_spaces(line + 2)))
 	{
 		free(line);
-		exit_project(game, NULL);
+		exit_project(game, "Wrong sprite extensions\n");
 	}
 	if (!ft_strncmp(game->map[i], "SO", 2))
 	{
-		game->sprites->csouth = ft_strdup((line + 2) + skip_spaces(line + 2));
+		if (!game->sprites->csouth)
+			game->sprites->csouth = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "EA", 2))
 	{
-		game->sprites->ceast = ft_strdup((line + 2) + skip_spaces(line + 2));
+		if (!game->sprites->ceast)
+			game->sprites->ceast = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "NO", 2))
 	{
-		game->sprites->cnorth = ft_strdup((line + 2) + skip_spaces(line + 2));
+		if (!game->sprites->cnorth)
+			game->sprites->cnorth = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	if (!ft_strncmp(game->map[i], "WE", 2))
 	{
-		game->sprites->cwest = ft_strdup((line + 2) + skip_spaces(line + 2));
+		if (!game->sprites->cwest)
+			game->sprites->cwest = ft_strdup((line + 2) + skip_spaces(line + 2));
 		return (1);
 	}
 	return (0);

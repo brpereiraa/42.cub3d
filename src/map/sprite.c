@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/07 22:20:15 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/11 02:32:39 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,42 @@ int	color_init(t_game *game, char *line)
 	int		rgb_i[3];
 	int		i;
 
+	if (!line)
+		exit_project(game, "Sprite information missing\n");
 	values = ft_split(line, ' ');
 	if (values[2] || !values[1])
+	{
+		free(line);
+		dp_cleaner(values);
 		exit_project(game, "Invalid sprite information\n");
+	}
 	rgb = ft_split(values[1], ',');
 	i = 0;
-	while (rgb[i])
-		if (only_digits(rgb[i++]))
-			exit_project(game, "Color code has invalid characters\n");
-	if (i != 3)
-		exit_project(game, "Invalid sprite information\n");
 	dp_cleaner(values);
+	while (rgb[i])
+	{
+		if (only_digits(rgb[i++]))
+		{
+			free(line);
+			dp_cleaner(rgb);
+			exit_project(game, "Color code has invalid characters\n");
+		}
+	}
+	if (i != 3)
+	{
+		free(line);
+		dp_cleaner(rgb);
+		exit_project(game, "Invalid sprite information\n");
+	}
 	rgb_i[0] = ft_atoi(rgb[0]);
 	rgb_i[1] = ft_atoi(rgb[1]);
 	rgb_i[2] = ft_atoi(rgb[2]);
 	dp_cleaner(rgb);
 	if (check_rgb(rgb_i))
+	{
+		free(line);
 		exit_project(game, "Invalid color values\n");
+	}
 	return (shift_color(rgb_i));
 }
 

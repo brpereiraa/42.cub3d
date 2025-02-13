@@ -6,7 +6,7 @@
 /*   By: davioliv <davioliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:12:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/13 00:13:00 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/13 03:18:49 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ char	**alloc_map(int lines, char *file, int fd)
 	while (i < lines)
 	{
 		str = get_next_line(fd);
-		map[i++] = ft_strtrim(str, " ");
-		free(str);
+		map[i++] = str;
 		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
 			flag = 1;
 	}

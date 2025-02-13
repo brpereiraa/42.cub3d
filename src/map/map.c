@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:08:00 by marvin            #+#    #+#             */
-/*   Updated: 2025/02/11 01:31:46 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:49:35 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,14 @@ void	map_init(t_game *game, char *file)
 	if (!game->map)
 		exit_project(game, "Couldn't create map\nInvalid map\n");
 	check_flood_fill(game);
-//	game->player = (t_player *)malloc(sizeof(t_player));
 	if (!game->player)
 		exit_project(game, "Couldn't alloc player struct\n");
 	game->player->perp = (t_vect *)malloc(sizeof(t_vect));
 	game->fmap = fmap_read(game);
 	if (!game->fmap)
 		exit_project(game, "Error reading map.\n");
-//	game->sprites = (t_sprites *)malloc(sizeof(t_sprites));
 	if (!game->sprites)
 		exit_project(game, "Couldn't alloc sprites\n");
-////	game->data = (t_data *)malloc(sizeof(t_data));
 	sprites_init(game);
 }
 

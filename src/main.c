@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:35:10 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/11 01:11:16 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:57:59 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
+	if (ac != 2)
+		return (printf("Error\nInvalid number of arguments\n"), 1);
 	ft_bzero(&game, sizeof(t_game));
 	start_sprites(&game);
-	if (ac != 2)
-		return (printf("Invalid number of arguments\n"), 1);
 	map_init((&game), av[1]);
 	ft_mlx_init(&game);
 	exit_project(&game, NULL);

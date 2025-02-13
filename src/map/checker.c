@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:06:47 by marvin            #+#    #+#             */
-/*   Updated: 2025/02/11 02:27:29 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:59:13 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	check_sprite_syntax(char *sprite)
 	int		fd;
 	char	*ext;
 
-	if (!sprite)
-		return (1);
 	ext = sprite + 1;
 	ext = ft_strchr(ext, '.');
 	if (ext == NULL || ft_strcmp(ext, ".xpm") != 0)

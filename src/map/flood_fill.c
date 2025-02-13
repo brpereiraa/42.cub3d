@@ -6,13 +6,19 @@
 /*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/11 02:06:46 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/12 23:59:46 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
 
 int	flood_fill(int x, int y, t_game *game)
 {
+	int	i;
+
+	i = -1;
+	while (game->flood_map[++i])
+		printf("%s", game->flood_map[i]);
+	printf("\n");
 	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x \
 			|| !game->flood_map[x][y])
 	{
@@ -20,7 +26,7 @@ int	flood_fill(int x, int y, t_game *game)
 		exit_project(game, "Map is open\n");
 	}
 	if (game->flood_map[x][y] == '1')
-		return (0);
+		return (1);
 	else if (game->flood_map[x][y] != '0' && game->flood_map[x][y] != 'N' \
 			&& game->flood_map[x][y] != 'S' && game->flood_map[x][y] != 'E' \
 			&& game->flood_map[x][y] != 'W')
@@ -41,6 +47,8 @@ int	check_flood_fill(t_game *game)
 	if (check_invalid_chars(game->map))
 		exit_project(game, "Invalid character detected\n");
 	game->flood_map = create_flood_map(game);
+	if (!game->flood_map)
+		exit_project(game, "Couldn't alloc flood_map\n");
 	flood_fill(game->start_y, game->start_x, game);
 	dp_cleaner(game->flood_map);
 	return (1);
@@ -61,7 +69,15 @@ char	**create_flood_map(t_game *game)
 	only_map = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while (game->map[reach_map + ++i])
+	{
+		if (game->map[reach_map + i][0] == '\n')
+		{
+			only_map[i] = NULL;
+			dp_cleaner(only_map);
+			return (NULL);
+		}
 		only_map[i] = ft_strdup(game->map[reach_map + i]);
+	}
 	only_map[i] = NULL;
 	if (flood_map_utils(reach_map, game))
 	{

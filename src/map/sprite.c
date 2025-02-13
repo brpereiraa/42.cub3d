@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	sprites_init(t_game *game)
 {
@@ -50,7 +50,7 @@ int	color_init(t_game *game, char *line)
 
 	values = ft_split(line, ' ');
 	if (values[2] || !values[1])
-		clean_colors_trash(game, line, rgb, "Invalid sprite information\n");
+		clean_colors_trash(game, line, values, "Invalid sprite information\n");
 	rgb = ft_split(values[1], ',');
 	i = 0;
 	dp_cleaner(values);
@@ -86,4 +86,27 @@ int	check_if_wall(char *line)
 		|| !ft_strncmp(line, "NO", 2))
 		return (1);
 	return (0);
+}
+
+int	reach_map(char **map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (map[++i])
+	{
+		if (check_if_wall(map[i]))
+			j++;
+		if (!ft_strncmp(map[i], "F", 1) || !ft_strncmp(map[i], "C", 1))
+			j++;
+		if (j == 6)
+			break ;
+	}
+	if (j != 6)
+		return (0);
+	while (map[++i][0] && map[i][0] == '\n')
+		;
+	return (i);
 }

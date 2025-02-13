@@ -9,16 +9,10 @@
 /*   Updated: 2025/02/13 03:26:34 by davioliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	int	i;
-
-	i = -1;
-	while (game->flood_map[++i])
-		printf("%s", game->flood_map[i]);
-	printf("\n");
 	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x \
 			|| !game->flood_map[x][y])
 	{
@@ -47,8 +41,6 @@ int	check_flood_fill(t_game *game)
 	int	i;
 
 	i = -1;
-	while (game->map[++i])
-		printf("%s", game->map[i]);
 	if (check_invalid_chars(game->map))
 		exit_project(game, "Invalid character detected\n");
 	game->flood_map = create_flood_map(game);
@@ -63,24 +55,22 @@ char	**create_flood_map(t_game *game)
 {
 	char	**only_map;
 	int		i;
-	int		reach_map;
+	int		reach;
 
-	reach_map = 0;
-	while (!ft_strnstr(game->map[reach_map], "01", ft_strlen(game->map[reach_map])))
-		reach_map++;
+	reach = reach_map(game->map);
 	i = -1;
-	while (game->map[reach_map + ++i])
+	while (game->map[reach + ++i])
 		;
 	only_map = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
-	while (game->map[reach_map + ++i])
+	while (game->map[reach + ++i])
 	{
-		if (check_newline(game, only_map, reach_map + i))
+		if (check_newline(game, only_map, reach + i))
 			return (NULL);
-		only_map[i] = ft_strdup(game->map[reach_map + i]);
+		only_map[i] = ft_strdup(game->map[reach + i]);
 	}
 	only_map[i] = NULL;
-	if (flood_map_utils(reach_map, game))
+	if (flood_map_utils(reach, game))
 	{
 		dp_cleaner(only_map);
 		exit_project(game, "Wrong number of players\n");

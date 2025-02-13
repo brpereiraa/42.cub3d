@@ -77,3 +77,9 @@ char	**alloc_map(int lines, char *file, int fd)
 	}
 	return (map);
 }
+
+int	exit_key(t_game *game)
+{
+	clean_project(game);
+	exit(0);
+}

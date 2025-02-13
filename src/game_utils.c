@@ -15,24 +15,24 @@
 int	check_invalid_chars(char **map)
 {
 	int	i;
-	int	reach_map;
+	int	reach;
 	int	j;
 
 	i = -1;
 	j = -1;
-	reach_map = -1;
-	while (!ft_strchr("01", map[++reach_map][0]))
-		;
-	while (map[reach_map + ++i])
+	reach = reach_map(map);
+	if (!reach)
+		return (1);
+	while (map[reach + ++i])
 	{
 		j = -1;
-		while (map[reach_map + i][++j])
+		while (map[reach + i][++j])
 		{
-			if (map[reach_map + i][j] != '0' && map[reach_map + i][j] != '1' \
-				&& map[reach_map + i][j] != 'N' && map[reach_map + i][j] != 'W' \
-				&& map[reach_map + i][j] != 'E' && map[reach_map + i][j] != 'S' \
-				&& map[reach_map + i][j] != ' ' \
-				&& map[reach_map + i][j] != '\n')
+			if (map[reach + i][j] != '0' && map[reach + i][j] != '1' \
+				&& map[reach + i][j] != 'N' && map[reach + i][j] != 'W' \
+				&& map[reach + i][j] != 'E' && map[reach + i][j] != 'S' \
+				&& map[reach + i][j] != ' ' \
+				&& map[reach + i][j] != '\n')
 				return (1);
 		}
 	}

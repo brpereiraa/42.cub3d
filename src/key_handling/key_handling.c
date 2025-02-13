@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-#include <math.h>
+#include "../../includes/cub3d.h"
 
 void	get_next(t_game *game, int flag, double *next_x, double *next_y);
 int		right_utils(t_game *game, int keycode);

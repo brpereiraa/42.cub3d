@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	map_init(t_game *game, char *file)
 {
@@ -75,8 +75,7 @@ char	**fmap_read(t_game *game)
 	game->fv = (t_vect *)malloc(sizeof(t_vect));
 	game->fv->x = 1;
 	game->fv->y = 1;
-	while (!ft_strchr("01", game->map[++i][0]))
-		;
+	i = reach_map(game->map);
 	return (fmap_utils(game, i));
 }
 

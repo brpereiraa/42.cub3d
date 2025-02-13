@@ -103,6 +103,7 @@ struct s_game
 	int			start_y;
 	int			max_x;
 	int			max_y;
+	int			flag;
 };
 
 struct s_vect
@@ -175,6 +176,8 @@ int				ft_raycasting(t_game *game);
 /*.........cleaner.c............*/
 void			dp_cleaner(char **var);
 void			exit_project(t_game *game, char *msg);
+void			clean_project(t_game *game);
+int				exit_key(t_game *game);
 
 /*.........sprite.c...............*/
 int				color_init(t_game *game, char *line);
@@ -197,5 +200,6 @@ void			clean_colors_trash(t_game *game, char *line, \
 					char **rgb, char *msg);
 int				check_newline(t_game *game, char **map, int i);
 char			**alloc_map(int lines, char *file, int fd);
+int				reach_map(char **map);
 
 #endif

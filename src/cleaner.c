@@ -61,7 +61,7 @@ static void	clear_sprites(t_game *game)
 	free(game->sprites);
 }
 
-static void	clean_project(t_game *game)
+void	clean_project(t_game *game)
 {
 	if (game->map)
 		dp_cleaner(game->map);

@@ -37,6 +37,7 @@ void	minimap_loop(t_game *game)
 
 	data = game->data;
 	mlx_hook (data->win, 2, 1L << 0, key_handler, game);
+	mlx_hook (data->win, 17, 1L << 17, exit_key, game);
 	mlx_loop_hook(data->mlx, ft_render, game);
 	mlx_loop (data->mlx);
 	return ;

@@ -97,6 +97,8 @@ int	reach_map(char **map)
 	j = 0;
 	while (map[++i])
 	{
+		if (ft_strnstr(map[i], "01", ft_strlen(map[i])))
+			return (0);
 		if (check_if_wall(map[i]))
 			j++;
 		if (!ft_strncmp(map[i], "F", 1) || !ft_strncmp(map[i], "C", 1))
@@ -106,7 +108,7 @@ int	reach_map(char **map)
 	}
 	if (j != 6)
 		return (0);
-	while (map[++i][0] && map[i][0] == '\n')
+	while (map[i++][0] && map[i][0] == '\n')
 		;
 	return (i);
 }

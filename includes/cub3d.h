@@ -73,7 +73,7 @@ struct s_cast
 	t_vect	*step;
 	double	wall_dist;
 	double	wall_x;
-	int 		wall_height;
+	int		wall_height;
 	int		side;
 };
 
@@ -145,7 +145,7 @@ int				check_colors(char *input);
 int				flood_fill(int x, int y, t_game *game);
 int				check_flood_fill(t_game *game);
 char			**create_flood_map(t_game *game);
-int			flood_map_utils(int start, t_game *game);
+int				flood_map_utils(int start, t_game *game);
 int				check_player(char c, t_game *game, int i, int j);
 
 /*........checker.c..............*/
@@ -192,5 +192,10 @@ int				set_colors(t_game *game, char *line, int i);
 int				set_sprite_walls(t_game *game, char *line, int i);
 int				left_utils(t_game *game, int keycode);
 int				check_wall(t_game *game, int flag);
+int				no_we_alloc(t_game *game, char *line, int i);
+void			clean_colors_trash(t_game *game, char *line, \
+					char **rgb, char *msg);
+int				check_newline(t_game *game, char **map, int i);
+char			**alloc_map(int lines, char *file, int fd);
 
 #endif

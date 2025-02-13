@@ -13,12 +13,12 @@
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	int	i;
+/*	int	i;
 
 	i = -1;
 	while (game->flood_map[++i])
 		printf("%s", game->flood_map[i]);
-	printf("\n");
+	printf("\n");*/
 	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x \
 			|| !game->flood_map[x][y])
 	{
@@ -70,12 +70,8 @@ char	**create_flood_map(t_game *game)
 	i = -1;
 	while (game->map[reach_map + ++i])
 	{
-		if (game->map[reach_map + i][0] == '\n')
-		{
-			only_map[i] = NULL;
-			dp_cleaner(only_map);
+		if (check_newline(game, only_map, reach_map + i))
 			return (NULL);
-		}
 		only_map[i] = ft_strdup(game->map[reach_map + i]);
 	}
 	only_map[i] = NULL;
@@ -83,7 +79,7 @@ char	**create_flood_map(t_game *game)
 	{
 		dp_cleaner(only_map);
 		exit_project(game, "Wrong number of players\n");
-	}	
+	}
 	return (only_map);
 }
 

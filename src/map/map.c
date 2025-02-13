@@ -31,36 +31,15 @@ void	map_init(t_game *game, char *file)
 	sprites_init(game);
 }
 
-char	**map_read(char *file, char *str)
+char	**map_read(char *file)
 {
-	int		fd;
-	int		lines;
-	int		i;
 	char	**map;
-	int		flag;
 
-	i = 0;
-	flag = 0;
+	fd = open(file, O_RDONLY);
 	lines = map_lines(file);
 	if (!lines)
 		return (NULL);
-	fd = open(file, O_RDONLY);
-	map = (char **)malloc(sizeof(char *) * (lines + 1));
-	while (i < lines)
-	{
-		str = get_next_line(fd);
-		map[i++] = ft_strtrim(str, " ");
-		free(str);
-		if (ft_strnstr(map[i - 1], "01", ft_strlen(map[i - 1])))
-			flag = 1;
-	}
-	get_next_line(-1);
-	map[i] = NULL;
-	if (flag == 0)
-	{
-		dp_cleaner(map);
-		return (NULL);
-	}
+	map = alloc_map(lines, file, fd);
 	return (map);
 }
 

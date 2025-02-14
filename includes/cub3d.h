@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/13 00:52:47 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:29:24 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void			clean_project(t_game *game);
 int				exit_key(t_game *game);
 
 /*.........sprite.c...............*/
-int				color_init(t_game *game, char *line);
+int				color_init(t_game *game, char *line, char *col);
 int				shift_color(int *rgb);
 void			sprites_init(t_game *game);
 int				check_if_wall(char *line);
@@ -191,8 +191,10 @@ int				skip_spaces(char *line);
 void			start_sprites(t_game *game);
 char			**fmap_utils(t_game *game, int start);
 void			draw_wall(t_game *game, int i, int j, int color);
-int				set_colors(t_game *game, char *line, int i);
-int				set_sprite_walls(t_game *game, char *line, int i);
+// int				set_colors(t_game *game, char *line, int i);
+int				set_colors(t_game *game, char *col, char *line);
+// int				set_sprite_walls(t_game *game, char *line, int i);
+int				set_sprite_walls(t_game *game, char *col, char *line);
 int				left_utils(t_game *game, int keycode);
 int				check_wall(t_game *game, int flag);
 int				no_we_alloc(t_game *game, char *line, int i);

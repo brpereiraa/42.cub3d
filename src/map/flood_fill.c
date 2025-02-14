@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davioliv <davioliv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/13 03:26:34 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:42:20 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 int	flood_fill(int x, int y, t_game *game)
@@ -42,7 +43,7 @@ int	check_flood_fill(t_game *game)
 
 	i = -1;
 	if (check_invalid_chars(game->map))
-		exit_project(game, "Invalid character detected\n");
+		exit_project(game, NULL);
 	game->flood_map = create_flood_map(game);
 	if (!game->flood_map)
 		exit_project(game, "Couldn't alloc flood_map\n");

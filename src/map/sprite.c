@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/12 23:12:11 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:39:55 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,48 +16,60 @@ void	sprites_init(t_game *game)
 {
 	int		i;
 	int		j;
-	char	*line_form;
+	char	*end;
+	char	*col;
 
 	i = -1;
 	j = 0;
+	col = NULL;
 	while (game->map[++i])
 	{
-		if (game->map[i][0] == 10)
+		col = game->map[i];
+		if (ft_strchr(" \t", game->map[i][0]))
+			col = ft_strpbrk_skip(game->map[i], " \t");
+		end = ft_strpbrk(col, " \t");
+		if (!end)
 			continue ;
-		line_form = ft_strtrim(game->map[i], "\n");
-		if (!line_form || ft_strlen(line_form) <= 3)
+		col = ft_substr(col, 0, end - col);
+		if (col && check_if_wall(col))
 		{
-			free(line_form);
-			exit_project(game, "Unable to trim newline");
+			if (set_sprite_walls(game, col, game->map[i]))
+			{
+				free(col);
+				exit_project(game, NULL);
+			}
 		}
-		if (check_if_wall(game->map[i]))
-			if (set_sprite_walls(game, line_form, i))
-				j++;
-		if (set_colors(game, line_form, i))
-			j++;
-		free(line_form);
+		if (col && (!ft_strcmp(col, "C") || !ft_strcmp(col, "F")))
+		{
+			if (!set_colors(game, col, end))
+			{
+					free(col);
+					exit_project(game, "dwad");
+			}
+		}
+		free(col);
+		j++;
 	}
-	if (j != 6)
-		exit_project(game, "Wrong number of sprite configurations\n");
 }
 
-int	color_init(t_game *game, char *line)
+int	color_init(t_game *game, char *line, char *col)
 {
-	char	**values;
 	char	**rgb;
 	int		rgb_i[3];
 	int		i;
 
-	values = ft_split(line, ' ');
-	if (values[2] || !values[1])
-		clean_colors_trash(game, line, values, "Invalid sprite information\n");
-	rgb = ft_split(values[1], ',');
+	i = -1;
+	while(line[++i])
+		if (line[i] == ',' && line[i + 1] && line[i + 1] == ',')
+		{
+			free(col);
+			clean_colors_trash(game, line, NULL, "Multiple commas\n");
+		}
+	rgb = ft_split(line, ',');
 	i = 0;
-	dp_cleaner(values);
 	while (rgb[i])
 		if (only_digits(rgb[i++]))
-			clean_colors_trash(game, line, rgb, \
-			"Color code has invalid characters\n");
+			clean_colors_trash(game, line, rgb, "Color: Invalid characters\n");
 	if (i != 3)
 		clean_colors_trash(game, line, rgb, "Invalid sprite information\n");
 	rgb_i[0] = ft_atoi(rgb[0]);
@@ -66,6 +78,7 @@ int	color_init(t_game *game, char *line)
 	dp_cleaner(rgb);
 	if (check_rgb(rgb_i))
 		clean_colors_trash(game, line, NULL, "Invalid color values\n");
+	free (line);
 	return (shift_color(rgb_i));
 }
 
@@ -80,10 +93,10 @@ int	shift_color(int *rgb)
 
 int	check_if_wall(char *line)
 {
-	if (!ft_strncmp(line, "SO", 2) \
-		|| !ft_strncmp(line, "EA", 2) \
-		|| !ft_strncmp(line, "WE", 2) \
-		|| !ft_strncmp(line, "NO", 2))
+	if (!ft_strcmp(line, "SO") \
+		|| !ft_strcmp(line, "EA") \
+		|| !ft_strcmp(line, "WE") \
+		|| !ft_strcmp(line, "NO"))
 		return (1);
 	return (0);
 }
@@ -92,23 +105,33 @@ int	reach_map(char **map)
 {
 	int	i;
 	int	j;
+	char	*end;
+	char	*col;
 
 	i = -1;
 	j = 0;
 	while (map[++i])
 	{
-		if (ft_strnstr(map[i], "01", ft_strlen(map[i])))
-			return (0);
-		if (check_if_wall(map[i]))
+		col = map[i];
+		if (ft_strchr(" \t", col[0]))
+			col = ft_strpbrk_skip(col, " \t");
+		end = ft_strpbrk(col, " \t");
+		if (!end)
+			continue ;
+		col = ft_substr(col, 0, end - col);
+		if (check_if_wall(col))
 			j++;
-		if (!ft_strncmp(map[i], "F", 1) || !ft_strncmp(map[i], "C", 1))
+		else if (!ft_strcmp(col, "F") || !ft_strcmp(col, "C"))
 			j++;
+		else if (*col && ft_isalpha(col[0]))
+			return (free(col), printf("Error: Not all information before map\n"), 0);
 		if (j == 6)
 			break ;
+		free (col);
 	}
 	if (j != 6)
-		return (0);
-	while (map[i++][0] && map[i][0] == '\n')
+		return (printf("Missing information\n"), 0);
+	while (map[i] && map[i++] && map[i][0] == '\n')
 		;
 	return (i);
 }

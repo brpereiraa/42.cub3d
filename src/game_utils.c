@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/12 23:11:42 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:29:30 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	check_invalid_chars(char **map)
 				&& map[reach + i][j] != 'E' && map[reach + i][j] != 'S' \
 				&& map[reach + i][j] != ' ' \
 				&& map[reach + i][j] != '\n')
-				return (1);
+				{
+					return (printf("Error: Invalid characters found\n"), 1);
+				}
 		}
 	}
 	return (0);
@@ -82,42 +84,39 @@ void	draw_wall(t_game *game, int i, int j, int color)
 	}
 }
 
-int	set_sprite_walls(t_game *game, char *line, int i)
+
+int	set_sprite_walls(t_game *game, char *col, char *line)
 {
-	if (check_sprite_syntax((line + 2) + skip_spaces(line + 2)))
-	{
-		free(line);
-		exit_project(game, "Wrong sprite extensions\n");
-	}
-	if (!ft_strncmp(game->map[i], "SO", 2))
-	{
-		if (!game->sprites->csouth)
-			game->sprites->csouth = \
-				ft_strdup((line + 2) + skip_spaces(line + 2));
-		return (1);
-	}
-	if (!ft_strncmp(game->map[i], "EA", 2))
-	{
-		if (!game->sprites->ceast)
-			game->sprites->ceast = \
-				ft_strdup((line + 2) + skip_spaces(line + 2));
-		return (1);
-	}
-	if (no_we_alloc(game, line, i))
-		return (1);
+	char *fline;
+
+	fline = ft_strpbrk_skip(line, " \t");
+	if (check_sprite_syntax(fline))
+		exit_project(game, NULL);
+	if (!ft_strcmp(col, "SO"))
+		game->sprites->csouth = ft_substr(fline, 0, ft_strlen(fline) - 1);
+	else if (!ft_strcmp(col, "NO"))
+		game->sprites->cnorth = ft_substr(fline, 0, ft_strlen(fline) - 1);
+	else if (!ft_strcmp(col, "EA"))
+		game->sprites->ceast = ft_substr(fline, 0, ft_strlen(fline) - 1);
+	else if (!ft_strcmp(col, "WE"))
+		game->sprites->cwest = ft_substr(fline, 0, ft_strlen(fline) - 1);
 	return (0);
 }
 
-int	set_colors(t_game *game, char *line, int i)
+int	set_colors(t_game *game, char *col, char *line)
 {
-	if (!ft_strncmp(game->map[i], "C", 1))
+	char	*end;
+
+	end = ft_strpbrk_skip(line, " \t");
+	end = ft_substr(end, 0, ft_strlen(end) - 1);
+	if (!ft_strcmp(col, "C"))
 	{
-		game->sprites->ceiling = color_init(game, line);
+		game->sprites->ceiling = color_init(game, end, col);
 		return (1);
 	}
-	if (!ft_strncmp(game->map[i], "F", 1))
+	if (!ft_strcmp(col, "F"))
 	{
-		game->sprites->floor = color_init(game, line);
+		game->sprites->floor = color_init(game, end, col);
 		return (1);
 	}
 	return (0);

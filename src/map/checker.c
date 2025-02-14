@@ -30,14 +30,24 @@ int	check_sprite_syntax(char *sprite)
 {
 	int		fd;
 	char	*ext;
+	char	*line;
 
-	ext = sprite + 1;
-	ext = ft_strchr(ext, '.');
-	if (ext == NULL || ft_strcmp(ext, ".xpm") != 0)
-		return (1);
-	fd = open(sprite, O_RDONLY);
+	line = ft_substr(sprite, 0, ft_strlen(sprite) - 1);
+	ext = ft_strchr(line, '.');
+	while (ft_strchr(ext + 1, '.'))
+		ext = ft_strchr(ext + 1, '.');
+	if (ext == NULL || ft_strcmp(ext, ".xpm"))
+	{
+		free (line);
+		return (printf("Error: Invalid extension\n"), 1);
+	}
+	fd = open(line, O_RDONLY);
 	if (fd == -1)
-		return (1);
+	{
+		free (line);
+		return (printf("Error: Non existent file\n"), 1);
+	}
+	free (line);
 	close(fd);
 	return (0);
 }

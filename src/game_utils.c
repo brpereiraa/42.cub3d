@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/14 17:29:30 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:26:38 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	check_invalid_chars(char **map)
 			if (map[reach + i][j] != '0' && map[reach + i][j] != '1' \
 				&& map[reach + i][j] != 'N' && map[reach + i][j] != 'W' \
 				&& map[reach + i][j] != 'E' && map[reach + i][j] != 'S' \
-				&& map[reach + i][j] != ' ' \
+				&& !isspace(map[reach + i][j]) \
 				&& map[reach + i][j] != '\n')
 			{
-				return (printf("Error: Invalid characters found\n"), 1);
+				return (printf("Error\nInvalid characters found\n"), 1);
 			}
 		}
 	}
@@ -89,8 +89,13 @@ int	set_sprite_walls(t_game *game, char *col, char *line)
 	char	*fline;
 
 	fline = ft_strpbrk_skip(line, " \t");
+	if (fline[0] == '\n')
+		clean_colors_trash(game, col, NULL, "Invalid information");
 	if (check_sprite_syntax(fline))
+	{
+		free (col);
 		exit_project(game, NULL);
+	}
 	if (!ft_strcmp(col, "SO"))
 		game->sprites->csouth = ft_substr(fline, 0, ft_strlen(fline) - 1);
 	else if (!ft_strcmp(col, "NO"))

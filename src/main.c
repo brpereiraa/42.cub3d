@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:35:10 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/12 23:57:59 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:07:18 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,23 @@ int	skip_spaces(char *line)
 	while (line[i] == 32)
 		i++;
 	return (i);
+}
+
+int	check_data(int *j, char *col, char *end)
+{
+	if (end)
+		col = ft_substr(col, 0, end - col);
+	else
+		col = ft_strdup(col);
+	if (check_if_wall(col))
+		*j += 1;
+	else if (!ft_strcmp(col, "F") || !ft_strcmp(col, "C"))
+		*j += 1;
+	else if (col && ft_isalnum(col[0]))
+	{
+		return (free(col), printf("Error\nNot all \
+information before map\n"), 0);
+	}
+	free (col);
+	return (1);
 }

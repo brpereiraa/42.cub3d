@@ -34,18 +34,18 @@ int	check_sprite_syntax(char *sprite)
 
 	line = ft_substr(sprite, 0, ft_strlen(sprite) - 1);
 	ext = ft_strchr(line, '.');
-	while (ft_strchr(ext + 1, '.'))
+	while (ext && ft_strchr(ext + 1, '.'))
 		ext = ft_strchr(ext + 1, '.');
 	if (ext == NULL || ft_strcmp(ext, ".xpm"))
 	{
 		free (line);
-		return (printf("Error: Invalid extension\n"), 1);
+		return (printf("Error\nInvalid extension\n"), 1);
 	}
 	fd = open(line, O_RDONLY);
 	if (fd == -1)
 	{
 		free (line);
-		return (printf("Error: Non existent file\n"), 1);
+		return (printf("Error\nSprite: Non existent file\n"), 1);
 	}
 	free (line);
 	close(fd);

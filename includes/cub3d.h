@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/14 17:29:24 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:57:24 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ struct s_cast
 	double	wall_x;
 	int		wall_height;
 	int		side;
+	int		start;
+	int		end;
+	double	sstep;
 };
 
 struct s_data
@@ -128,6 +131,9 @@ int				map_lines(char *file);
 char			**fmap_read(t_game *game);
 void			player_fov(t_game *game, char c);
 
+void			check_rgb_val(t_game *game, char *line, char *col, char **rgb);
+void			handle_colors(t_game *game, char *col, char *end, int i);
+void			handle_walls(t_game *game, char *col, int i);
 /*.......minimap.c............*/
 void			render_images(t_game *game);
 void			put_image_to_window(t_game *game, int i, int j);
@@ -162,8 +168,7 @@ void			perp_vect(t_vect *v1, t_vect *v2);
 int				ft_render(t_game *game);
 void			create_image(t_game *game);
 void			draw_vertical_line(t_game *game, int screen_x, \
-				int wall_height, double wall_x, \
-				int side, t_vect *ray_dir);
+			t_cast *data, t_vect *ray_dir);
 char			*ft_texture(t_game *game, int side, t_vect *ray_dir);
 
 /*........raycasting.c.........*/
@@ -171,6 +176,11 @@ void			pixel_put(t_data *data, int x, int y, int color);
 unsigned int	get_pixel_color(void *texture, int tex_x, \
 			int tex_y, int texture_width);
 int				ft_raycasting(t_game *game);
+
+void			calculate_wall_distance_and_x(t_cast *data, \
+			int side, t_vect *ray_dir, t_game *game);
+void			draw_ceiling_floor(t_game *game, int screen_x, int wall_height);
+
 
 /*.........cleaner.c............*/
 void			dp_cleaner(char **var);
@@ -202,5 +212,7 @@ void			clean_colors_trash(t_game *game, char *line, \
 int				check_newline(t_game *game, char **map, int i);
 char			**alloc_map(int lines, char *file, int fd);
 int				reach_map(char **map);
+int				check_data(int *j, char *col, char *end);
+void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x);
 
 #endif

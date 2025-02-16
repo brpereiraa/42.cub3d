@@ -1,9 +1,9 @@
-NO ./sprites/wall1.xpm
-SO  ./sprites/wall2.xpm
+NO ./sprites/n_wall.xpm
+SO ./sprites/s_wall.xpm
+WE ./sprites/w_wall.xpm
+EA ./sprites/e_wall.xpm
 C    225,30,0
-EA  ./sprites/wall5.xpm
 F    220,100,0
-WE  ./sprites/wall3.xpm
 
 111111111111111111111111111111111111111111111111111111111111111111111111111111
 10000000000000000000000000000000000000000000000000000000N000000000000000000001

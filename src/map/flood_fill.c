@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/14 15:42:20 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:30:03 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	if (x < 0 || x >= game->max_y || y < 0 || y >= game->max_x \
-			|| !game->flood_map[x][y])
+	if (x < 0 || x >= game->max_y || y < 0 || y > ft_strlen(game->flood_map[x]) \
+	|| y >= game->max_x || !game->flood_map[x][y])
 	{
 		dp_cleaner(game->flood_map);
 		exit_project(game, "Map is open\n");
@@ -63,12 +63,13 @@ char	**create_flood_map(t_game *game)
 	while (game->map[reach + ++i])
 		;
 	only_map = (char **)malloc(sizeof(char *) * (i + 1));
+	ft_memset(only_map, 0, sizeof(char *) * (i + 1));
 	i = -1;
 	while (game->map[reach + ++i])
 	{
+		only_map[i] = ft_strdup(game->map[reach + i]);
 		if (check_newline(game, only_map, reach + i))
 			return (NULL);
-		only_map[i] = ft_strdup(game->map[reach + i]);
 	}
 	only_map[i] = NULL;
 	if (flood_map_utils(reach, game))

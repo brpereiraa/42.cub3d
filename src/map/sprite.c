@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/14 18:39:55 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:29:32 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,8 @@ void	sprites_init(t_game *game)
 		if (!end)
 			continue ;
 		col = ft_substr(col, 0, end - col);
-		if (col && check_if_wall(col))
-		{
-			if (set_sprite_walls(game, col, game->map[i]))
-			{
-				free(col);
-				exit_project(game, NULL);
-			}
-		}
-		if (col && (!ft_strcmp(col, "C") || !ft_strcmp(col, "F")))
-		{
-			if (!set_colors(game, col, end))
-			{
-				free(col);
-				exit_project(game, "dwad");
-			}
-		}
+		handle_walls(game, col, i);
+		handle_colors(game, col, end, i);
 		free(col);
 		j++;
 	}
@@ -68,20 +54,17 @@ int	color_init(t_game *game, char *line, char *col)
 		}
 	}
 	rgb = ft_split(line, ',');
-	i = 0;
-	while (rgb[i])
-		if (only_digits(rgb[i++]))
-			clean_colors_trash(game, line, rgb, "Color: Invalid characters\n");
-	if (i != 3)
-		clean_colors_trash(game, line, rgb, "Invalid sprite information\n");
-	rgb_i[0] = ft_atoi(rgb[0]);
-	rgb_i[1] = ft_atoi(rgb[1]);
-	rgb_i[2] = ft_atoi(rgb[2]);
+	i = -1;
+	check_rgb_val(game, line, col, rgb);
+	while (++i < 3)
+		rgb_i[i] = ft_atoi(rgb[i]);
 	dp_cleaner(rgb);
 	if (check_rgb(rgb_i))
+	{
+		free (col);
 		clean_colors_trash(game, line, NULL, "Invalid color values\n");
-	free (line);
-	return (shift_color(rgb_i));
+	}
+	return (free (line), shift_color(rgb_i));
 }
 
 int	shift_color(int *rgb)
@@ -118,22 +101,13 @@ int	reach_map(char **map)
 		if (ft_strchr(" \t", col[0]))
 			col = ft_strpbrk_skip(col, " \t");
 		end = ft_strpbrk(col, " \t");
-		if (!end)
-			continue ;
-		col = ft_substr(col, 0, end - col);
-		if (check_if_wall(col))
-			j++;
-		else if (!ft_strcmp(col, "F") || !ft_strcmp(col, "C"))
-			j++;
-		else if (*col && ft_isalpha(col[0]))
-			return (free(col), printf("Error: Not all \
-			information before map\n"), 0);
+		if (!check_data(&j, col, end))
+			return (0);
 		if (j == 6)
 			break ;
-		free (col);
 	}
 	if (j != 6)
-		return (printf("Missing information\n"), 0);
+		return (printf("Error\nMissing information\n"), 0);
 	while (map[i] && map[i++] && map[i][0] == '\n')
 		;
 	return (i);

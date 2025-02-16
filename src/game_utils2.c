@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davioliv <davioliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:12:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/13 03:18:49 by davioliv         ###   ########.fr       */
+/*   Updated: 2025/02/16 16:17:47 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	check_newline(t_game *game, char **map, int i)
 {
 	if (game->map[i][0] == '\n')
 	{
-		map[i] = NULL;
 		dp_cleaner(map);
 		return (1);
 	}

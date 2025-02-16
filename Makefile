@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
+#    By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2025/02/13 00:54:07 by davioliv         ###   ########.fr        #
+#    Updated: 2025/02/16 16:24:56 by brpereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 #CFLAGS = -Wall -Wextra -Werror -Iincludes
 CFLAGS = -Iincludes
 SRC = src/main.c src/mlx.c src/key_handling/key_handling.c src/key_handling/key_utils.c \
-		src/map/map.c src/map/minimap.c src/map/checker.c \
+		src/map/map.c src/map/minimap.c src/map/checker.c src/map/utils.c\
 		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c  src/raycasting/utils.c \
 		src/vector/vect_utils.c src/cleaner.c src/map/flood_fill.c src/game_utils.c src/game_utils2.c
 

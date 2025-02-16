@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-char	*ft_strpbrk(const char *s, const char *accept) 
+char	*ft_strpbrk(const char *s, const char *accept)
 {
-	const char *a;
+	const char	*a;
 
 	while (*s)
 	{
 		a = accept;
-		while(*a)
+		while (*a)
 		{
 			if (*s == *a)
 				return ((char *)s);
@@ -32,10 +32,10 @@ char	*ft_strpbrk(const char *s, const char *accept)
 
 char	*ft_strpbrk_skip(const char *s, const char *accept)
 {
-    char *ptr;
+	char	*ptr;
 
 	ptr = ft_strpbrk(s, accept);
-    while (ptr && *ptr && ft_strchr(accept, *ptr))
-        ptr++;
-    return ptr;
+	while (ptr && *ptr && ft_strchr(accept, *ptr))
+		ptr++;
+	return (ptr);
 }

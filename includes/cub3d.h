@@ -161,7 +161,6 @@ void			rotate_vector(t_vect *vector, int degree);
 void			perp_vect(t_vect *v1, t_vect *v2);
 int				ft_render(t_game *game);
 void			create_image(t_game *game);
-// void draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side);
 void			draw_vertical_line(t_game *game, int screen_x, \
 				int wall_height, double wall_x, \
 				int side, t_vect *ray_dir);

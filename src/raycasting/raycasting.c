@@ -10,31 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-void	calculate_wall_distance_and_x(t_cast *data, int side, t_vect *ray_dir, t_game *game);
+void	calculate_wall_distance_and_x(t_cast *data, \
+			int side, t_vect *ray_dir, t_game *game);
 
-void	initialize_side_and_step(t_vect *ray_dir, t_cast *data, t_game *game, t_vect *map)
+void	initialize_side_and_step(t_vect *ray_dir, \
+			t_cast *data, t_game *game, t_vect *map)
 {
 	if (ray_dir->x < 0)
 	{
 		data->step->x = -1;
-		data->side_dist->x = (game->player->pos_x - map->x) * data->delta_dist->x;
+		data->side_dist->x = (game->player->pos_x - map->x) \
+			* data->delta_dist->x;
 	}
 	else
 	{
 		data->step->x = 1;
-		data->side_dist->x = (map->x + 1.0 - game->player->pos_x) * data->delta_dist->x;
+		data->side_dist->x = (map->x + 1.0 - game->player->pos_x) \
+			* data->delta_dist->x;
 	}
 	if (ray_dir->y < 0)
 	{
 		data->step->y = -1;
-		data->side_dist->y = (game->player->pos_y - map->y) * data->delta_dist->y;
+		data->side_dist->y = (game->player->pos_y - map->y) \
+			* data->delta_dist->y;
 	}
 	else
 	{
 		data->step->y = 1;
-		data->side_dist->y = (map->y + 1.0 - game->player->pos_y) * data->delta_dist->y;
+		data->side_dist->y = (map->y + 1.0 - game->player->pos_y) \
+			* data->delta_dist->y;
 	}
 }
 
@@ -58,7 +64,8 @@ void	draw_ceiling_floor(t_game *game, int screen_x, int wall_height)
 		pixel_put(game->data, screen_x, y, game->sprites->floor);
 }
 
-void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall_x, int side, t_vect *ray_dir)
+void	draw_vertical_line(t_game *game, int screen_x, \
+			int wall_height, double wall_x, int side, t_vect *ray_dir)
 {
 	t_vect	*tex;
 	double	step;
@@ -85,7 +92,8 @@ void	draw_vertical_line(t_game *game, int screen_x, int wall_height, double wall
 	{
 		tex->y = (int)tex_pos & (TEXTURE_SIZE - 1);
 		tex_pos += step;
-		pixel_put(game->data, screen_x, y, get_pixel_color(game->texture, tex->x, tex->y, TEXTURE_SIZE));
+		pixel_put(game->data, screen_x, y, \
+			get_pixel_color(game->texture, tex->x, tex->y, TEXTURE_SIZE));
 	}
 	free(tex);
 }
@@ -130,7 +138,8 @@ void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 	side = perform_dda(data, map, game);
 	calculate_wall_distance_and_x(data, side, ray_dir, game);
 	draw_ceiling_floor(game, screen_x, data->wall_height);
-	draw_vertical_line(game, screen_x, data->wall_height, data->wall_x, side, ray_dir);
+	draw_vertical_line(game, screen_x, data->wall_height, \
+		data->wall_x, side, ray_dir);
 	free(data->delta_dist);
 	free(data->side_dist);
 	free(data->step);
@@ -138,7 +147,8 @@ void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 	free(map);
 }
 
-void	calculate_wall_distance_and_x(t_cast *data, int side, t_vect *ray_dir, t_game *game)
+void	calculate_wall_distance_and_x(t_cast *data, \
+			int side, t_vect *ray_dir, t_game *game)
 {
 	double	wall_dist;
 

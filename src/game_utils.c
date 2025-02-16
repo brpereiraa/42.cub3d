@@ -33,9 +33,9 @@ int	check_invalid_chars(char **map)
 				&& map[reach + i][j] != 'E' && map[reach + i][j] != 'S' \
 				&& map[reach + i][j] != ' ' \
 				&& map[reach + i][j] != '\n')
-				{
-					return (printf("Error: Invalid characters found\n"), 1);
-				}
+			{
+				return (printf("Error: Invalid characters found\n"), 1);
+			}
 		}
 	}
 	return (0);
@@ -84,10 +84,9 @@ void	draw_wall(t_game *game, int i, int j, int color)
 	}
 }
 
-
 int	set_sprite_walls(t_game *game, char *col, char *line)
 {
-	char *fline;
+	char	*fline;
 
 	fline = ft_strpbrk_skip(line, " \t");
 	if (check_sprite_syntax(fline))

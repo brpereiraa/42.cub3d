@@ -43,8 +43,8 @@ void	sprites_init(t_game *game)
 		{
 			if (!set_colors(game, col, end))
 			{
-					free(col);
-					exit_project(game, "dwad");
+				free(col);
+				exit_project(game, "dwad");
 			}
 		}
 		free(col);
@@ -59,12 +59,14 @@ int	color_init(t_game *game, char *line, char *col)
 	int		i;
 
 	i = -1;
-	while(line[++i])
+	while (line[++i])
+	{
 		if (line[i] == ',' && line[i + 1] && line[i + 1] == ',')
 		{
 			free(col);
 			clean_colors_trash(game, line, NULL, "Multiple commas\n");
 		}
+	}
 	rgb = ft_split(line, ',');
 	i = 0;
 	while (rgb[i])
@@ -103,8 +105,8 @@ int	check_if_wall(char *line)
 
 int	reach_map(char **map)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*end;
 	char	*col;
 
@@ -124,7 +126,8 @@ int	reach_map(char **map)
 		else if (!ft_strcmp(col, "F") || !ft_strcmp(col, "C"))
 			j++;
 		else if (*col && ft_isalpha(col[0]))
-			return (free(col), printf("Error: Not all information before map\n"), 0);
+			return (free(col), printf("Error: Not all \
+			information before map\n"), 0);
 		if (j == 6)
 			break ;
 		free (col);

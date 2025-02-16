@@ -8,7 +8,7 @@ SRCS = ft_atoi.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c
 		ft_tolower.c ft_toupper.c ft_bzero.c ft_memcpy.c ft_strlcat.c ft_memmove.c ft_memchr.c ft_strmapi.c ft_strpbrk.c \
 		ft_strrchr.c ft_strlcpy.c ft_striteri.c get_next_line.c get_next_line_utils.c ft_print_hex.c ft_print_char.c \
 		ft_print_decimal.c ft_print_integer.c ft_print_percent.c ft_print_pointer.c ft_print_str.c ft_print_unsigned_decimal.c \
-		ft_printf.c
+		ft_printf.c ft_isspace.c
 
 OBJS = $(SRCS:.c=.o)
 

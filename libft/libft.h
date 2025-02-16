@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 22:21:27 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/14 12:24:20 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:54:42 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int				ft_isalpha(int c);
 int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
+int				ft_isspace(int c);
 char			*ft_itoa(int n);
 int				ft_memcmp(const void *str1, const void *str2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);

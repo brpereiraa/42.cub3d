@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/16 17:26:38 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:53:28 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_invalid_chars(char **map)
 			if (map[reach + i][j] != '0' && map[reach + i][j] != '1' \
 				&& map[reach + i][j] != 'N' && map[reach + i][j] != 'W' \
 				&& map[reach + i][j] != 'E' && map[reach + i][j] != 'S' \
-				&& !isspace(map[reach + i][j]) \
+				&& !ft_isspace(map[reach + i][j]) \
 				&& map[reach + i][j] != '\n')
 			{
 				return (printf("Error\nInvalid characters found\n"), 1);

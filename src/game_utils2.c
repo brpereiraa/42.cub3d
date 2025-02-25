@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:12:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/16 16:17:47 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:53:21 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	**alloc_map(int lines, char *file, int fd)
 	char	**map;
 	char	*str;
 
+	(void)file;
 	i = 0;
 	flag = 0;
 	map = (char **)malloc(sizeof(char *) * (lines + 1));

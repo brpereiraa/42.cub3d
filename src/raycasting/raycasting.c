@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:47:25 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/16 18:06:29 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:50:53 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	initialize_side_and_step(t_vect *ray_dir, \
 
 void	get_raydata(t_game *game, t_cast *data)
 {
+	(void)game;
 	data->start = -data->wall_height / 2 + HEIGHT / 2;
 	data->end = data->wall_height / 2 + HEIGHT / 2;
 	if (data->start < 0)
@@ -107,8 +108,6 @@ void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x)
 {
 	t_cast	*data;
 	t_vect	*map;
-	int		side;
-	double	wall_dist;
 
 	data = (t_cast *)malloc(sizeof(t_cast));
 	data->delta_dist = new_vect(fabs(1 / ray_dir->x), fabs(1 / ray_dir->y));

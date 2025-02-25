@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:22:58 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:30:37 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:49:41 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	handle_walls(t_game *game, char *col, int i)
 
 void	handle_colors(t_game *game, char *col, char *end, int i)
 {
+	(void)i;
 	if (col && (!ft_strcmp(col, "C") || !ft_strcmp(col, "F")))
 	{
 		if (!set_colors(game, col, end))

@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/16 16:57:24 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:02:39 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ void			calculate_wall_distance_and_x(t_cast *data, \
 			int side, t_vect *ray_dir, t_game *game);
 void			draw_ceiling_floor(t_game *game, int screen_x, int wall_height);
 
-
 /*.........cleaner.c............*/
 void			dp_cleaner(char **var);
 void			exit_project(t_game *game, char *msg);
@@ -200,9 +199,7 @@ int				skip_spaces(char *line);
 void			start_sprites(t_game *game);
 char			**fmap_utils(t_game *game, int start);
 void			draw_wall(t_game *game, int i, int j, int color);
-// int				set_colors(t_game *game, char *line, int i);
 int				set_colors(t_game *game, char *col, char *line);
-// int				set_sprite_walls(t_game *game, char *line, int i);
 int				set_sprite_walls(t_game *game, char *col, char *line);
 int				left_utils(t_game *game, int keycode);
 int				check_wall(t_game *game, int flag);
@@ -213,6 +210,6 @@ int				check_newline(t_game *game, char **map, int i);
 char			**alloc_map(int lines, char *file, int fd);
 int				reach_map(char **map);
 int				check_data(int *j, char *col, char *end);
-void	cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x);
+void			cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x);
 
 #endif

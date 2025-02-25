@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:46:54 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/16 18:06:30 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:51:32 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ unsigned int	get_pixel_color(void *texture,
 	int		endian;
 	int		offset;
 
+	(void)texture_width;
 	data = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
 	offset = (tex_y * size_line) + (tex_x * (bpp / 8));
 	return (*(unsigned int *)(data + offset));

@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/16 18:30:03 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:53:02 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	flood_fill(int x, int y, t_game *game)
 {
-	if (x < 0 || x >= game->max_y || y < 0 || y > ft_strlen(game->flood_map[x]) \
-	|| y >= game->max_x || !game->flood_map[x][y])
+	if (x < 0 || x >= game->max_y || y < 0 || \
+		y > (int)ft_strlen(game->flood_map[x]) || \
+		y >= game->max_x || !game->flood_map[x][y])
 	{
 		dp_cleaner(game->flood_map);
 		exit_project(game, "Map is open\n");
@@ -92,7 +93,7 @@ int	flood_map_utils(int start, t_game *game)
 	max_x = ft_strlen(game->map[start]);
 	while (game->map[start + ++i])
 	{
-		if (ft_strlen(game->map[start + i]) > max_x)
+		if ((int)ft_strlen(game->map[start + i]) > max_x)
 			max_x = ft_strlen(game->map[start + i]);
 		j = -1;
 		while (game->map[start + i][++j])

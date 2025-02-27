@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:34:55 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/07 22:50:12 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/27 23:34:29 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int	mmap_init(t_game *game)
 
 void	put_image_to_window(t_game *game, int i, int j)
 {
-	int	size;
-
-	size = 50;
 	if (game->fmap[i][j] == '1')
 		draw_wall(game, j * 10, i * 10, BLACK);
 	if (game->fmap[i][j] == '0' || game->fmap[i][j] == 'W' \
@@ -84,13 +81,9 @@ void	cast_rays(t_game *game, t_vect *perp)
 
 int	ft_fov(t_game *game)
 {
-	int		x;
-	int		y;
 	double	t;
 	t_vect	ray_dir;
 
-	x = (game->player->pos_x * 60);
-	y = (game->player->pos_y * 60);
 	t = 0;
 	while (t <= 1)
 	{

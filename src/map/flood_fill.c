@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 13:55:10 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/25 19:53:02 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:36:04 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ int	flood_fill(int x, int y, t_game *game)
 
 int	check_flood_fill(t_game *game)
 {
-	int	i;
-
-	i = -1;
 	if (check_invalid_chars(game->map))
 		exit_project(game, NULL);
 	game->flood_map = create_flood_map(game);

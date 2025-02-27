@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:37:58 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/16 19:02:39 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:50:36 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,5 +211,7 @@ char			**alloc_map(int lines, char *file, int fd);
 int				reach_map(char **map);
 int				check_data(int *j, char *col, char *end);
 void			cast_single_ray(t_game *game, t_vect *ray_dir, int screen_x);
+void			check_commas(t_game *game, char *line, char *col);
+void			check_dup(t_game *game, char *col);
 
 #endif

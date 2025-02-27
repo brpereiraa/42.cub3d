@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/16 18:29:32 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:50:48 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	sprites_init(t_game *game)
 		if (!end)
 			continue ;
 		col = ft_substr(col, 0, end - col);
+		check_dup(game, col);
 		handle_walls(game, col, i);
 		handle_colors(game, col, end, i);
 		free(col);
@@ -44,15 +45,7 @@ int	color_init(t_game *game, char *line, char *col)
 	int		rgb_i[3];
 	int		i;
 
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] == ',' && line[i + 1] && line[i + 1] == ',')
-		{
-			free(col);
-			clean_colors_trash(game, line, NULL, "Multiple commas\n");
-		}
-	}
+	check_commas(game, line, col);
 	rgb = ft_split(line, ',');
 	i = -1;
 	check_rgb_val(game, line, col, rgb);

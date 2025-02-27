@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+         #
+#    By: bruno <bruno@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 11:09:52 by bruno             #+#    #+#              #
-#    Updated: 2025/02/25 19:49:12 by brpereir         ###   ########.fr        #
+#    Updated: 2025/02/27 23:29:16 by bruno            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = cub3D
 
 MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm
 CFLAGS = -Wall -Wextra -Werror -Iincludes -O3
-# CFLAGS = -Iincludes
 SRC = src/main.c src/mlx.c src/key_handling/key_handling.c src/key_handling/key_utils.c \
 		src/map/map.c src/map/minimap.c src/map/checker.c src/map/utils.c\
 		src/map/sprite.c src/raycasting/raycasting.c src/raycasting/render.c  src/raycasting/utils.c \

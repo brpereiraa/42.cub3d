@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:22:58 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/25 19:49:41 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:50:59 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,53 @@ void	handle_colors(t_game *game, char *col, char *end, int i)
 			free(col);
 			exit_project(game, "dwad");
 		}
+	}
+}
+
+void	check_commas(t_game *game, char *line, char *col)
+{
+	int		i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == ',' && line[i + 1] && line[i + 1] == ',')
+		{
+			free(col);
+			clean_colors_trash(game, line, NULL, "Multiple commas\n");
+		}
+	}
+	if (line[i - 1] == ',' || line[0] == ',')
+	{
+		free(col);
+		clean_colors_trash(game, line, NULL, "Comma at the end/beggining\n");
+	}
+}
+
+void	check_dup(t_game *game, char *col)
+{
+	char *error_message;
+
+	if ((!ft_strcmp(col, "NO") && game->sprites->cnorth) ||
+		(!ft_strcmp(col, "SO") && game->sprites->csouth) ||
+		(!ft_strcmp(col, "WE") && game->sprites->cwest) ||
+		(!ft_strcmp(col, "EA") && game->sprites->ceast) ||
+		(!ft_strcmp(col, "F") && game->sprites->floor != 0) ||
+		(!ft_strcmp(col, "C") && game->sprites->ceiling != 0))
+	{
+		if (!ft_strcmp(col, "NO"))
+			error_message = "Duplicate NO texture\n";
+		else if (!ft_strcmp(col, "SO"))
+			error_message = "Duplicate SO texture\n";
+		else if (!ft_strcmp(col, "WE"))
+			error_message = "Duplicate WE texture\n";
+		else if (!ft_strcmp(col, "EA"))
+			error_message = "Duplicate EA texture\n";
+		else if (!ft_strcmp(col, "F"))
+			error_message = "Duplicate floor color\n";
+		else
+			error_message = "Duplicate ceiling color\n";
+		free(col);
+		exit_project(game, error_message);
 	}
 }

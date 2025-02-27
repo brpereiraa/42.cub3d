@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:53:58 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/07 22:47:13 by bruno            ###   ########.fr       */
+/*   Updated: 2025/02/27 23:33:14 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	check_wall(t_game *game, int flag)
 	double	next_x;
 	double	next_y;
 
+	next_x = 0;
+	next_y = 0;
 	get_next(game, flag, &next_x, &next_y);
 	if (game->fmap[(int)next_y][(int)next_x] == '1' || \
 		game->fmap[(int)(next_y + 0.1)][(int)next_x] == '1' || \

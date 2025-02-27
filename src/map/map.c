@@ -82,9 +82,9 @@ char	**fmap_read(t_game *game)
 void	player_fov(t_game *game, char c)
 {
 	if (c == 'E')
-		game->player->angle = new_vect(-1, 0);
-	if (c == 'W')
 		game->player->angle = new_vect(1, 0);
+	if (c == 'W')
+		game->player->angle = new_vect(-1, 0);
 	if (c == 'S')
 		game->player->angle = new_vect(0, 1);
 	if (c == 'N')

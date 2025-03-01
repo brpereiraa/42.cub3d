@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:04:59 by davioliv          #+#    #+#             */
-/*   Updated: 2025/02/07 22:59:59 by bruno            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:44:57 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	ft_mlx_init(t_game *game)
 		(game->data->mlx, game->sprites->cwest, &size, &size);
 	game->sprites->east = mlx_xpm_file_to_image \
 		(game->data->mlx, game->sprites->ceast, &size, &size);
+	if (!game->sprites->south || !game->sprites->north \
+		|| !game->sprites->east || !game->sprites->west)
+		exit_project(game, "Invalid sprite file\n");
 	minimap_loop(game);
 	return (1);
 }

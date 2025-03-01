@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:22:58 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/27 23:50:59 by bruno            ###   ########.fr       */
+/*   Updated: 2025/03/01 23:03:41 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ void	check_commas(t_game *game, char *line, char *col)
 
 void	check_dup(t_game *game, char *col)
 {
-	char *error_message;
+	char	*error_message;
 
-	if ((!ft_strcmp(col, "NO") && game->sprites->cnorth) ||
-		(!ft_strcmp(col, "SO") && game->sprites->csouth) ||
-		(!ft_strcmp(col, "WE") && game->sprites->cwest) ||
-		(!ft_strcmp(col, "EA") && game->sprites->ceast) ||
-		(!ft_strcmp(col, "F") && game->sprites->floor != 0) ||
+	if ((!ft_strcmp(col, "NO") && game->sprites->cnorth) || \
+		(!ft_strcmp(col, "SO") && game->sprites->csouth) || \
+		(!ft_strcmp(col, "WE") && game->sprites->cwest) || \
+		(!ft_strcmp(col, "EA") && game->sprites->ceast) || \
+		(!ft_strcmp(col, "F") && game->sprites->floor != 0) || \
 		(!ft_strcmp(col, "C") && game->sprites->ceiling != 0))
 	{
 		if (!ft_strcmp(col, "NO"))

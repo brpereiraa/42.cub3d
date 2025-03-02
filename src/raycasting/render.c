@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 18:12:13 by brpereir          #+#    #+#             */
-/*   Updated: 2025/02/16 16:49:07 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:51:22 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	start_window(t_game *game)
 
 	data = game->data;
 	if (!data->mlx)
-		return (printf("Error starting mlx.\n"), 0);
+		return (printf("Error\n starting mlx.\n"), 0);
 	if (!data->win)
-		return (printf("Error starting win.\n"), 0);
+		return (printf("Error\n starting win.\n"), 0);
 	if (!data->img)
-		return (printf("Error starting img.\n"), 0);
+		return (printf("Error\n starting img.\n"), 0);
 	return (1);
 }
 

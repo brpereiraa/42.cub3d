@@ -53,7 +53,7 @@ int	map_lines(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (printf("Error while trying to open map.\n"), 0);
+		return (0);
 	i = 0;
 	str = get_next_line(fd);
 	while (str)

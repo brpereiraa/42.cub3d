@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:57:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/03/01 23:51:28 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:12:45 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,11 @@ void	draw_wall(t_game *game, int i, int j, int color)
 	}
 }
 
-int	set_sprite_walls(t_game *game, char *col, char *line)
+int	set_sprite_walls(t_game *game, char *col, char *end)
 {
 	char	*fline;
 
-	fline = ft_strpbrk_skip(line, " \t");
-	if (fline[0] == '\n')
-		clean_colors_trash(game, col, NULL, "Invalid information");
-	if (strncmp(fline, "EA", 2) == 0 || strncmp(fline, "NO", 2) == 0 ||
-		strncmp(fline, "SO", 2) == 0 || strncmp(fline, "WE", 2) == 0)
-		fline = ft_strpbrk_skip(fline + 2, " \t");
+	fline = ft_strpbrk_skip(end, " \t");
 	if (check_sprite_syntax(fline))
 	{
 		free (col);

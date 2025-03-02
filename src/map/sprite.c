@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 01:58:51 by bruno             #+#    #+#             */
-/*   Updated: 2025/02/27 23:50:48 by bruno            ###   ########.fr       */
+/*   Updated: 2025/03/02 17:13:31 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sprites_init(t_game *game)
 			continue ;
 		col = ft_substr(col, 0, end - col);
 		check_dup(game, col);
-		handle_walls(game, col, i);
+		handle_walls(game, col, end);
 		handle_colors(game, col, end, i);
 		free(col);
 		j++;

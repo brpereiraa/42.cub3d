@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:22:58 by brpereir          #+#    #+#             */
-/*   Updated: 2025/03/01 23:03:41 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:13:02 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	check_rgb_val(t_game *game, char *line, char *col, char **rgb)
 	}
 }
 
-void	handle_walls(t_game *game, char *col, int i)
-{
+void	handle_walls(t_game *game, char *col, char *end)
+{	
 	if (col && check_if_wall(col))
 	{
-		if (set_sprite_walls(game, col, game->map[i]))
+		if (set_sprite_walls(game, col, end))
 		{
 			free(col);
 			exit_project(game, NULL);

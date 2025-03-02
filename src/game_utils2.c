@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:12:35 by davioliv          #+#    #+#             */
-/*   Updated: 2025/03/01 23:59:05 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:34:22 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,32 @@ void	clean_colors_trash(t_game *game, char *line, char **rgb, char *msg)
 	exit_project(game, msg);
 }
 
-int	check_newline(t_game *game, char **map, int i)
+int check_newline(t_game *game, char **map, int i)
 {
-	while (game->map[++i])
-	{
-		if (ft_strpbrk(game->map[i], " \t\n") == NULL)
-		{
-			dp_cleaner(map);
-			return (1);
-		}
-	}
-	return (0);
-}	
+    int j;
+
+    j = 0;
+    while (game->map[i][j])
+    {
+        if (!ft_isspace(game->map[i][j]) && game->map[i][j] != '\n')
+            return (0);
+        j++;
+    }
+    while (game->map[++i])
+    {
+        j = 0;
+        while (game->map[i][j])
+        {
+            if (!ft_isspace(game->map[i][j]) && game->map[i][j] != '\n')
+            {
+                dp_cleaner(map);
+                return (1);
+            }
+            j++;
+        }
+    }
+    return (0);
+}
 
 char	**alloc_map(int lines, char *file, int fd)
 {

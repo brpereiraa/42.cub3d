@@ -6,7 +6,7 @@
 /*   By: brpereir <brpereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 16:22:58 by brpereir          #+#    #+#             */
-/*   Updated: 2025/03/02 17:13:02 by brpereir         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:40:30 by brpereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	check_rgb_val(t_game *game, char *line, char *col, char **rgb)
 	if (i != 3)
 	{
 		free (col);
-		clean_colors_trash(game, line, rgb, "Invalid sprite information\n");
+		clean_colors_trash(game, line, rgb, "Invalid color setting\n");
 	}
 }
 
 void	handle_walls(t_game *game, char *col, char *end)
-{	
+{
 	if (col && check_if_wall(col))
 	{
 		if (set_sprite_walls(game, col, end))
@@ -73,7 +73,7 @@ void	check_commas(t_game *game, char *line, char *col)
 	if (line[i - 1] == ',' || line[0] == ',')
 	{
 		free(col);
-		clean_colors_trash(game, line, NULL, "Comma at the end/beggining\n");
+		clean_colors_trash(game, line, NULL, "Comma at the end/beginning\n");
 	}
 }
 
